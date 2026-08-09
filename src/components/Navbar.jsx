@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Menu, X, Terminal } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import logo from '../assets/logo.png';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,8 +20,8 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <NavLink to="/" className="flex items-center gap-2 text-xl font-bold text-white hover:text-primary transition-colors">
-              <Terminal className="text-primary" size={24} />
+            <NavLink to="/" className="flex items-center gap-2.5 text-xl font-bold text-white hover:text-primary transition-colors">
+              <img src={logo} alt="Programming Club IITM logo" className="h-9 w-auto" />
               <span>Programming Club <span className="text-primary">IITM</span></span>
             </NavLink>
           </div>
