@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Terminal } from 'lucide-react';
+import HeroBackground from '../components/HeroBackground';
 
 const TypingText = ({ phrases }) => {
   const [displayText, setDisplayText] = useState('');
@@ -46,8 +47,9 @@ const Home = () => {
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden py-20">
         <div className="absolute inset-0 z-0">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-[120px]"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/20 rounded-full blur-[120px]"></div>
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/15 rounded-full blur-[120px] animate-drift-a"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/15 rounded-full blur-[120px] animate-drift-b"></div>
+          <HeroBackground />
         </div>
         
         <div className="z-10 text-center px-4 max-w-4xl mx-auto">
@@ -59,9 +61,10 @@ const Home = () => {
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card mb-8 text-primary font-mono text-sm">
               <Terminal size={16} />
               <span>&gt; ./init_club.sh</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-spark animate-pulse"></span>
             </div>
             <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
-              ProgClub<span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">IITM</span>
+              ProgClub<span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-highlight">IITM</span>
             </h1>
             <div className="text-xl md:text-2xl text-textMuted mb-10 h-16">
               <TypingText phrases={["CFI and IITM", "CFI, IIT Madras"]} />
