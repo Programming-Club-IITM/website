@@ -41,4 +41,72 @@
   .btn-highlight {
     @apply px-6 py-2 rounded-lg border border-highlight/60 text-highlight font-medium transition-all duration-300 hover:bg-highlight/10;
   }
+
+  /* ── Glass panel: wraps an entire team section ── */
+  .glass-panel {
+    @apply relative bg-surface/40 backdrop-blur-md border border-white/[0.07] rounded-2xl;
+  }
+
+  /* ── Flip card system ── */
+  .flip-card {
+    perspective: 800px;
+  }
+  .flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+  }
+  .flip-card:hover .flip-card-inner,
+  .flip-card:focus-within .flip-card-inner {
+    transform: rotateY(180deg);
+  }
+  .flip-card-front,
+  .flip-card-back {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 9999px;
+    overflow: hidden;
+  }
+  .flip-card-back {
+    transform: rotateY(180deg);
+  }
+
+  /* ── Glow ring: animated gradient border around avatars ── */
+  .glow-ring {
+    @apply relative;
+  }
+  .glow-ring::before {
+    content: '';
+    @apply absolute -inset-[3px] rounded-full animate-pulse-glow;
+    background: conic-gradient(
+      from 0deg,
+      #2FBDA5,
+      #1B8FB0,
+      #86C440,
+      #2FBDA5
+    );
+    z-index: -1;
+  }
+  .glow-ring::after {
+    content: '';
+    @apply absolute -inset-[1px] rounded-full;
+    background: #0a0a0a;
+    z-index: -1;
+  }
+
+  /* ── Section divider: gradient line between team sections ── */
+  .section-divider {
+    @apply h-px w-full max-w-xs mx-auto;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(47, 189, 165, 0.3),
+      rgba(27, 143, 176, 0.3),
+      transparent
+    );
+  }
 }

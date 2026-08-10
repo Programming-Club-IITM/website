@@ -1,11 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 
-// Brand palette used for the node network (spark used sparingly)
+// Brand palette used for the node network
 const NODE_COLORS = [
   { color: '47, 189, 165', weight: 5 },  // primary teal
-  { color: '27, 143, 176', weight: 4 },  // accent blue
-  { color: '134, 196, 64', weight: 3 },  // highlight lime
-  { color: '242, 169, 59', weight: 1 },  // spark amber (rare)
+  { color: '27, 143, 176', weight: 4 },  // accent cyan
+  { color: '134, 196, 64', weight: 2 },  // highlight lime
 ];
 
 const pickColor = () => {
@@ -16,22 +15,6 @@ const pickColor = () => {
     r -= c.weight;
   }
   return NODE_COLORS[0].color;
-};
-
-// Draws a flat-topped hexagon outline
-const drawHexagon = (ctx, cx, cy, radius, rotation, color, alpha, lineWidth) => {
-  ctx.beginPath();
-  for (let i = 0; i < 6; i++) {
-    const angle = rotation + (Math.PI / 3) * i;
-    const x = cx + radius * Math.cos(angle);
-    const y = cy + radius * Math.sin(angle);
-    if (i === 0) ctx.moveTo(x, y);
-    else ctx.lineTo(x, y);
-  }
-  ctx.closePath();
-  ctx.strokeStyle = `rgba(${color}, ${alpha})`;
-  ctx.lineWidth = lineWidth;
-  ctx.stroke();
 };
 
 const HeroBackground = () => {
@@ -46,7 +29,6 @@ const HeroBackground = () => {
 
     let width, height, dpr;
     let nodes = [];
-    let hexagons = [];
     let animationId;
 
     const setup = () => {
@@ -60,33 +42,22 @@ const HeroBackground = () => {
       canvas.style.height = `${height}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      const nodeCount = Math.max(24, Math.min(52, Math.floor((width * height) / 22000)));
+      // Increase node density for a better network effect
+      const nodeCount = Math.max(30, Math.min(80, Math.floor((width * height) / 16000)));
       nodes = Array.from({ length: nodeCount }, () => ({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.18,
-        vy: (Math.random() - 0.5) * 0.18,
-        r: Math.random() * 1.6 + 1,
+        vx: (Math.random() - 0.5) * 0.25, // slightly faster
+        vy: (Math.random() - 0.5) * 0.25,
+        r: Math.random() * 1.8 + 1.2,
         color: pickColor(),
       }));
-
-      hexagons = [
-        { cx: width * 0.18, cy: height * 0.28, radius: Math.min(width, height) * 0.22, rot: 0, speed: 0.00015, color: '47, 189, 165' },
-        { cx: width * 0.82, cy: height * 0.68, radius: Math.min(width, height) * 0.16, rot: 1.1, speed: -0.00022, color: '27, 143, 176' },
-      ];
     };
 
-    const linkDist = 140;
+    const linkDist = 180; // Connect nodes from further away
 
-    const render = (time) => {
+    const render = () => {
       ctx.clearRect(0, 0, width, height);
-
-      // large faint rotating hexagons (brand motif)
-      hexagons.forEach((h) => {
-        const rot = prefersReducedMotion ? h.rot : h.rot + time * h.speed;
-        drawHexagon(ctx, h.cx, h.cy, h.radius, rot, h.color, 0.07, 1.5);
-        drawHexagon(ctx, h.cx, h.cy, h.radius * 0.86, -rot * 1.3, h.color, 0.05, 1);
-      });
 
       // update + draw nodes
       nodes.forEach((n) => {
@@ -94,12 +65,14 @@ const HeroBackground = () => {
           n.x += n.vx;
           n.y += n.vy;
 
+          // Mouse attraction physics
           if (mouseRef.current.active) {
             const dx = n.x - mouseRef.current.x;
             const dy = n.y - mouseRef.current.y;
             const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < 120 && dist > 0.01) {
-              const force = (120 - dist) / 120 * 0.04;
+            if (dist < 200 && dist > 0.01) {
+              // Nodes accelerate towards the cursor
+              const force = (200 - dist) / 200 * 0.12;
               n.x += (dx / dist) * force;
               n.y += (dy / dist) * force;
             }
@@ -113,7 +86,7 @@ const HeroBackground = () => {
 
         ctx.beginPath();
         ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${n.color}, 0.55)`;
+        ctx.fillStyle = `rgba(${n.color}, 0.9)`; // Brighter nodes
         ctx.fill();
       });
 
@@ -124,10 +97,12 @@ const HeroBackground = () => {
           const dy = nodes[i].y - nodes[j].y;
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < linkDist) {
-            const alpha = (1 - dist / linkDist) * 0.15;
+            // Stronger alpha for more visible lines
+            const alpha = (1 - dist / linkDist) * 0.35;
             ctx.beginPath();
             ctx.moveTo(nodes[i].x, nodes[i].y);
             ctx.lineTo(nodes[j].x, nodes[j].y);
+            // Use the primary teal color for all lines to keep it clean
             ctx.strokeStyle = `rgba(47, 189, 165, ${alpha})`;
             ctx.lineWidth = 1;
             ctx.stroke();

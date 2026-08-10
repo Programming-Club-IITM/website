@@ -54,7 +54,7 @@ export const avatarPlaceholder = (name, seed = 0) => {
 };
 
 // Helper to build a person object with an auto-generated placeholder avatar.
-const person = (id, name, linkedin = '#') => ({
+const person = (id, name, linkedin = null) => ({
   id,
   name,
   linkedin,

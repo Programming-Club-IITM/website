@@ -26,6 +26,8 @@ export default {
         'blink': 'blink 1s step-end infinite',
         'drift-a': 'driftA 22s ease-in-out infinite',
         'drift-b': 'driftB 26s ease-in-out infinite',
+        'pulse-glow': 'pulseGlow 3s ease-in-out infinite',
+        'spin-slow': 'spin 4s linear infinite',
       },
       keyframes: {
         fadeIn: {
@@ -49,6 +51,10 @@ export default {
           '0%, 100%': { transform: 'translate(0, 0) scale(1)' },
           '40%': { transform: 'translate(-5%, -4%) scale(1.05)' },
           '75%': { transform: 'translate(3%, -5%) scale(0.94)' },
+        },
+        pulseGlow: {
+          '0%, 100%': { opacity: '0.4' },
+          '50%': { opacity: '0.7' },
         },
       }
     },

@@ -1,111 +1,135 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Terminal } from 'lucide-react';
+import { ChevronDown, ArrowRight } from 'lucide-react';
 import HeroBackground from '../components/HeroBackground';
-
-const TypingText = ({ phrases }) => {
-  const [displayText, setDisplayText] = useState('');
-  const [phraseIndex, setPhraseIndex] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
-  
-  useEffect(() => {
-    const currentPhrase = phrases[phraseIndex];
-    let timer;
-    
-    if (isDeleting) {
-      timer = setTimeout(() => {
-        setDisplayText(currentPhrase.substring(0, displayText.length - 1));
-      }, 40);
-    } else {
-      timer = setTimeout(() => {
-        setDisplayText(currentPhrase.substring(0, displayText.length + 1));
-      }, 70);
-    }
-    
-    if (!isDeleting && displayText === currentPhrase) {
-      timer = setTimeout(() => setIsDeleting(true), 2000);
-    } else if (isDeleting && displayText === '') {
-      setIsDeleting(false);
-      setPhraseIndex((prev) => (prev + 1) % phrases.length);
-    }
-    
-    return () => clearInterval(timer);
-  }, [displayText, isDeleting, phraseIndex, phrases]);
-
-  return (
-    <span className="font-mono text-primary">
-      {displayText}
-      <span className="animate-pulse text-white">|</span>
-    </span>
-  );
-};
 
 const Home = () => {
   return (
     <div className="flex flex-col w-full">
-      {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden py-20">
-        <div className="absolute inset-0 z-0">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/15 rounded-full blur-[120px] animate-drift-a"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/15 rounded-full blur-[120px] animate-drift-b"></div>
+      {/* ─── Hero Section ──────────────────────────────────────────────────────── */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Background Network */}
+        <div className="absolute inset-0 z-0 bg-[#0B0F15]">
+          {/* Subtle gradient overlay to ensure text contrast */}
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-bgDark/50 to-bgDark z-10"></div>
           <HeroBackground />
         </div>
         
-        <div className="z-10 text-center px-4 max-w-4xl mx-auto">
+        {/* Main Content */}
+        <div className="z-20 text-center px-4 max-w-5xl mx-auto w-full pt-16">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            className="flex flex-col items-center"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card mb-8 text-primary font-mono text-sm">
-              <Terminal size={16} />
-              <span>&gt; ./init_club.sh</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-spark animate-pulse"></span>
-            </div>
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
-              ProgClub<span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-highlight">IITM</span>
+            {/* Title */}
+            <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-[7rem] font-extrabold tracking-tight mb-4 leading-none">
+              <span className="text-white block mb-2">Programming</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-cyan-400 to-accent inline-block">
+                Club
+              </span>
             </h1>
-            <div className="text-xl md:text-2xl text-textMuted mb-10 h-16">
-              <TypingText phrases={["CFI and IITM", "CFI, IIT Madras"]} />
-            </div>
-            <div className="flex flex-wrap justify-center gap-4">
-              <a href="mailto:programmingclubiitm@gmail.com" className="btn-primary">Join the Community</a>
-              <Link to="/projects" className="btn-outline">Explore Projects</Link>
-            </div>
+
+            {/* Subtitles */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5, duration: 1 }}
+              className="mt-6 mb-12 flex flex-col items-center space-y-2"
+            >
+              <div className="text-lg sm:text-xl md:text-2xl font-medium tracking-wide">
+                <span className="text-gray-300">Centre </span>
+                <span className="text-red-500 font-semibold">for Innovation</span>
+              </div>
+              <div className="text-sm sm:text-base md:text-lg text-gray-400/80 uppercase tracking-widest font-mono">
+                Indian Institute of Technology Madras
+              </div>
+            </motion.div>
+
+            {/* CTA Buttons */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8, duration: 0.8 }}
+              className="flex flex-wrap justify-center gap-4 sm:gap-6 mt-4"
+            >
+              <a href="mailto:programmingclubiitm@gmail.com" className="btn-primary py-3 px-8 text-base shadow-[0_0_20px_rgba(47,189,165,0.3)] hover:shadow-[0_0_30px_rgba(47,189,165,0.5)]">
+                Join the Community
+              </a>
+              <Link to="/projects" className="btn-outline py-3 px-8 text-base bg-white/[0.03] backdrop-blur-sm group">
+                Explore Projects
+                <ArrowRight size={16} className="inline-block ml-2 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </motion.div>
           </motion.div>
         </div>
+
+        {/* Scroll Indicator */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5, duration: 1 }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center text-textMuted"
+        >
+          <span className="text-xs font-mono uppercase tracking-widest mb-2 opacity-50">Discover</span>
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+          >
+            <ChevronDown size={20} className="text-primary/70" />
+          </motion.div>
+        </motion.div>
       </section>
 
-      {/* About & Mission Section */}
-      <section className="py-20 bg-surface/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-8">
+      {/* ─── About & Mission Section ────────────────────────────────────────────── */}
+      <section className="py-24 relative overflow-hidden bg-bgDark">
+        {/* Ambient background glows */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/3"></div>
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[150px] translate-y-1/2 -translate-x-1/3"></div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
+            
+            {/* About Card */}
             <motion.div 
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="glass-card p-10 flex flex-col justify-center"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ duration: 0.7 }}
+              className="glass-panel p-10 md:p-12 relative overflow-hidden group"
             >
-              <h2 className="text-3xl font-bold mb-6 text-primary">About Us</h2>
+              {/* Subtle top border accent */}
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-transparent opacity-50"></div>
+              
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 flex items-center gap-4">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400">About Us</span>
+              </h2>
               <p className="text-lg text-textMuted leading-relaxed">
                 Part of the Centre for Innovation (CFI) at IIT Madras, the Programming Club is a vibrant community of developers, problem solvers, and tech enthusiasts. We aim to foster a culture of coding, open-source contribution, and competitive programming across the institute.
               </p>
             </motion.div>
 
+            {/* Mission Card */}
             <motion.div 
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="glass-card p-10 flex flex-col justify-center border-l-4 border-l-accent"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="glass-panel p-10 md:p-12 relative overflow-hidden group"
             >
-              <h2 className="text-3xl font-bold mb-6 text-accent">Our Mission</h2>
+              {/* Subtle top border accent */}
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-accent to-transparent opacity-50"></div>
+              
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 flex items-center gap-4">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400">Our Mission</span>
+              </h2>
               <p className="text-lg text-textMuted leading-relaxed">
                 We are dedicated to strengthening the logical thinking that powers all great code. We channel this passion into the fast-paced, analytical challenges of Competitive Programming (CP) and the creative, hands-on world of Development (Dev). Whether solving a complex puzzle or launching a new project, our goal is to cultivate the essential skills of a programmer.
               </p>
             </motion.div>
+
           </div>
         </div>
       </section>

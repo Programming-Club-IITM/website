@@ -1,122 +1,216 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { team } from '../data/teamData';
+import SectionBackground from '../components/SectionBackground';
 
-// Inline LinkedIn icon (kept local to this file so it matches the "redirect
-// symbol" styling described for member cards without depending on lucide's
-// brand icon set).
-const LinkedinIcon = (props) => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-    <rect x="2" y="9" width="4" height="12" />
-    <circle cx="4" cy="4" r="2" />
+// ─── Inline SVG Icons ────────────────────────────────────────────────
+const LinkedinIcon = ({ size = 36, className = '' }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className={className}
+  >
+    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
   </svg>
 );
 
+// ─── Animation Variants ──────────────────────────────────────────────
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.08 },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 30, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.5, ease: 'easeOut' },
+  },
+};
+
+// ─── Member Card ─────────────────────────────────────────────────────
 const MemberCard = ({ member }) => (
-  <motion.div
-    initial={{ opacity: 0, scale: 0.9 }}
-    whileInView={{ opacity: 1, scale: 1 }}
-    viewport={{ once: true }}
-    className="glass-card p-6 flex flex-col items-center text-center group"
-  >
-    <div className="relative w-28 h-28 mb-4">
-      <div className="absolute inset-0 bg-primary/20 rounded-full blur-xl group-hover:bg-primary/40 transition-colors" />
-      <img
-        src={member.photo || member.avatar}
-        alt={member.name}
-        className="relative w-full h-full object-cover rounded-full border-2 border-surface group-hover:border-primary transition-colors"
-      />
-    </div>
-    <h3 className="text-lg font-bold text-white mb-3">{member.name}</h3>
-    {member.linkedin && (
-      <a
-        href={member.linkedin}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={`${member.name} on LinkedIn`}
-        className="inline-flex items-center justify-center w-9 h-9 rounded-full border border-white/10 text-gray-400 hover:text-white hover:border-[#0077b5] hover:bg-[#0077b5]/20 transition-colors"
-      >
-        <LinkedinIcon />
-      </a>
-    )}
+  <motion.div variants={cardVariants} className="flex flex-col items-center w-40 sm:w-48">
+    {/* Flip card avatar */}
+    <a
+      href={member.linkedin && member.linkedin !== '#' ? member.linkedin : undefined}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flip-card w-36 h-36 sm:w-44 sm:h-44 mb-5 block cursor-pointer group"
+      aria-label={`${member.name} on LinkedIn`}
+    >
+      <div className="flip-card-inner w-full h-full">
+        {/* Front: Photo with glow ring */}
+        <div className="flip-card-front flex items-center justify-center">
+          <div className="glow-ring w-full h-full rounded-full">
+            <img
+              src={member.photo || member.avatar}
+              alt={member.name}
+              className="w-full h-full object-cover rounded-full"
+              loading="lazy"
+            />
+          </div>
+        </div>
+        {/* Back: LinkedIn icon */}
+        <div className="flip-card-back flex items-center justify-center bg-[#0077b5]">
+          <LinkedinIcon size={40} className="text-white" />
+        </div>
+      </div>
+    </a>
+
+    {/* Name */}
+    <h3 className="text-base font-semibold text-white text-center leading-tight">
+      {member.name}
+    </h3>
   </motion.div>
 );
 
+// ─── Member Grid ─────────────────────────────────────────────────────
 const MemberGrid = ({ members }) => (
-  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 justify-center">
+  <motion.div
+    variants={containerVariants}
+    initial="hidden"
+    whileInView="visible"
+    viewport={{ once: true, margin: '-40px' }}
+    className="flex flex-wrap justify-center gap-x-4 sm:gap-x-8 gap-y-10 max-w-4xl mx-auto"
+  >
     {members.map((member) => (
       <MemberCard key={member.id} member={member} />
     ))}
+  </motion.div>
+);
+
+// ─── Section Header ──────────────────────────────────────────────────
+const SectionHeader = ({ title }) => (
+  <div className="flex items-center gap-4 mb-10">
+    <div className="flex-1 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+    <h2 className="text-2xl md:text-3xl font-bold text-white whitespace-nowrap">
+      {title}
+    </h2>
+    <div className="flex-1 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
   </div>
 );
 
+// ─── Team Section (glass panel wrapper) ──────────────────────────────
 const TeamSection = ({ title, children }) => (
-  <section>
-    <h2 className="text-3xl font-bold text-center mb-10">{title}</h2>
-    {children}
-  </section>
+  <motion.section
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, margin: '-60px' }}
+    transition={{ duration: 0.6 }}
+  >
+    <div className="glass-panel p-8 md:p-10">
+      <SectionHeader title={title} />
+      {children}
+    </div>
+  </motion.section>
 );
 
+// ─── Project Team ────────────────────────────────────────────────────
 const ProjectTeam = ({ project }) => (
-  <div className="glass-card p-8 md:p-10">
-    <h3 className="text-2xl font-bold text-primary mb-8 text-center">{project.name}</h3>
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, margin: '-40px' }}
+    transition={{ duration: 0.5 }}
+    className="glass-panel p-8 md:p-10 border-l-2 border-l-accent"
+  >
+    <h3 className="text-2xl font-bold text-primary mb-10 text-center">
+      {project.name}
+    </h3>
 
+    {/* Leads */}
     <div className="mb-10">
-      <h4 className="text-sm font-mono uppercase tracking-widest text-textMuted mb-6 text-center">
+      <h4 className="text-xs font-mono uppercase tracking-[0.2em] text-textMuted mb-6 text-center">
         Project Leads
       </h4>
       <MemberGrid members={project.leads} />
     </div>
 
+    {/* Members */}
     <div>
-      <h4 className="text-sm font-mono uppercase tracking-widest text-textMuted mb-6 text-center">
+      <h4 className="text-xs font-mono uppercase tracking-[0.2em] text-textMuted mb-6 text-center">
         Project Members
       </h4>
       <MemberGrid members={project.members} />
     </div>
-  </div>
+  </motion.div>
 );
 
+// ─── Main Team Page ──────────────────────────────────────────────────
 const Team = () => {
   return (
-    <div className="py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-20">
-          <h1 className="text-5xl font-bold mb-6">Meet the Team</h1>
-          <p className="text-xl text-textMuted max-w-2xl mx-auto">
-            The dedicated individuals behind Programming Club IITM.
-          </p>
-        </div>
+    <SectionBackground variant="teal" intensity={0.08}>
+      <div className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Page Title */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            className="text-center mb-20"
+          >
+            <h1 className="text-5xl md:text-6xl font-bold mb-6">
+              Meet the{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-highlight">
+                Team
+              </span>
+            </h1>
+            <p className="text-xl text-textMuted max-w-2xl mx-auto">
+              The dedicated individuals behind Programming Club IITM.
+            </p>
+          </motion.div>
 
-        <div className="space-y-24">
-          <TeamSection title="Heads">
-            <MemberGrid members={team.heads} />
-          </TeamSection>
+          {/* Sections */}
+          <div className="space-y-12">
+            <TeamSection title="The Heads">
+              <MemberGrid members={team.heads} />
+            </TeamSection>
 
-          <TeamSection title="Dev Strats">
-            <MemberGrid members={team.devStrats} />
-          </TeamSection>
+            <div className="section-divider" />
 
-          <TeamSection title="CP Strats">
-            <MemberGrid members={team.cpStrats} />
-          </TeamSection>
+            <TeamSection title="Dev Strats">
+              <MemberGrid members={team.devStrats} />
+            </TeamSection>
 
-          <TeamSection title="Coordinators">
-            <MemberGrid members={team.coordinators} />
-          </TeamSection>
+            <div className="section-divider" />
 
-          <section>
-            <h2 className="text-3xl font-bold text-center mb-10">Projects</h2>
-            <div className="space-y-10">
-              {team.projects.map((project) => (
-                <ProjectTeam key={project.id} project={project} />
-              ))}
-            </div>
-          </section>
+            <TeamSection title="CP Strats">
+              <MemberGrid members={team.cpStrats} />
+            </TeamSection>
+
+            <div className="section-divider" />
+
+            <TeamSection title="Coordinators">
+              <MemberGrid members={team.coordinators} />
+            </TeamSection>
+
+            <div className="section-divider" />
+
+            {/* Projects */}
+            <motion.section
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <SectionHeader title="Projects" />
+              <div className="space-y-10">
+                {team.projects.map((project) => (
+                  <ProjectTeam key={project.id} project={project} />
+                ))}
+              </div>
+            </motion.section>
+          </div>
         </div>
       </div>
-    </div>
+    </SectionBackground>
   );
 };
 

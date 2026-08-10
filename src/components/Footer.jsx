@@ -58,7 +58,7 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold text-white mb-4">Connect With Us</h3>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors" title="GitHub">
+              <a aria-disabled="true" className="text-gray-600 cursor-not-allowed transition-colors" title="GitHub (Coming soon)">
                 <GithubIcon />
               </a>
               <a href="https://www.linkedin.com/company/programming-club-cfi-iit-madras/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#0077b5] transition-colors" title="LinkedIn">
