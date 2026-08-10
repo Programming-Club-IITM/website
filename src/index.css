@@ -21,10 +21,14 @@
   }
   
   .btn-primary {
-    @apply px-6 py-2 rounded-lg bg-primary text-white font-medium transition-all duration-300 hover:bg-primary/80 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)];
+    @apply px-6 py-2 rounded-lg bg-primary text-background font-semibold transition-all duration-300 hover:bg-primary/85 hover:shadow-[0_0_18px_rgba(47,189,165,0.45)];
   }
 
   .btn-outline {
     @apply px-6 py-2 rounded-lg border border-primary text-primary font-medium transition-all duration-300 hover:bg-primary/10;
+  }
+
+  .btn-highlight {
+    @apply px-6 py-2 rounded-lg border border-highlight/60 text-highlight font-medium transition-all duration-300 hover:bg-highlight/10;
   }
 }

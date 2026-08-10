@@ -8,12 +8,12 @@ export default {
     extend: {
       colors: {
         background: '#0a0a0a',
-        surface: '#171717',
-        primary: '#3b82f6', // Electric blue
-        accent: '#8b5cf6',  // Purple
-        highlight: '#10b981', // Neon green
+        surface: '#121a19',
+        primary: '#2FBDA5',   // Teal — sampled from the logo ribbon
+        accent: '#1B8FB0',    // Deep cyan-blue — sampled from the logo ribbon's shadow tone
+        highlight: '#86C440', // Lime green — sampled from the logo's "PC" lettering
         textMain: '#f3f4f6',
-        textMuted: '#9ca3af',
+        textMuted: '#94a3a1',
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
