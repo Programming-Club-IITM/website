@@ -4,7 +4,6 @@ import { Menu, X, ChevronDown, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import logo from '../assets/logo.png';
 import { assetPath,eventGroups } from '../data/eventsData';
-
 // ─── Desktop Events Dropdown ─────────────────────────────────────────
 const EventsDropdown = () => {
   const [open, setOpen] = useState(false);
@@ -20,14 +19,23 @@ const EventsDropdown = () => {
   }, []);
 
   return (
-    <div className="relative" ref={ref}>
-      <button
-        onClick={() => setOpen((v) => !v)}
-        className={`px-3 py-2 rounded-md text-sm font-medium transition-colors inline-flex items-center gap-1 ${
-          open ? 'text-primary' : 'text-gray-300 hover:text-white'
-        }`}
+    <div className="relative flex items-center" ref={ref}>
+      {/* Split trigger: Text links to page, Arrow opens dropdown */}
+      <NavLink
+        to="/events"
+        className={({ isActive }) =>
+          `pl-3 pr-1.5 py-2 rounded-l-md text-sm font-medium transition-colors ${isActive ? 'text-primary' : 'text-gray-300 hover:text-white'
+          }`
+        }
       >
         Events
+      </NavLink>
+      <button
+        onClick={() => setOpen((v) => !v)}
+        className={`pr-3 pl-1.5 py-2 rounded-r-md transition-colors flex items-center ${open ? 'text-primary' : 'text-gray-300 hover:text-white'
+          }`}
+        aria-label="Toggle Events Dropdown"
+      >
         <ChevronDown
           size={14}
           className={`transition-transform ${open ? 'rotate-180' : ''}`}
@@ -43,16 +51,7 @@ const EventsDropdown = () => {
             transition={{ duration: 0.2 }}
             className="absolute left-0 top-full mt-2 w-56 bg-surface/95 backdrop-blur-lg border border-white/10 rounded-xl shadow-2xl shadow-black/40 z-50"
           >
-            {/* All Events link */}
-            <Link
-              to="/events"
-              onClick={() => setOpen(false)}
-              className="block px-4 py-2.5 text-sm text-gray-300 hover:text-primary hover:bg-white/5 transition-colors border-b border-white/[0.06] font-medium rounded-t-xl"
-            >
-              All Events
-            </Link>
-
-            <div className="py-1">
+            <div className="py-2">
               {eventGroups.map((group) => (
                 <div key={group.name}>
                   {group.events.length === 1 ? (
@@ -104,16 +103,30 @@ const MobileEventsSection = ({ onClose }) => {
 
   return (
     <div>
-      <button
-        onClick={() => setExpanded((v) => !v)}
-        className="w-full flex items-center justify-between px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-surface/50"
-      >
-        Events
-        <ChevronDown
-          size={16}
-          className={`transition-transform ${expanded ? 'rotate-180' : ''}`}
-        />
-      </button>
+      <div className="flex items-center w-full">
+        <NavLink
+          to="/events"
+          onClick={onClose}
+          className={({ isActive }) =>
+            `flex-1 px-3 py-2 text-base font-medium rounded-l-md transition-colors ${isActive
+              ? 'text-primary bg-surface/50'
+              : 'text-gray-300 hover:text-white hover:bg-surface/50'
+            }`
+          }
+        >
+          Events
+        </NavLink>
+        <button
+          onClick={() => setExpanded((v) => !v)}
+          className="px-4 py-2 rounded-r-md text-gray-400 hover:text-white hover:bg-surface/50 transition-colors"
+          aria-label="Expand Events"
+        >
+          <ChevronDown
+            size={16}
+            className={`transition-transform ${expanded ? 'rotate-180' : ''}`}
+          />
+        </button>
+      </div>
 
       <AnimatePresence>
         {expanded && (
@@ -124,13 +137,6 @@ const MobileEventsSection = ({ onClose }) => {
             transition={{ duration: 0.2 }}
             className="overflow-hidden"
           >
-            <Link
-              to="/events"
-              onClick={onClose}
-              className="block pl-6 py-1.5 text-sm text-primary font-medium"
-            >
-              All Events
-            </Link>
             {eventGroups.map((group) =>
               group.events.length === 1 ? (
                 <Link
@@ -165,7 +171,6 @@ const MobileEventsSection = ({ onClose }) => {
     </div>
   );
 };
-
 // ─── Navbar ──────────────────────────────────────────────────────────
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
