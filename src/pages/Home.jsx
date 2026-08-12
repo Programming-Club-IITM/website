@@ -15,7 +15,7 @@ const Home = () => {
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-bgDark/50 to-bgDark z-10"></div>
           <HeroBackground />
         </div>
-        
+
         {/* Main Content */}
         <div className="z-20 text-center px-4 max-w-5xl mx-auto w-full pt-16">
           <motion.div
@@ -25,7 +25,10 @@ const Home = () => {
             className="flex flex-col items-center"
           >
             {/* Title */}
-            <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-[7rem] font-extrabold tracking-tight mb-4 leading-none">
+            <h1
+              className="font-extrabold tracking-tight mb-4 leading-none"
+              style={{ fontSize: 'clamp(2.75rem, 11vw, 7rem)' }}
+            >
               <span className="text-white block mb-2">Programming</span>
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-cyan-400 to-accent inline-block">
                 Club
@@ -33,7 +36,7 @@ const Home = () => {
             </h1>
 
             {/* Subtitles */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5, duration: 1 }}
@@ -49,7 +52,7 @@ const Home = () => {
             </motion.div>
 
             {/* CTA Buttons */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.8 }}
@@ -67,7 +70,7 @@ const Home = () => {
         </div>
 
         {/* Scroll Indicator */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5, duration: 1 }}
@@ -88,12 +91,12 @@ const Home = () => {
         {/* Ambient background glows */}
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/3"></div>
         <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[150px] translate-y-1/2 -translate-x-1/3"></div>
-        
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
-            
+
             {/* About Card */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
@@ -102,7 +105,7 @@ const Home = () => {
             >
               {/* Subtle top border accent */}
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-transparent opacity-50"></div>
-              
+
               <h2 className="text-3xl md:text-4xl font-bold mb-6 flex items-center gap-4">
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400">About Us</span>
               </h2>
@@ -112,7 +115,7 @@ const Home = () => {
             </motion.div>
 
             {/* Mission Card */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
@@ -121,7 +124,7 @@ const Home = () => {
             >
               {/* Subtle top border accent */}
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-accent to-transparent opacity-50"></div>
-              
+
               <h2 className="text-3xl md:text-4xl font-bold mb-6 flex items-center gap-4">
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400">Our Mission</span>
               </h2>
