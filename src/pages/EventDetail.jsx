@@ -3,9 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
 import { useState } from 'react';
-import { Document, Page, pdfjs } from 'react-pdf';
-import 'react-pdf/dist/Page/AnnotationLayer.css';
-import 'react-pdf/dist/Page/TextLayer.css';
+
 import {
   ArrowLeft,
   Calendar,
@@ -18,7 +16,7 @@ import {
 } from 'lucide-react';
 import { assetPath,getEventBySlug } from '../data/eventsData';
 import SectionBackground from '../components/SectionBackground';
-pdfjs.GlobalWorkerOptions.workerSrc = `https://cdn.jsdelivr.net/npm/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
+
 // ─── Detail row helper ───────────────────────────────────────────────
 const InfoRow = ({ icon: Icon, label, children }) => (
   <div className="flex items-start gap-3 text-textMuted">
@@ -56,9 +54,7 @@ const ActionButton = ({ href, icon: Icon, children, primary = false }) => {
 const EventDetail = () => {
   const { slug } = useParams();
   const event = getEventBySlug(slug);
-  const [numPages, setNumPages] = useState(null);
-  const [pageNum, setPageNum] = useState(1);
-  const [scale, setScale] = useState(1);
+
 
 
   // 404 fallback
@@ -204,6 +200,7 @@ const EventDetail = () => {
                 </div>
                 <iframe
                   src={assetPath(event.slidesPdf)}
+                  loading ="lazy"
                   title={`${event.title} slides`}
                   className="w-full h-[80vh] rounded-xl border border-white/10"
                 />
