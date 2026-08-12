@@ -64,7 +64,7 @@ const person = (id, name, linkedin = null, photo=null) => ({
 
 export const team = {
   heads: [
-    person(1, 'Head 1', 'progclubiitm.com', 'team/t1.jpg'),
+    person(1, 'Head 1', 'progclubiitm.com', 'team/t1.jpeg'),
     person(2, 'Head 2'),
   ],
 

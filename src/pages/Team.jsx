@@ -87,15 +87,14 @@ const MemberGrid = ({ members }) => (
     initial="hidden"
     whileInView="visible"
     viewport={{ once: true, margin: '-40px' }}
-    // Fix 2: Force 2-column grid on mobile, flex wrap on larger screens
-    className="grid grid-cols-2 sm:flex sm:flex-wrap sm:justify-center gap-x-2 gap-y-8 sm:gap-x-8 sm:gap-y-10 max-w-4xl mx-auto"
+    // The arbitrary Tailwind selector here centers the last item if the total count is odd
+    className="grid grid-cols-2 [&>*:nth-child(odd):last-child]:col-span-2 sm:flex sm:flex-wrap sm:justify-center gap-x-2 gap-y-8 sm:gap-x-8 sm:gap-y-10 max-w-4xl mx-auto"
   >
     {members.map((member) => (
       <MemberCard key={member.id} member={member} />
     ))}
   </motion.div>
 );
-
 // ─── Section Header ──────────────────────────────────────────────────
 const SectionHeader = ({ title }) => (
   <div className="flex items-center gap-4 mb-8 sm:mb-10">
