@@ -59,11 +59,11 @@ const Projects = () => {
                   <h3 className="text-2xl font-bold text-white group-hover:text-primary transition-colors">{project.title}</h3>
                   <div className="flex items-center gap-3">
                     <StatusBadge status={project.status} />
-                    {project.githubLink && (
+                    {/* {project.githubLink && (
                       <a href={project.githubLink} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
                         <GitBranch size={20} />
                       </a>
-                    )}
+                    )} */}
                     {/* <a href="#" className="text-gray-400 hover:text-primary transition-colors" title="Project Details">
                       <ExternalLink size={20} />
                     </a> */}
@@ -85,6 +85,7 @@ const Projects = () => {
                 {/* Link to team section */}
                 <Link
                   to="/team"
+                  state={{ scrollToProject: project.teamId }}
                   className="inline-flex items-center gap-2 text-sm text-primary/70 hover:text-primary transition-colors mt-auto"
                 >
                   <Users size={16} />

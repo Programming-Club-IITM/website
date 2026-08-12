@@ -2,6 +2,8 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { team } from '../data/teamData';
 import SectionBackground from '../components/SectionBackground';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 // ─── Inline SVG Icons ────────────────────────────────────────────────
 const LinkedinIcon = ({ size = 36, className = '' }) => (
@@ -120,6 +122,7 @@ const ProjectTeam = ({ project }) => (
     viewport={{ once: true, margin: '-40px' }}
     transition={{ duration: 0.5 }}
     className="glass-panel p-8 md:p-10 border-l-2 border-l-accent"
+    id={`project-${project.id}`}
   >
     <h3 className="text-2xl font-bold text-primary mb-10 text-center">
       {project.name}
@@ -145,6 +148,15 @@ const ProjectTeam = ({ project }) => (
 
 // ─── Main Team Page ──────────────────────────────────────────────────
 const Team = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state?.scrollToProject) {
+      const el = document.getElementById(`project-${location.state.scrollToProject}`);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [location.state]);
+
   return (
     <SectionBackground variant="teal" intensity={0.08}>
       <div className="py-20">
