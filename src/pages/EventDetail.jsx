@@ -18,7 +18,7 @@ import {
 } from 'lucide-react';
 import { assetPath,getEventBySlug } from '../data/eventsData';
 import SectionBackground from '../components/SectionBackground';
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdf.js-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
+pdfjs.GlobalWorkerOptions.workerSrc = `https://cdn.jsdelivr.net/npm/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 // ─── Detail row helper ───────────────────────────────────────────────
 const InfoRow = ({ icon: Icon, label, children }) => (
   <div className="flex items-start gap-3 text-textMuted">
@@ -198,11 +198,12 @@ const EventDetail = () => {
                   <h3 className="text-sm font-mono uppercase tracking-widest text-textMuted/60">
                     Slides
                   </h3>
-                    <a>
+                  <a>
                     href={assetPath(event.slidesPdf)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1 text-primary text-sm hover:underline"
+
                     <ExternalLink size={14} /> Open PDF
                   </a>
                 </div>
