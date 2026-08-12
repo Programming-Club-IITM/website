@@ -8,16 +8,15 @@ const Home = () => {
   return (
     <div className="flex flex-col w-full">
       {/* ─── Hero Section ──────────────────────────────────────────────────────── */}
-      <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[100svh] flex flex-col items-center justify-between overflow-hidden py-10">
         {/* Background Network */}
         <div className="absolute inset-0 z-0 bg-[#0B0F15]">
-          {/* Subtle gradient overlay to ensure text contrast */}
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-bgDark/50 to-bgDark z-10"></div>
           <HeroBackground />
         </div>
 
         {/* Main Content */}
-        <div className="z-20 text-center px-4 max-w-5xl mx-auto w-full pt-8">
+        <div className="z-20 text-center px-4 max-w-5xl mx-auto w-full flex-1 flex flex-col items-center justify-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -74,7 +73,7 @@ const Home = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5, duration: 1 }}
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center text-textMuted"
+          className="z-20 flex flex-col items-center text-textMuted"
         >
           <span className="text-xs font-mono uppercase tracking-widest mb-2 opacity-50">Discover</span>
           <motion.div
