@@ -198,34 +198,15 @@ const EventDetail = () => {
                   <h3 className="text-sm font-mono uppercase tracking-widest text-textMuted/60">
                     Slides
                   </h3>
-                  <a>
-                    href={assetPath(event.slidesPdf)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-primary text-sm hover:underline"
-
+                  <a href={assetPath(event.slidesPdf)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-primary text-sm hover:underline">
                     <ExternalLink size={14} /> Open PDF
                   </a>
                 </div>
-                <Document file={assetPath(event.slidesPdf)} onLoadSuccess={({ numPages }) => setNumPages(numPages)}>
-                  <Page pageNumber={pageNum} scale={scale} />
-                </Document>
-                <div className="flex gap-2 mt-3 items-center text-sm text-textMuted">
-                  <button onClick={() => setPageNum((p) => Math.max(1, p - 1))} disabled={pageNum <= 1} className="btn-outline px-2 py-1">Prev</button>
-                  <span>{pageNum} / {numPages}</span>
-                  <button onClick={() => setPageNum((p) => Math.min(numPages, p + 1))} disabled={pageNum >= numPages} className="btn-outline px-2 py-1">Next</button>
-                  <button onClick={() => setScale((s) => s + 0.2)} className="btn-outline px-2 py-1">+</button>
-                  <button onClick={() => setScale((s) => Math.max(0.4, s - 0.2))} className="btn-outline px-2 py-1">-</button>
-                </div>
-              </div>
-            )}
-
-            {/* Action buttons */}
-            {hasActions && (
-              <div className="border-t border-white/[0.07] pt-6 flex flex-wrap gap-3">
-                <ActionButton href={event.registrationLink} icon={ClipboardList} primary>Register</ActionButton>
-                <ActionButton href={event.contestLink} icon={ExternalLink}>Contest Page</ActionButton>
-                <ActionButton href={event.ranklistLink} icon={Trophy}>Ranklist</ActionButton>
+                <iframe
+                  src={assetPath(event.slidesPdf)}
+                  title={`${event.title} slides`}
+                  className="w-full h-[80vh] rounded-xl border border-white/10"
+                />
               </div>
             )}
           </motion.div>
