@@ -17,13 +17,13 @@ const EventCard = ({ event }) => (
       to={`/events/${event.slug}`}
       className="glass-card p-6 flex flex-col h-full group block"
     >
-      {event.poster && (
+      {/* {event.poster && (
         <img
           src={assetPath(event.poster)}
           alt={event.title}
           className="w-full h-40 object-cover rounded-lg mb-4"
         />
-      )}
+      )} */}
       <div className="flex justify-between items-start mb-3">
         <h3 className="text-lg font-bold text-white group-hover:text-primary transition-colors">
           {event.title}
