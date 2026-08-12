@@ -20,7 +20,8 @@
  *   2. Add an event object with a unique slug
  *   3. Set category: 'upcoming' for live events, 'past' when done
  */
-export const assetPath = (path) => path;
+const base = import.meta.env.BASE_URL;
+export const assetPath = (path) => `${base}${path}`;
 
 export const eventGroups = [
   {
@@ -52,8 +53,8 @@ export const eventGroups = [
         date: '2025-03-05',
         category: 'past',
         description: 'Focusing on essential algorithms: binary search applications, graph traversals (BFS/DFS), and time complexity analysis.',
-        poster: 'prog-club-website-v3/public/events/cps-2/cps2.jpg',
-        posters: ['prog-club-website-v3/public/events/cps-2/g1.jpg', 'prog-club-website-v3/public/events/cps-2/g2.jpg','prog-club-website-v3/public/events/cps-2/g3.jpg'],
+        poster: 'events/cps-2/cps2.jpg',
+        posters: ['events/cps-2/g1.jpg', 'events/cps-2/g2.jpg','events/cps-2/g3.jpg'],
         venue: null,
         time: null,
         details: null,
