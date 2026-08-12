@@ -154,7 +154,7 @@ const Team = () => {
     if (location.state?.scrollToProject) {
       const el = document.getElementById(`project-${location.state.scrollToProject}`);
       if (el) {
-        const yOffset = -80;
+        const yOffset = -120;
         const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
         window.scrollTo({ top: y, behavior: 'smooth' });
       }
