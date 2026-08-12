@@ -6,3 +6,4 @@ export default defineConfig({
   plugins: [react()],
   base: '/prog-club-website-v3/',
 })
+
