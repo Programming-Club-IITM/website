@@ -27,7 +27,7 @@ const Home = () => {
             {/* Title */}
             <h1
               className="font-extrabold tracking-tight mb-4 leading-none"
-              style={{ fontSize: 'clamp(2.75rem, 13vw, 10rem)' }}
+              style={{ fontSize: 'clamp(2.75rem, 15vw, 9rem)' }}
             >
               <span className="text-white block mb-2">Programming</span>
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-cyan-400 to-accent inline-block">
