@@ -4,7 +4,7 @@ import { team } from '../data/teamData';
 import SectionBackground from '../components/SectionBackground';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-
+import { assetPath } from '../data/eventsData';
 // ─── Inline SVG Icons ────────────────────────────────────────────────
 const LinkedinIcon = ({ size = 36, className = '' }) => (
   <svg
@@ -52,7 +52,7 @@ const MemberCard = ({ member }) => (
         <div className="flip-card-front flex items-center justify-center">
           <div className="glow-ring w-full h-full rounded-full">
             <img
-              src={member.photo || member.avatar}
+              src={member.photo ? assetPath(member.photo) : member.avatar}
               alt={member.name}
               className="w-full h-full object-cover rounded-full"
               loading="lazy"
@@ -72,7 +72,6 @@ const MemberCard = ({ member }) => (
     </h3>
   </motion.div>
 );
-
 // ─── Member Grid ─────────────────────────────────────────────────────
 const MemberGrid = ({ members }) => (
   <motion.div
