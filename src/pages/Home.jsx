@@ -26,7 +26,7 @@ const Home = () => {
           >
             {/* Title */}
             <h1
-              className="font-extrabold tracking-tight mb-4 leading-none"
+              className="font-extrabold tracking-tight mb-2 leading-none"
               style={{ fontSize: 'clamp(2.75rem, 15vw, 9rem)' }}
             >
               <span className="text-white block mb-2">Programming</span>
@@ -74,7 +74,7 @@ const Home = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5, duration: 1 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center text-textMuted"
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center text-textMuted"
         >
           <span className="text-xs font-mono uppercase tracking-widest mb-2 opacity-50">Discover</span>
           <motion.div
