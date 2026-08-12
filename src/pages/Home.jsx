@@ -8,7 +8,7 @@ const Home = () => {
   return (
     <div className="flex flex-col w-full">
       {/* ─── Hero Section ──────────────────────────────────────────────────────── */}
-      <section className="relative min-h-[100svh] flex flex-col items-center justify-between overflow-hidden py-10">
+      <section className="relative min-h-[100svh] flex flex-col items-center justify-between overflow-hidden py-10 pb-16">
         {/* Background Network */}
         <div className="absolute inset-0 z-0 bg-[#0B0F15]">
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-bgDark/50 to-bgDark z-10"></div>
