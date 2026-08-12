@@ -3,7 +3,7 @@ import { NavLink, Link } from 'react-router-dom';
 import { Menu, X, ChevronDown, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import logo from '../assets/logo.png';
-import { eventGroups } from '../data/eventsData';
+import { assetPath,eventGroups } from '../data/eventsData';
 
 // ─── Desktop Events Dropdown ─────────────────────────────────────────
 const EventsDropdown = () => {
@@ -71,7 +71,7 @@ const EventsDropdown = () => {
                         {group.name}
                         <ChevronRight size={14} className="text-gray-500 group-hover:text-primary transition-colors" />
                       </button>
-                      
+
                       <div className="absolute left-[95%] top-0 ml-1 w-48 bg-surface/95 backdrop-blur-lg border border-white/10 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                         <div className="py-1">
                           {group.events.map((event) => (
@@ -235,7 +235,12 @@ const Navbar = () => {
               </NavLink>
             ))}
           </div>
-
+          {/* ── Right Section (CFI Logo + Mobile Toggle) ── */}
+          <div className="flex items-center gap-4">
+            <a href="https://cfi.iitm.ac.in/" target="_blank" rel="noopener noreferrer" className="flex items-center">
+              <img src={assetPath('cfi.png')} alt="CFI Logo" className="h-8 w-auto opacity-80 hover:opacity-100 transition-opacity" />
+            </a>
+            
           {/* ── Mobile Toggle ── */}
           <div className="-mr-2 flex md:hidden">
             <button
