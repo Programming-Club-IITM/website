@@ -52,7 +52,7 @@ export const eventGroups = [
         category: 'past',
         description: 'Focusing on essential algorithms: binary search applications, graph traversals (BFS/DFS), and time complexity analysis.',
         poster: 'prog-club-website-v3/src/assets/cps2.jpg',
-        posters=['prog-club-website-v3/src/assets/g1.jpg', 'prog-club-website-v3/src/assets/g2.jpg','prog-club-website-v3/src/assets/g3.jpg'],
+        posters: ['prog-club-website-v3/src/assets/g1.jpg', 'prog-club-website-v3/src/assets/g2.jpg','prog-club-website-v3/src/assets/g3.jpg'],
         venue: null,
         time: null,
         details: null,
