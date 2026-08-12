@@ -81,20 +81,67 @@ const MemberCard = ({ member }) => {
 };
 
 // ─── Member Grid ─────────────────────────────────────────────────────
-const MemberGrid = ({ members }) => (
-  <motion.div
-    variants={containerVariants}
-    initial="hidden"
-    whileInView="visible"
-    viewport={{ once: true, margin: '-40px' }}
-    // The arbitrary Tailwind selector here centers the last item if the total count is odd
-    className="grid grid-cols-2 [&>*:nth-child(odd):last-child]:col-span-2 sm:flex sm:flex-wrap sm:justify-center gap-x-2 gap-y-8 sm:gap-x-8 sm:gap-y-10 max-w-4xl mx-auto"
-  >
-    {members.map((member) => (
-      <MemberCard key={member.id} member={member} />
-    ))}
-  </motion.div>
-);
+// ─── Member Card ─────────────────────────────────────────────────────
+const MemberCard = ({ member }) => {
+  // Track if the card has been tapped once on mobile
+  const [tapped, setTapped] = React.useState(false);
+
+  const validLinkedin = member.linkedin && member.linkedin !== '#'
+    ? (member.linkedin.startsWith('http') ? member.linkedin : `https://${member.linkedin}`)
+    : undefined;
+
+  const handleClick = (e) => {
+    // Apply 2-tap logic only on mobile screens (under 640px)
+    if (window.innerWidth < 640 && validLinkedin) {
+      if (!tapped) {
+        e.preventDefault(); // Stop navigation on first tap, letting browser apply hover flip
+        setTapped(true);
+      } else {
+        // Second tap: let it navigate, then reset state so it's ready for next time
+        setTimeout(() => setTapped(false), 500);
+      }
+    }
+  };
+
+  return (
+    <motion.div variants={cardVariants} className="flex flex-col items-center w-full sm:w-48">
+      {/* Flip card avatar */}
+      <a
+        href={validLinkedin}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flip-card w-28 h-28 sm:w-44 sm:h-44 mb-3 sm:mb-5 block cursor-pointer group mx-auto"
+        aria-label={`${member.name} on LinkedIn`}
+        onClick={handleClick}
+        onBlur={() => setTapped(false)}
+        onMouseLeave={() => setTapped(false)}
+      >
+        <div className="flip-card-inner w-full h-full">
+          {/* Front: Photo with glow ring */}
+          <div className="flip-card-front flex items-center justify-center">
+            <div className="glow-ring w-full h-full rounded-full">
+              <img
+                src={member.photo ? assetPath(member.photo) : member.avatar}
+                alt={member.name}
+                className="w-full h-full object-cover rounded-full"
+                loading="lazy"
+              />
+            </div>
+          </div>
+          {/* Back: LinkedIn icon */}
+          <div className="flip-card-back flex items-center justify-center bg-[#0077b5]">
+            <LinkedinIcon size={40} className="text-white" />
+          </div>
+        </div>
+      </a>
+
+      {/* Name */}
+      <h3 className="text-sm sm:text-base font-semibold text-white text-center leading-tight px-1">
+        {member.name}
+      </h3>
+    </motion.div>
+  );
+};
 // ─── Section Header ──────────────────────────────────────────────────
 const SectionHeader = ({ title }) => (
   <div className="flex items-center gap-4 mb-8 sm:mb-10">
