@@ -238,7 +238,7 @@ const Navbar = () => {
           {/* ── Right Section (CFI Logo + Mobile Toggle) ── */}
           <div className="flex items-center gap-4">
             <a href="https://cfi.iitm.ac.in/" target="_blank" rel="noopener noreferrer" className="hidden md:flex items-center">
-              <img src={assetPath('cfi.png')} alt="CFI Logo" className="h-8 w-auto opacity-80 hover:opacity-100 transition-opacity" />
+              <img src={assetPath('cfi.png')} alt="CFI Logo" className="h-6 w-auto opacity-80 hover:opacity-100 transition-opacity" />
             </a>
           </div>
             {/* ── Mobile Toggle ── */}
