@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import ReactMarkdown from 'react-markdown';
 import {
   ArrowLeft,
   Calendar,
@@ -177,8 +178,8 @@ const EventDetail = () => {
                   <h3 className="text-sm font-mono uppercase tracking-widest text-textMuted/60 mb-3">
                     Details
                   </h3>
-                  <div className="text-sm text-gray-300 leading-relaxed whitespace-pre-line">
-                    {event.details}
+                  <div className="prose prose-invert max-w-none">
+                    <ReactMarkdown>{event.details}</ReactMarkdown>
                   </div>
                 </div>
               )}
