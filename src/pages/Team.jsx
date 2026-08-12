@@ -55,7 +55,7 @@ const MemberCard = ({ member }) => (
               src={member.photo ? assetPath(member.photo) : member.avatar}
               alt={member.name}
               className="w-full h-full object-cover rounded-full"
-              loading="lazy"
+              loading="eager"
             />
           </div>
         </div>
