@@ -237,22 +237,21 @@ const Navbar = () => {
           </div>
           {/* ── Right Section (CFI Logo + Mobile Toggle) ── */}
           <div className="flex items-center gap-4">
-            <a href="https://cfi.iitm.ac.in/" target="_blank" rel="noopener noreferrer" className="flex items-center">
+            <a href="https://cfi.iitm.ac.in/" target="_blank" rel="noopener noreferrer" className="hidden md:flex items-center">
               <img src={assetPath('cfi.png')} alt="CFI Logo" className="h-8 w-auto opacity-80 hover:opacity-100 transition-opacity" />
             </a>
           </div>
-
-          {/* ── Mobile Toggle ── */}
-          <div className="-mr-2 flex md:hidden">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              type="button"
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-surface focus:outline-none"
-            >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
+            {/* ── Mobile Toggle ── */}
+            <div className="-mr-2 flex md:hidden">
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                type="button"
+                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-surface focus:outline-none"
+              >
+                {isOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
+            </div>
           </div>
-        </div>
       </div>
 
       {/* ── Mobile Menu ── */}
