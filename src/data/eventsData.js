@@ -20,6 +20,7 @@
  *   2. Add an event object with a unique slug
  *   3. Set category: 'upcoming' for live events, 'past' when done
  */
+export const assetPath = (path) => path;
 
 export const eventGroups = [
   {
