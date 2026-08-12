@@ -3,6 +3,9 @@ import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
 import { useState } from 'react';
+import { Document, Page, pdfjs } from 'react-pdf';
+import 'react-pdf/dist/Page/AnnotationLayer.css';
+import 'react-pdf/dist/Page/TextLayer.css';
 import {
   ArrowLeft,
   Calendar,
@@ -15,7 +18,7 @@ import {
 } from 'lucide-react';
 import { getEventBySlug } from '../data/eventsData';
 import SectionBackground from '../components/SectionBackground';
-
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdf.js-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 // ─── Detail row helper ───────────────────────────────────────────────
 const InfoRow = ({ icon: Icon, label, children }) => (
   <div className="flex items-start gap-3 text-textMuted">
@@ -54,6 +57,9 @@ const EventDetail = () => {
   const { slug } = useParams();
   const event = getEventBySlug(slug);
   const [activePhoto, setActivePhoto] = useState(0);
+  const [numPages, setNumPages] = useState(null);
+  const [pageNum, setPageNum] = useState(1);
+  const [scale, setScale] = useState(1);
 
 
   // 404 fallback
@@ -186,7 +192,33 @@ const EventDetail = () => {
                   </div>
                 </div>
               )}
-
+              {/* Slides */}
+              {event.slidesPdf && (
+                <div className="border-t border-white/[0.07] pt-6">
+                  <div className="flex justify-between items-center mb-3">
+                    <h3 className="text-sm font-mono uppercase tracking-widest text-textMuted/60">
+                      Slides
+                    </h3>
+                    <a>
+                      href={event.slidesPdf}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-primary text-sm hover:underline"
+                      <ExternalLink size={14} /> Open PDF
+                    </a>
+                  </div>
+                  <Document file={event.slidesPdf} onLoadSuccess={({ numPages }) => setNumPages(numPages)}>
+                    <Page pageNumber={pageNum} scale={scale} />
+                  </Document>
+                  <div className="flex gap-2 mt-3 items-center text-sm text-textMuted">
+                    <button onClick={() => setPageNum((p) => Math.max(1, p - 1))} disabled={pageNum <= 1} className="btn-outline px-2 py-1">Prev</button>
+                    <span>{pageNum} / {numPages}</span>
+                    <button onClick={() => setPageNum((p) => Math.min(numPages, p + 1))} disabled={pageNum >= numPages} className="btn-outline px-2 py-1">Next</button>
+                    <button onClick={() => setScale((s) => s + 0.2)} className="btn-outline px-2 py-1">+</button>
+                    <button onClick={() => setScale((s) => Math.max(0.4, s - 0.2))} className="btn-outline px-2 py-1">-</button>
+                  </div>
+                </div>
+              )}
               {/* Action buttons */}
               {hasActions && (
                 <div className="border-t border-white/[0.07] pt-6 flex flex-wrap gap-3">

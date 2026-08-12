@@ -54,7 +54,7 @@ const Projects = () => {
                 className="glass-card p-8 group relative overflow-hidden flex flex-col"
               >
                 <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-bl-[100px] -z-10 transition-transform group-hover:scale-110"></div>
-                
+
                 <div className="flex justify-between items-start mb-6">
                   <h3 className="text-2xl font-bold text-white group-hover:text-primary transition-colors">{project.title}</h3>
                   <div className="flex items-center gap-3">
@@ -64,16 +64,16 @@ const Projects = () => {
                         <GitBranch size={20} />
                       </a>
                     )}
-                    <a href="#" className="text-gray-400 hover:text-primary transition-colors" title="Project Details">
+                    {/* <a href="#" className="text-gray-400 hover:text-primary transition-colors" title="Project Details">
                       <ExternalLink size={20} />
-                    </a>
+                    </a> */}
                   </div>
                 </div>
-                
+
                 <p className="text-textMuted mb-6 line-clamp-3 flex-grow">
                   {project.description}
                 </p>
-                
+
                 <div className="flex flex-wrap gap-2 mb-6">
                   {project.tags.map((tag) => (
                     <span key={tag} className="px-3 py-1 rounded-full bg-surface text-xs font-mono text-gray-300 border border-white/5">
