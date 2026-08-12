@@ -56,7 +56,6 @@ const ActionButton = ({ href, icon: Icon, children, primary = false }) => {
 const EventDetail = () => {
   const { slug } = useParams();
   const event = getEventBySlug(slug);
-  const [activePhoto, setActivePhoto] = useState(0);
   const [numPages, setNumPages] = useState(null);
   const [pageNum, setPageNum] = useState(1);
   const [scale, setScale] = useState(1);
@@ -141,128 +140,93 @@ const EventDetail = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.15 }}
-            className={`grid gap-8 ${
-              event.poster ? 'md:grid-cols-[2fr_3fr]' : 'grid-cols-1'
-            }`}
+            className="max-w-3xl mx-auto space-y-10"
           >
-            {/* Poster */}
+            {/* Poster - full width hero */}
             {event.poster && (
-              <div className="glass-panel p-3 self-start">
-                <img
-                  src={assetPath(event.poster)}
-                  alt={`${event.title} poster`}
-                  className="w-full h-auto rounded-xl"
-                  loading="lazy"
-                />
-              </div>
+              <img
+                src={assetPath(event.poster)}
+                alt={`${event.title} poster`}
+                className="w-full h-auto rounded-2xl"
+                loading="lazy"
+              />
             )}
-            {/* Gallery */}
+
+            {/* Gallery collage */}
             {event.posters?.length > 0 && (
-              <div className="glass-panel p-3 self-start mt-4">
-                <img
-                  src={assetPath(event.posters[activePhoto])}
-                  alt={`${event.title} photo ${activePhoto + 1}`}
-                  className="w-full h-auto rounded-xl"
-                />
-                {event.posters.length > 1 && (
-                  <div className="flex gap-2 mt-2 overflow-x-auto">
-                    {event.posters.map((src, i) => (
-                      <button key={i} onClick={() => setActivePhoto(i)}>
-                        <img
-                          src={assetPath(src)}
-                          className={`w-16 h-16 object-cover rounded ${i === activePhoto ? 'ring-2 ring-white' : 'opacity-60'}`}
-                        />
-                      </button>
-                    ))}
-                  </div>
-                )}
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 auto-rows-[140px]">
+                {event.posters.map((src, i) => (
+                  <img
+                    key={i}
+                    src={assetPath(src)}
+                    alt={`${event.title} photo ${i + 1}`}
+                    className={`w-full h-full object-cover rounded-xl ${i === 0 ? 'col-span-2 row-span-2' : ''
+                      }`}
+                  />
+                ))}
               </div>
             )}
 
-            {/* Details panel */}
-            <div className="glass-panel p-8 space-y-6">
-              {/* Short description */}
-              <p className="text-textMuted leading-relaxed">
-                {event.description}
-              </p>
+            {/* Description */}
+            <p className="text-textMuted leading-relaxed text-lg">
+              {event.description}
+            </p>
 
-              {/* Info rows */}
-              <div className="space-y-4 border-t border-white/[0.07] pt-6">
-                <InfoRow icon={Calendar} label="Date">
-                  {formattedDate}
-                </InfoRow>
-                {event.time && (
-                  <InfoRow icon={Clock} label="Time">
-                    {event.time}
-                  </InfoRow>
-                )}
-                {event.venue && (
-                  <InfoRow icon={MapPin} label="Venue">
-                    {event.venue}
-                  </InfoRow>
-                )}
-              </div>
-
-              {/* Extended details */}
-              {event.details && (
-                <div className="border-t border-white/[0.07] pt-6">
-                  <h3 className="text-sm font-mono uppercase tracking-widest text-textMuted/60 mb-3">
-                    Details
-                  </h3>
-                  <div className="prose prose-invert max-w-none">
-                    <ReactMarkdown>{event.details}</ReactMarkdown>
-                  </div>
-                </div>
-              )}
-              {/* Slides */}
-              {event.slidesPdf && (
-                <div className="border-t border-white/[0.07] pt-6">
-                  <div className="flex justify-between items-center mb-3">
-                    <h3 className="text-sm font-mono uppercase tracking-widest text-textMuted/60">
-                      Slides
-                    </h3>
-                    <a>
-                      href={event.slidesPdf}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-primary text-sm hover:underline"
-                      <ExternalLink size={14} /> Open PDF
-                    </a>
-                  </div>
-                  <Document file={assetPath(event.slidesPdf)} onLoadSuccess={({ numPages }) => setNumPages(numPages)}>
-                    <Page pageNumber={pageNum} scale={scale} />
-                  </Document>
-                  <div className="flex gap-2 mt-3 items-center text-sm text-textMuted">
-                    <button onClick={() => setPageNum((p) => Math.max(1, p - 1))} disabled={pageNum <= 1} className="btn-outline px-2 py-1">Prev</button>
-                    <span>{pageNum} / {numPages}</span>
-                    <button onClick={() => setPageNum((p) => Math.min(numPages, p + 1))} disabled={pageNum >= numPages} className="btn-outline px-2 py-1">Next</button>
-                    <button onClick={() => setScale((s) => s + 0.2)} className="btn-outline px-2 py-1">+</button>
-                    <button onClick={() => setScale((s) => Math.max(0.4, s - 0.2))} className="btn-outline px-2 py-1">-</button>
-                  </div>
-                </div>
-              )}
-              {/* Action buttons */}
-              {hasActions && (
-                <div className="border-t border-white/[0.07] pt-6 flex flex-wrap gap-3">
-                  <ActionButton
-                    href={event.registrationLink}
-                    icon={ClipboardList}
-                    primary
-                  >
-                    Register
-                  </ActionButton>
-                  <ActionButton href={event.contestLink} icon={ExternalLink}>
-                    Contest Page
-                  </ActionButton>
-                  <ActionButton href={event.ranklistLink} icon={Trophy}>
-                    Ranklist
-                  </ActionButton>
-                  <ActionButton href={event.slidesLink} icon={Presentation}>
-                    Slides
-                  </ActionButton>
-                </div>
-              )}
+            {/* Info rows */}
+            <div className="flex flex-wrap gap-x-10 gap-y-4 border-t border-white/[0.07] pt-6">
+              <InfoRow icon={Calendar} label="Date">{formattedDate}</InfoRow>
+              {event.time && <InfoRow icon={Clock} label="Time">{event.time}</InfoRow>}
+              {event.venue && <InfoRow icon={MapPin} label="Venue">{event.venue}</InfoRow>}
             </div>
+
+            {/* Extended details */}
+            {event.details && (
+              <div className="border-t border-white/[0.07] pt-6">
+                <h3 className="text-sm font-mono uppercase tracking-widest text-textMuted/60 mb-3">
+                  Details
+                </h3>
+                <div className="prose prose-invert max-w-none">
+                  <ReactMarkdown>{event.details}</ReactMarkdown>
+                </div>
+              </div>
+            )}
+
+            {/* Slides */}
+            {event.slidesPdf && (
+              <div className="border-t border-white/[0.07] pt-6">
+                <div className="flex justify-between items-center mb-3">
+                  <h3 className="text-sm font-mono uppercase tracking-widest text-textMuted/60">
+                    Slides
+                  </h3>
+                    <a>
+                    href={assetPath(event.slidesPdf)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-primary text-sm hover:underline"
+                    <ExternalLink size={14} /> Open PDF
+                  </a>
+                </div>
+                <Document file={assetPath(event.slidesPdf)} onLoadSuccess={({ numPages }) => setNumPages(numPages)}>
+                  <Page pageNumber={pageNum} scale={scale} />
+                </Document>
+                <div className="flex gap-2 mt-3 items-center text-sm text-textMuted">
+                  <button onClick={() => setPageNum((p) => Math.max(1, p - 1))} disabled={pageNum <= 1} className="btn-outline px-2 py-1">Prev</button>
+                  <span>{pageNum} / {numPages}</span>
+                  <button onClick={() => setPageNum((p) => Math.min(numPages, p + 1))} disabled={pageNum >= numPages} className="btn-outline px-2 py-1">Next</button>
+                  <button onClick={() => setScale((s) => s + 0.2)} className="btn-outline px-2 py-1">+</button>
+                  <button onClick={() => setScale((s) => Math.max(0.4, s - 0.2))} className="btn-outline px-2 py-1">-</button>
+                </div>
+              </div>
+            )}
+
+            {/* Action buttons */}
+            {hasActions && (
+              <div className="border-t border-white/[0.07] pt-6 flex flex-wrap gap-3">
+                <ActionButton href={event.registrationLink} icon={ClipboardList} primary>Register</ActionButton>
+                <ActionButton href={event.contestLink} icon={ExternalLink}>Contest Page</ActionButton>
+                <ActionButton href={event.ranklistLink} icon={Trophy}>Ranklist</ActionButton>
+              </div>
+            )}
           </motion.div>
         </div>
       </div>
