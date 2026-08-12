@@ -229,7 +229,7 @@ const EventDetail = () => {
                       <ExternalLink size={14} /> Open PDF
                     </a>
                   </div>
-                  <Document file={event.slidesPdf} onLoadSuccess={({ numPages }) => setNumPages(numPages)}>
+                  <Document file={assetPath(event.slidesPdf)} onLoadSuccess={({ numPages }) => setNumPages(numPages)}>
                     <Page pageNumber={pageNum} scale={scale} />
                   </Document>
                   <div className="flex gap-2 mt-3 items-center text-sm text-textMuted">
