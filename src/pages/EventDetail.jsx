@@ -149,11 +149,33 @@ const EventDetail = () => {
             {event.poster && (
               <div className="glass-panel p-3 self-start">
                 <img
-                  src={event.poster}
+                  src={assetPath(event.poster)}
                   alt={`${event.title} poster`}
                   className="w-full h-auto rounded-xl"
                   loading="lazy"
                 />
+              </div>
+            )}
+            {/* Gallery */}
+            {event.posters?.length > 0 && (
+              <div className="glass-panel p-3 self-start mt-4">
+                <img
+                  src={assetPath(event.posters[activePhoto])}
+                  alt={`${event.title} photo ${activePhoto + 1}`}
+                  className="w-full h-auto rounded-xl"
+                />
+                {event.posters.length > 1 && (
+                  <div className="flex gap-2 mt-2 overflow-x-auto">
+                    {event.posters.map((src, i) => (
+                      <button key={i} onClick={() => setActivePhoto(i)}>
+                        <img
+                          src={assetPath(src)}
+                          className={`w-16 h-16 object-cover rounded ${i === activePhoto ? 'ring-2 ring-white' : 'opacity-60'}`}
+                        />
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
 

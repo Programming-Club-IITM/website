@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Calendar, ArrowRight, ChevronRight } from 'lucide-react';
 import { eventGroups, getAllEvents } from '../data/eventsData';
 import SectionBackground from '../components/SectionBackground';
-
+import { assetPath, getEventBySlug } from '../data/eventsData';
 // ─── Small Event Card (links to detail page) ────────────────────────
 const EventCard = ({ event }) => (
   <motion.div
@@ -19,7 +19,7 @@ const EventCard = ({ event }) => (
     >
       {event.poster && (
         <img
-          src={event.poster}
+          src={assetPath(event.poster)}
           alt={event.title}
           className="w-full h-40 object-cover rounded-lg mb-4"
         />
