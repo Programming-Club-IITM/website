@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
+import { useState } from 'react';
 import {
   ArrowLeft,
   Calendar,
@@ -52,6 +53,8 @@ const ActionButton = ({ href, icon: Icon, children, primary = false }) => {
 const EventDetail = () => {
   const { slug } = useParams();
   const event = getEventBySlug(slug);
+  const [activePhoto, setActivePhoto] = useState(0);
+
 
   // 404 fallback
   if (!event) {
