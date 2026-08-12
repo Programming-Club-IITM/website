@@ -240,7 +240,8 @@ const Navbar = () => {
             <a href="https://cfi.iitm.ac.in/" target="_blank" rel="noopener noreferrer" className="flex items-center">
               <img src={assetPath('cfi.png')} alt="CFI Logo" className="h-8 w-auto opacity-80 hover:opacity-100 transition-opacity" />
             </a>
-            
+          </div>
+
           {/* ── Mobile Toggle ── */}
           <div className="-mr-2 flex md:hidden">
             <button
