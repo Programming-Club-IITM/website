@@ -87,6 +87,12 @@ export const team = {
     person(12, 'Coordinator 4'),
     person(13, 'Coordinator 5'),
     person(14, 'Coordinator 6'),
+    person(35, 'Coordinator 6'),
+    person(36, 'Coordinator 6'),
+    person(37, 'Coordinator 6'),
+    person(38, 'Coordinator 6'),
+    person(39, 'Coordinator 6'),
+    person(40, 'Coordinator 6'),
   ],
 
   // Keep these names in sync with src/data/projectsData.js
