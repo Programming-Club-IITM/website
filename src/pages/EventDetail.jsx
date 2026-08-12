@@ -16,7 +16,7 @@ import {
   Trophy,
   ClipboardList,
 } from 'lucide-react';
-import { getEventBySlug } from '../data/eventsData';
+import { assetPath,getEventBySlug } from '../data/eventsData';
 import SectionBackground from '../components/SectionBackground';
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdf.js-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 // ─── Detail row helper ───────────────────────────────────────────────
