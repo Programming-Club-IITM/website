@@ -37,41 +37,49 @@ const cardVariants = {
 };
 
 // ─── Member Card ─────────────────────────────────────────────────────
-const MemberCard = ({ member }) => (
-  <motion.div variants={cardVariants} className="flex flex-col items-center w-40 sm:w-48">
-    {/* Flip card avatar */}
-    <a
-      href={member.linkedin && member.linkedin !== '#' ? member.linkedin : undefined}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="flip-card w-36 h-36 sm:w-44 sm:h-44 mb-5 block cursor-pointer group"
-      aria-label={`${member.name} on LinkedIn`}
-    >
-      <div className="flip-card-inner w-full h-full">
-        {/* Front: Photo with glow ring */}
-        <div className="flip-card-front flex items-center justify-center">
-          <div className="glow-ring w-full h-full rounded-full">
-            <img
-              src={member.photo ? assetPath(member.photo) : member.avatar}
-              alt={member.name}
-              className="w-full h-full object-cover rounded-full"
-              loading="eager"
-            />
+const MemberCard = ({ member }) => {
+  // Fix 1: Auto-prepend https:// so the browser doesn't treat it as a GitHub Pages route
+  const validLinkedin = member.linkedin && member.linkedin !== '#'
+    ? (member.linkedin.startsWith('http') ? member.linkedin : `https://${member.linkedin}`)
+    : undefined;
+
+  return (
+    <motion.div variants={cardVariants} className="flex flex-col items-center w-full sm:w-48">
+      {/* Flip card avatar */}
+      <a
+        href={validLinkedin}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flip-card w-28 h-28 sm:w-44 sm:h-44 mb-3 sm:mb-5 block cursor-pointer group mx-auto"
+        aria-label={`${member.name} on LinkedIn`}
+      >
+        <div className="flip-card-inner w-full h-full">
+          {/* Front: Photo with glow ring */}
+          <div className="flip-card-front flex items-center justify-center">
+            <div className="glow-ring w-full h-full rounded-full">
+              <img
+                src={member.photo ? assetPath(member.photo) : member.avatar}
+                alt={member.name}
+                className="w-full h-full object-cover rounded-full"
+                loading="lazy"
+              />
+            </div>
+          </div>
+          {/* Back: LinkedIn icon */}
+          <div className="flip-card-back flex items-center justify-center bg-[#0077b5]">
+            <LinkedinIcon size={40} className="text-white" />
           </div>
         </div>
-        {/* Back: LinkedIn icon */}
-        <div className="flip-card-back flex items-center justify-center bg-[#0077b5]">
-          <LinkedinIcon size={40} className="text-white" />
-        </div>
-      </div>
-    </a>
+      </a>
 
-    {/* Name */}
-    <h3 className="text-base font-semibold text-white text-center leading-tight">
-      {member.name}
-    </h3>
-  </motion.div>
-);
+      {/* Name */}
+      <h3 className="text-sm sm:text-base font-semibold text-white text-center leading-tight px-1">
+        {member.name}
+      </h3>
+    </motion.div>
+  );
+};
+
 // ─── Member Grid ─────────────────────────────────────────────────────
 const MemberGrid = ({ members }) => (
   <motion.div
@@ -79,7 +87,8 @@ const MemberGrid = ({ members }) => (
     initial="hidden"
     whileInView="visible"
     viewport={{ once: true, margin: '-40px' }}
-    className="flex flex-wrap justify-center gap-x-4 sm:gap-x-8 gap-y-10 max-w-4xl mx-auto"
+    // Fix 2: Force 2-column grid on mobile, flex wrap on larger screens
+    className="grid grid-cols-2 sm:flex sm:flex-wrap sm:justify-center gap-x-2 gap-y-8 sm:gap-x-8 sm:gap-y-10 max-w-4xl mx-auto"
   >
     {members.map((member) => (
       <MemberCard key={member.id} member={member} />
@@ -89,9 +98,9 @@ const MemberGrid = ({ members }) => (
 
 // ─── Section Header ──────────────────────────────────────────────────
 const SectionHeader = ({ title }) => (
-  <div className="flex items-center gap-4 mb-10">
+  <div className="flex items-center gap-4 mb-8 sm:mb-10">
     <div className="flex-1 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
-    <h2 className="text-2xl md:text-3xl font-bold text-white whitespace-nowrap">
+    <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white whitespace-nowrap">
       {title}
     </h2>
     <div className="flex-1 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
@@ -106,7 +115,8 @@ const TeamSection = ({ title, children }) => (
     viewport={{ once: true, margin: '-60px' }}
     transition={{ duration: 0.6 }}
   >
-    <div className="glass-panel p-8 md:p-10">
+    {/* Reduced padding on mobile (p-4) to fit cards */}
+    <div className="glass-panel p-4 sm:p-8 md:p-10">
       <SectionHeader title={title} />
       {children}
     </div>
@@ -120,10 +130,10 @@ const ProjectTeam = ({ project }) => (
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true, margin: '-40px' }}
     transition={{ duration: 0.5 }}
-    className="glass-panel p-8 md:p-10 border-l-2 border-l-accent"
+    className="glass-panel p-4 sm:p-8 md:p-10 border-l-2 border-l-accent"
     id={`project-${project.id}`}
   >
-    <h3 className="text-2xl font-bold text-primary mb-10 text-center">
+    <h3 className="text-xl sm:text-2xl font-bold text-primary mb-8 sm:mb-10 text-center">
       {project.name}
     </h3>
 
@@ -144,7 +154,6 @@ const ProjectTeam = ({ project }) => (
     </div>
   </motion.div>
 );
-
 // ─── Main Team Page ──────────────────────────────────────────────────
 const Team = () => {
   const location = useLocation();
