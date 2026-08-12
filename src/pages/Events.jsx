@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Calendar, ArrowRight, ChevronRight } from 'lucide-react';
 import { assetPath,eventGroups, getAllEvents } from '../data/eventsData';
 import SectionBackground from '../components/SectionBackground';
-import { assetPath, getEventBySlug } from '../data/eventsData';
+import { getEventBySlug } from '../data/eventsData';
 // ─── Small Event Card (links to detail page) ────────────────────────
 const EventCard = ({ event }) => (
   <motion.div
