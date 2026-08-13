@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Calendar, ArrowRight, ChevronRight } from 'lucide-react';
-import { assetPath,eventGroups, getAllEvents } from '../data/eventsData';
+import { Calendar, ArrowRight } from 'lucide-react';
+import { getAllEvents } from '../data/eventsData';
 import SectionBackground from '../components/SectionBackground';
-import { getEventBySlug } from '../data/eventsData';
+
 // ─── Small Event Card (links to detail page) ────────────────────────
 const EventCard = ({ event }) => (
   <motion.div
@@ -15,32 +15,29 @@ const EventCard = ({ event }) => (
   >
     <Link
       to={`/events/${event.slug}`}
-      className="glass-card p-6 flex flex-col h-full group block"
+      className="glass-card p-6 flex flex-col h-full group block border-l-2 hover:border-l-primary transition-colors border-l-transparent"
     >
-      {/* {event.poster && (
-        <img
-          src={assetPath(event.poster)}
-          alt={event.title}
-          className="w-full h-40 object-cover rounded-lg mb-4"
-        />
-      )} */}
       <div className="flex justify-between items-start mb-3">
-        <h3 className="text-lg font-bold text-white group-hover:text-primary transition-colors">
-          {event.title}
-        </h3>
-        <span
-          className={`px-3 py-1 rounded-full text-xs font-semibold shrink-0 ml-3 ${
-            event.category === 'upcoming'
-              ? 'bg-primary/20 text-primary border border-primary/30'
-              : 'bg-surface text-textMuted border border-white/10'
-          }`}
-        >
-          {event.category === 'upcoming' ? 'Upcoming' : 'Past'}
-        </span>
+        <div>
+          {event.groupName && (
+            <span className="text-[10px] font-mono uppercase tracking-widest text-textMuted/60 block mb-1">
+              {event.groupName}
+            </span>
+          )}
+          <h3 className="text-lg font-bold text-white group-hover:text-primary transition-colors">
+            {event.title}
+          </h3>
+        </div>
+
+        {event.category === 'upcoming' && (
+          <span className="px-3 py-1 rounded-full text-[10px] uppercase tracking-wider font-bold shrink-0 ml-3 bg-primary/20 text-primary border border-primary/30">
+            Upcoming
+          </span>
+        )}
       </div>
 
       <div className="flex items-center gap-2 text-textMuted text-sm mb-3">
-        <Calendar size={14} />
+        <Calendar size={14} className="text-primary/70" />
         <span>
           {new Date(event.date).toLocaleDateString('en-US', {
             month: 'long',
@@ -50,51 +47,43 @@ const EventCard = ({ event }) => (
         </span>
       </div>
 
-      <p className="text-textMuted text-sm mb-4 flex-grow line-clamp-2">
+      <p className="text-textMuted text-sm mb-4 flex-grow line-clamp-3">
         {event.description}
       </p>
 
-      <div className="flex items-center text-primary text-sm font-medium group-hover:gap-1.5 transition-all">
+      <div className="flex items-center text-primary text-sm font-medium group-hover:gap-1.5 transition-all mt-auto pt-4 border-t border-white/[0.05]">
         View Details <ArrowRight size={14} className="ml-1" />
       </div>
     </Link>
   </motion.div>
 );
 
-// ─── Event Group Panel ───────────────────────────────────────────────
-const EventGroupPanel = ({ group }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: '-40px' }}
-    transition={{ duration: 0.5 }}
-    className="glass-panel p-6 md:p-8"
-  >
-    <div className="flex items-center gap-3 mb-6">
-      <ChevronRight size={20} className="text-primary" />
-      <h3 className="text-xl font-bold text-white">{group.name}</h3>
-      <span className="text-xs font-mono text-textMuted">
-        ({group.events.length} {group.events.length === 1 ? 'event' : 'events'})
-      </span>
-    </div>
-
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      {group.events.map((event) => (
-        <EventCard key={event.slug} event={event} />
-      ))}
-    </div>
-  </motion.div>
-);
-
 // ─── Main Events Page ────────────────────────────────────────────────
 const Events = () => {
   const allEvents = getAllEvents();
-  const upcomingEvents = allEvents.filter((e) => e.category === 'upcoming');
+
+  // Sort all events by date (newest first)
+  const sortedEvents = [...allEvents].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+  const upcomingEvents = sortedEvents.filter((e) => e.category === 'upcoming');
+  const pastEvents = sortedEvents.filter((e) => e.category === 'past');
+
+  // Group past events by Year
+  const pastEventsByYear = pastEvents.reduce((acc, event) => {
+    const year = new Date(event.date).getFullYear();
+    if (!acc[year]) acc[year] = [];
+    acc[year].push(event);
+    return acc;
+  }, {});
+
+  // Get years in descending order
+  const years = Object.keys(pastEventsByYear).sort((a, b) => b - a);
 
   return (
     <SectionBackground variant="teal" intensity={0.06}>
       <div className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
           {/* Page Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -115,13 +104,14 @@ const Events = () => {
           </motion.div>
 
           {/* ── Upcoming Events ── */}
-          <div className="mb-16">
+          <div className="mb-20">
             <h2 className="text-3xl font-bold mb-8 flex items-center gap-3">
               <span className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary text-sm">
                 ✦
               </span>
               Upcoming Events
             </h2>
+
             {upcomingEvents.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {upcomingEvents.map((event) => (
@@ -129,7 +119,7 @@ const Events = () => {
                 ))}
               </div>
             ) : (
-              <div className="glass-card p-8 text-center text-textMuted max-w-xl mx-auto">
+              <div className="glass-panel p-8 text-center text-textMuted max-w-xl mx-auto border-dashed border-2 border-white/10 bg-transparent">
                 <p className="mb-2 font-semibold text-white">
                   No upcoming events scheduled right now.
                 </p>
@@ -141,27 +131,35 @@ const Events = () => {
             )}
           </div>
 
-          {/* ── Past Events — Grouped by Series ── */}
+          {/* ── Past Events Archive (Grouped by Year) ── */}
           <div>
-            <h2 className="text-3xl font-bold mb-8 text-gray-400">
-              Past Events
+            <h2 className="text-3xl font-bold mb-10 text-white flex items-center gap-3">
+              <span className="w-8 h-8 rounded-full bg-surface flex items-center justify-center text-textMuted text-sm border border-white/10">
+                ❖
+              </span>
+              Event Archive
             </h2>
-            <div className="space-y-8">
-              {eventGroups
-                .filter((g) => g.events.some((e) => e.category === 'past'))
-                .map((group) => (
-                  <EventGroupPanel
-                    key={group.name}
-                    group={{
-                      ...group,
-                      events: group.events.filter(
-                        (e) => e.category === 'past'
-                      ),
-                    }}
-                  />
-                ))}
+
+            <div className="space-y-16">
+              {years.map((year) => (
+                <div key={year} className="relative">
+                  {/* Year Divider */}
+                  <div className="flex items-center gap-4 mb-8">
+                    <h3 className="text-2xl font-bold text-accent font-mono">{year}</h3>
+                    <div className="flex-1 h-px bg-white/10" />
+                  </div>
+
+                  {/* Grid of Events for this year */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {pastEventsByYear[year].map((event) => (
+                      <EventCard key={event.slug} event={event} />
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
+
         </div>
       </div>
     </SectionBackground>

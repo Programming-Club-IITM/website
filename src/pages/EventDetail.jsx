@@ -194,6 +194,14 @@ const EventDetail = () => {
                 <ReactMarkdown>{event.details}</ReactMarkdown>
               </div>
             )}
+            {/* Upcoming Event Placeholder Banner */}
+            {event.category === 'upcoming' && !event.slidesPdf && !event.problemsetLink && (!event.posters || event.posters.length === 0) && (
+              <div className="bg-surface border border-primary/20 rounded-xl p-6 text-center shadow-[0_0_15px_rgba(47,189,165,0.1)]">
+                <p className="text-primary font-medium">
+                  ✨ Slides, problemsets, and gallery will be uploaded here after the event concludes.
+                </p>
+              </div>
+            )}
 
             {/* PDF Viewer */}
             {event.slidesPdf && (
@@ -206,7 +214,7 @@ const EventDetail = () => {
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 text-primary hover:text-highlight transition-colors text-sm font-medium"
                   >
-                    Open Fullscreen <ExternalLink size={16} />
+                    Open PDF <ExternalLink size={16} />
                   </a>
                 </div>
                 <div className="rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-surface/50">

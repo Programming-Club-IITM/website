@@ -187,10 +187,20 @@ export const eventGroups = [
 ];
 
 // ─── Helper: flatten all events for lookups ──────────────────────────
-export const getAllEvents = () =>
-  eventGroups.flatMap((group) =>
-    group.events.map((event) => ({ ...event, groupName: group.name }))
+export const getAllEvents = () => {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0); // Reset time to start of day for fair comparison
+
+  return eventGroups.flatMap((group) =>
+    group.events.map((event) => {
+      // Automatically determine category based on date
+      const eventDate = new Date(event.date);
+      const category = eventDate >= today ? 'upcoming' : 'past';
+
+      return { ...event, groupName: group.name, category };
+    })
   );
+};
 
 export const getEventBySlug = (slug) =>
   getAllEvents().find((e) => e.slug === slug) || null;
