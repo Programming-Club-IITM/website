@@ -8,16 +8,6 @@ import satContent from './newsletters/sat.md?raw';
 
 export const newsletter = [
   {
-    slug: 'rvo-cpp',
-    title: 'Return Value Optimization (RVO)',
-    date: null,
-    author: 'tushar3q34',
-    summary: 'A deep dive into C++ Return Value Optimization, analyzing assembly output across C++11 and C++17.',
-    tags: ['C++', 'Compilers', 'Assembly'],
-    content: rvoContent, // 2. Assign the imported markdown here
-    furtherReading: []
-  },
-  {
     slug: 'advent-of-code',
     title: 'Advent of Code 2025',
     date: null,
@@ -27,6 +17,16 @@ export const newsletter = [
     content: AoCContent, // 2. Assign the imported markdown here
     furtherReading: [ ]
 
+  },
+  {
+    slug: 'rvo-cpp',
+    title: 'Return Value Optimization (RVO)',
+    date: null,
+    author: 'tushar3q34',
+    summary: 'A deep dive into C++ Return Value Optimization, analyzing assembly output across C++11 and C++17.',
+    tags: ['C++', 'Compilers', 'Assembly'],
+    content: rvoContent, // 2. Assign the imported markdown here
+    furtherReading: []
   },
   {
     slug: 'c++23',
