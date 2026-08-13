@@ -5,6 +5,20 @@
 @tailwind utilities;
 
 @layer base {
+  h1, .prose h1 {
+    @apply font-sora font-bold;
+  }
+
+    /* Enforce Sora Medium for H2 */
+  h2, .prose h2 {
+    @apply font-sora font-medium;
+  }
+
+    /* Enforce DM Sans Medium for H3 */
+  h3, .prose h3 {
+    @apply font-sans font-medium;
+  }
+
   body {
     @apply bg-background text-textMain font-sans antialiased selection:bg-primary/30;
     overflow-x: hidden;
@@ -25,11 +39,11 @@
   .glass-nav {
     @apply bg-surface/70 backdrop-blur-md border-b border-white/10;
   }
-  
+
   .glass-card {
     @apply bg-surface/50 backdrop-blur-sm border border-white/10 rounded-xl transition-all duration-300 hover:border-primary/50 hover:bg-surface/80;
   }
-  
+
   .btn-primary {
     @apply px-6 py-2 rounded-lg bg-primary text-background font-semibold transition-all duration-300 hover:bg-primary/85 hover:shadow-[0_0_18px_rgba(47,189,165,0.45)];
   }

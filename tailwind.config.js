@@ -17,8 +17,9 @@ export default {
         textMuted: '#94a3a1',
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['"DM Sans"', 'sans-serif'],
         mono: ['Fira Code', 'monospace'],
+        sora: ['Sora', 'sans-serif'],
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-out',

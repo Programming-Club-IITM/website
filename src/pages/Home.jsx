@@ -76,7 +76,7 @@ const Home = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5, duration: 1 }}
-          className="z-20 flex flex-col items-center text-textMuted"
+          className="absolute bottom-10 z-20 flex flex-col items-center text-textMuted"
         >
           <span className="text-xs font-mono uppercase tracking-widest mb-2 opacity-50">Discover</span>
           <motion.div
