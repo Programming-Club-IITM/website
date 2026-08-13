@@ -269,6 +269,20 @@ const Navbar = () => {
               </NavLink>
             ))}
           </div>
+          {/* ── Mobile Menu Toggle Button (ADD THIS) ── */}
+          <div className="flex md:hidden items-center">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-white/10 transition-colors focus:outline-none"
+              aria-label="Toggle main menu"
+            >
+              {isOpen ? (
+                <X className="block h-6 w-6" aria-hidden="true" />
+              ) : (
+                <Menu className="block h-6 w-6" aria-hidden="true" />
+              )}
+            </button>
+          </div>
         </div>
       </div>
 
