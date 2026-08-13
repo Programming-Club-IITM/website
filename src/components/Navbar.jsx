@@ -3,11 +3,16 @@ import { NavLink, Link } from 'react-router-dom';
 import { Menu, X, ChevronDown, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import logo from '../assets/logo.png';
-import { assetPath,eventGroups } from '../data/eventsData';
+import { assetPath,getAllEvents } from '../data/eventsData';
 // ─── Desktop Events Dropdown ─────────────────────────────────────────
 const EventsDropdown = () => {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
+
+  const allEvents = getAllEvents();
+  const sortedEvents = [...allEvents].sort((a, b) => new Date(b.date) - new Date(a.date));
+  const upcomingEvents = sortedEvents.filter((e) => e.category === 'upcoming');
+  const recentEvents = sortedEvents.filter((e) => e.category === 'past').slice(0, 3); // Only show top 3 recent
 
   // Close on outside click
   useEffect(() => {
@@ -49,46 +54,52 @@ const EventsDropdown = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.2 }}
-            className="absolute left-0 top-full mt-2 w-56 bg-surface/95 backdrop-blur-lg border border-white/10 rounded-xl shadow-2xl shadow-black/40 z-50"
+            className="absolute left-0 top-full mt-2 w-64 bg-surface/95 backdrop-blur-lg border border-white/10 rounded-xl shadow-2xl shadow-black/40 z-50 overflow-hidden"
           >
-            <div className="py-2">
-              {eventGroups.map((group) => (
-                <div key={group.name}>
-                  {group.events.length === 1 ? (
-                    /* Single event — link directly */
-                    <Link
-                      to={`/events/${group.events[0].slug}`}
-                      onClick={() => setOpen(false)}
-                      className="block px-4 py-2 text-sm text-gray-300 hover:text-primary hover:bg-white/5 transition-colors"
-                    >
-                      {group.name}
-                    </Link>
-                  ) : (
-                    /* Group with sub-events (Hover Flyout) */
-                    <div className="relative group">
-                      <button className="w-full text-left flex items-center justify-between px-4 py-2.5 text-sm text-gray-300 hover:text-primary hover:bg-white/5 transition-colors">
-                        {group.name}
-                        <ChevronRight size={14} className="text-gray-500 group-hover:text-primary transition-colors" />
-                      </button>
+            <Link
+              to="/events"
+              onClick={() => setOpen(false)}
+              className="block px-4 py-3 text-sm font-bold text-white hover:text-primary hover:bg-white/5 transition-colors border-b border-white/[0.06]"
+            >
+              View All Events →
+            </Link>
 
-                      <div className="absolute left-[95%] top-0 ml-1 w-48 bg-surface/95 backdrop-blur-lg border border-white/10 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                        <div className="py-1">
-                          {group.events.map((event) => (
-                            <Link
-                              key={event.slug}
-                              to={`/events/${event.slug}`}
-                              onClick={() => setOpen(false)}
-                              className="block px-4 py-2.5 text-sm text-gray-400 hover:text-primary hover:bg-white/5 transition-colors"
-                            >
-                              {event.title}
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  )}
+            <div className="py-2">
+              {/* Upcoming Section */}
+              {upcomingEvents.length > 0 && (
+                <div className="mb-2">
+                  <span className="block px-4 py-1 text-[10px] font-mono uppercase tracking-widest text-primary/80">
+                    Upcoming
+                  </span>
+                  {upcomingEvents.map((event) => (
+                    <Link
+                      key={event.slug}
+                      to={`/events/${event.slug}`}
+                      onClick={() => setOpen(false)}
+                      className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-white/5 transition-colors"
+                    >
+                      {event.title}
+                    </Link>
+                  ))}
                 </div>
-              ))}
+              )}
+
+              {/* Recent Archive Section */}
+              <div>
+                <span className="block px-4 py-1 text-[10px] font-mono uppercase tracking-widest text-textMuted/60">
+                  Recent Archive
+                </span>
+                {recentEvents.map((event) => (
+                  <Link
+                    key={event.slug}
+                    to={`/events/${event.slug}`}
+                    onClick={() => setOpen(false)}
+                    className="block px-4 py-2 text-sm text-gray-300 hover:text-white hover:bg-white/5 transition-colors"
+                  >
+                    {event.title}
+                  </Link>
+                ))}
+              </div>
             </div>
           </motion.div>
         )}
@@ -100,6 +111,11 @@ const EventsDropdown = () => {
 // ─── Mobile Events Expandable ────────────────────────────────────────
 const MobileEventsSection = ({ onClose }) => {
   const [expanded, setExpanded] = useState(false);
+
+  const allEvents = getAllEvents();
+  const sortedEvents = [...allEvents].sort((a, b) => new Date(b.date) - new Date(a.date));
+  const upcomingEvents = sortedEvents.filter((e) => e.category === 'upcoming');
+  const recentEvents = sortedEvents.filter((e) => e.category === 'past').slice(0, 3);
 
   return (
     <div>
@@ -137,34 +153,47 @@ const MobileEventsSection = ({ onClose }) => {
             transition={{ duration: 0.2 }}
             className="overflow-hidden"
           >
-            {eventGroups.map((group) =>
-              group.events.length === 1 ? (
-                <Link
-                  key={group.name}
-                  to={`/events/${group.events[0].slug}`}
-                  onClick={onClose}
-                  className="block pl-6 py-1.5 text-sm text-gray-400 hover:text-white transition-colors"
-                >
-                  {group.name}
-                </Link>
-              ) : (
-                <div key={group.name}>
-                  <span className="block pl-6 pt-2 pb-0.5 text-xs font-mono uppercase tracking-widest text-textMuted/50">
-                    {group.name}
-                  </span>
-                  {group.events.map((event) => (
-                    <Link
-                      key={event.slug}
-                      to={`/events/${event.slug}`}
-                      onClick={onClose}
-                      className="block pl-9 py-1.5 text-sm text-gray-400 hover:text-white transition-colors"
-                    >
-                      {event.title}
-                    </Link>
-                  ))}
-                </div>
-              )
+            <Link
+              to="/events"
+              onClick={onClose}
+              className="block pl-6 py-2 text-sm text-white font-bold hover:text-primary transition-colors"
+            >
+              View All Events →
+            </Link>
+
+            {upcomingEvents.length > 0 && (
+              <div className="mt-1">
+                <span className="block pl-6 pt-2 pb-1 text-[10px] font-mono uppercase tracking-widest text-primary/80">
+                  Upcoming
+                </span>
+                {upcomingEvents.map((event) => (
+                  <Link
+                    key={event.slug}
+                    to={`/events/${event.slug}`}
+                    onClick={onClose}
+                    className="block pl-9 py-1.5 text-sm text-gray-400 hover:text-white transition-colors"
+                  >
+                    {event.title}
+                  </Link>
+                ))}
+              </div>
             )}
+
+            <div className="mt-1 pb-2">
+              <span className="block pl-6 pt-2 pb-1 text-[10px] font-mono uppercase tracking-widest text-textMuted/60">
+                Recent Archive
+              </span>
+              {recentEvents.map((event) => (
+                <Link
+                  key={event.slug}
+                  to={`/events/${event.slug}`}
+                  onClick={onClose}
+                  className="block pl-9 py-1.5 text-sm text-gray-400 hover:text-white transition-colors"
+                >
+                  {event.title}
+                </Link>
+              ))}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
