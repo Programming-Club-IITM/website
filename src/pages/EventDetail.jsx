@@ -203,29 +203,42 @@ const EventDetail = () => {
               </div>
             )}
 
-            {/* PDF Viewer */}
+            {/* PDF Viewer(s) */}
             {event.slidesPdf && (
-              <div className="space-y-4">
-                <div className="flex justify-between items-center px-2">
-                  <h3 className="text-xl font-bold text-white">Presentation Slides</h3>
-                  <a
-                    href={assetPath(event.slidesPdf)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-primary hover:text-highlight transition-colors text-sm font-medium"
-                  >
-                    Open PDF <ExternalLink size={16} />
-                  </a>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                className="mb-16"
+              >
+                <h2 className="text-3xl font-bold mb-8 text-white flex items-center gap-3">
+                  <span className="w-8 h-8 rounded-full bg-surface flex items-center justify-center text-textMuted text-sm border border-white/10">
+                    📄
+                  </span>
+                  Presentation Slides
+                </h2>
+
+                <div className="space-y-12">
+                  {/* Convert to array if it's a single string to unify the mapping logic */}
+                  {(Array.isArray(event.slidesPdf) ? event.slidesPdf : [event.slidesPdf]).map((pdf, index, arr) => (
+                    <div key={index} className="flex flex-col">
+                      {/* Only show "Deck 1", "Deck 2" etc if there is more than one PDF */}
+                      {arr.length > 1 && (
+                        <h3 className="text-xl font-bold text-accent mb-4">
+                          Slide Deck {index + 1}
+                        </h3>
+                      )}
+                      <div className="w-full aspect-video md:aspect-[16/9] rounded-xl overflow-hidden border border-white/10 shadow-2xl glass-card">
+                        <iframe
+                          src={assetPath(pdf)}
+                          className="w-full h-full"
+                          title={`${event.title} Slides ${index + 1}`}
+                        />
+                      </div>
+                    </div>
+                  ))}
                 </div>
-                <div className="rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-surface/50">
-                  <iframe
-                    src={assetPath(event.slidesPdf)}
-                    loading="lazy"
-                    title={`${event.title} slides`}
-                    className="w-full h-[60vh] sm:h-[80vh]"
-                  />
-                </div>
-              </div>
+              </motion.div>
             )}
 
             {/* Photo Gallery Collage */}
