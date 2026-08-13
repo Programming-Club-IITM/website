@@ -107,7 +107,7 @@ const Events = () => {
           <div className="mb-20">
             <h2 className="text-3xl font-bold mb-8 flex items-center gap-3">
               <span className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary text-sm">
-                ✦
+                ✴
               </span>
               Upcoming Events
             </h2>
@@ -135,7 +135,7 @@ const Events = () => {
           <div>
             <h2 className="text-3xl font-bold mb-10 text-white flex items-center gap-3">
               <span className="w-8 h-8 rounded-full bg-surface flex items-center justify-center text-textMuted text-sm border border-white/10">
-                ❖
+                ✹
               </span>
               Event Archive
             </h2>

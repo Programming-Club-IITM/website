@@ -75,7 +75,7 @@ const NewsletterDetail = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.15 }}
-                        className="prose prose-invert prose-lg max-w-none prose-headings:text-white prose-a:text-accent hover:prose-a:text-highlight prose-pre:bg-[#0d1312] prose-pre:border prose-pre:border-white/10"
+                        className="prose prose-invert prose-lg max-w-none prose-headings:text-white prose-a:text-accent hover:prose-a:text-highlight prose-pre:bg-[#0d1312] prose-pre:border prose-pre:border-white/10 prose-pre:whitespace-pre-wrap prose-pre:break-words prose-code:break-words"
                     >
                         {/* Custom components map to intercept images and wrap them in assetPath */}
                         <ReactMarkdown

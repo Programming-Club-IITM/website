@@ -89,7 +89,7 @@ const Home = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.8 }}
-          className="mt-16 max-w-2xl mx-auto flex flex-col items-center justify-center space-y-2 z-10 relative"
+          className="mt-8 mb-16 max-w-2xl mx-auto flex flex-col items-center justify-center space-y-2 z-10 relative"
         >
           <p className="text-textMuted/80 text-sm md:text-base italic font-medium text-center">
             "{quotes[quoteIndex]?.text}"
