@@ -99,7 +99,7 @@ export const team = {
     person(24, 'Yash Tulshyan', 'https://www.linkedin.com/in/yasht67', 'team/t24.jpeg'),
     person(25, 'Saatvik Rai', 'https://www.linkedin.com/in/saatvik-rai', 'team/t25.jpeg'),
     person(26, 'Siddharth Maira', 'https://www.linkedin.com/in/siddharth-maira/', 'team/t26.jpeg'),
-    person(27, 'SJayashivan Hosamani', 'https://www.linkedin.com/in/jayashivan-hosamani-6b9b7039b', 'team/t27.jpeg'),
+    person(27, 'Jayashivan Hosamani', 'https://www.linkedin.com/in/jayashivan-hosamani-6b9b7039b', 'team/t27.jpeg'),
   ],
 
   // Keep these names in sync with src/data/projectsData.js
