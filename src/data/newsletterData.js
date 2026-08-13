@@ -2,30 +2,31 @@
 
 // 1. Import the raw markdown string (make sure this file actually exists in this folder!)
 import rvoContent from './newsletters/RVO.md?raw';
+import AoCContent from './newsletters/AoC.md?raw';
 
 export const newsletter = [
   {
     slug: 'rvo-cpp',
     title: 'Return Value Optimization (RVO)',
-    date: '2026-08-13',
+    date: null,
     author: 'tushar3q34',
     summary: 'A deep dive into C++ Return Value Optimization, analyzing assembly output across C++11 and C++17.',
     tags: ['C++', 'Compilers', 'Assembly'],
     content: rvoContent, // 2. Assign the imported markdown here
-    furtherReading: [    // 3. New section for links
-      {
-        title: 'CppReference: Copy Elision',
-        url: 'https://en.cppreference.com/w/cpp/language/copy_elision',
-        type: 'read' // 'read' or 'video'
-      },
-      {
-        title: 'CppCon: Understanding Compiler Optimization',
-        url: 'https://youtube.com/watch?example',
-        type: 'video'
-      }
-    ]
+    furtherReading: []
   },
-  
+  {
+    slug: 'advent-of-code',
+    title: 'Advent of Code 2025',
+    date: null,
+    author: 'ScepticallySam',
+    summary: "An introduction to the 12-day Advent of Code 2025 programming challenge, detailing puzzle mechanics and how to join the Programming Club's private leaderboard.",
+    tags: ['advent-of-code', 'competitive-programming', 'puzzles'],
+    content: AoCContent, // 2. Assign the imported markdown here
+    furtherReading: [ ]
+
+  }
+
 ];
 
 export const getNewsletterBySlug = (slug) => newsletter.find(n => n.slug === slug);
