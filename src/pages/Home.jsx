@@ -42,7 +42,7 @@ const Home = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5, duration: 1 }}
-              className="mt-4 mb-8 flex flex-col items-center space-y-2"
+              className="mt-4 mb-8 flex flex-col items-center space-y-2 select-none pointer-events-none"
             >
               <div className="text-lg sm:text-xl md:text-2xl font-medium tracking-wide">
                 <span className="text-gray-300">Centre </span>
@@ -76,7 +76,7 @@ const Home = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5, duration: 1 }}
-          className="absolute bottom-20 z-30 flex flex-col items-center text-textMuted"
+          className="absolute bottom-20 z-30 flex flex-col items-center text-textMuted select-none pointer-events-none"
         >
           <span className="text-[10px] sm:text-xs font-mono uppercase tracking-widest mb-3 text-textMuted/70">
             Discover
