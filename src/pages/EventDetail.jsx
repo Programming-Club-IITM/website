@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
+import { Calendar, MapPin, Clock, Users, ArrowLeft, ExternalLink } from 'lucide-react';
 
 import {
   ArrowLeft,
@@ -219,16 +220,31 @@ const EventDetail = () => {
                 </h2>
 
                 <div className="space-y-12">
-                  {/* Convert to array if it's a single string to unify the mapping logic */}
                   {(Array.isArray(event.slidesPdf) ? event.slidesPdf : [event.slidesPdf]).map((pdf, index, arr) => (
                     <div key={index} className="flex flex-col">
-                      {/* Only show "Deck 1", "Deck 2" etc if there is more than one PDF */}
-                      {arr.length > 1 && (
-                        <h3 className="text-xl font-bold text-accent mb-4">
-                          Slide Deck {index + 1}
-                        </h3>
-                      )}
-                      <div className="w-full aspect-video md:aspect-[16/9] rounded-xl overflow-hidden border border-white/10 shadow-2xl glass-card">
+
+                      {/* Header for each PDF (Title + External Link) */}
+                      <div className="flex items-center justify-between mb-4 px-2">
+                        {arr.length > 1 ? (
+                          <h3 className="text-xl font-bold text-accent">
+                            Slide Deck {index + 1}
+                          </h3>
+                        ) : (
+                          <div /> 
+                        )}
+
+                        <a
+                          href={assetPath(pdf)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 text-primary hover:text-highlight text-sm font-semibold transition-colors bg-primary/10 hover:bg-primary/20 px-4 py-2 rounded-lg"
+                        >
+                          Open PDF <ExternalLink size={16} />
+                        </a>
+                      </div>
+
+                      {/* PDF Window (Restored tall height) */}
+                      <div className="w-full h-[500px] md:h-[700px] rounded-xl overflow-hidden border border-white/10 shadow-2xl glass-card">
                         <iframe
                           src={assetPath(pdf)}
                           className="w-full h-full"
