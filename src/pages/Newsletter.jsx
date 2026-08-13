@@ -1,8 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, BookOpen, Mail } from 'lucide-react';
+import { ArrowRight, BookOpen } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { newsletter, NEWSLETTER_SUBSCRIBE_LINK } from '../data/newsletterData';
+import { newsletter } from '../data/newsletterData';
 import SectionBackground from '../components/SectionBackground';
 
 const Newsletter = () => {
@@ -28,17 +28,6 @@ const Newsletter = () => {
             <p className="text-xl text-textMuted max-w-2xl mx-auto mb-8">
               Deep dives, tutorials, and write-ups from our community members.
             </p>
-            {NEWSLETTER_SUBSCRIBE_LINK && (
-              <a
-                href={NEWSLETTER_SUBSCRIBE_LINK}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 btn-primary py-3 px-6 rounded-lg text-sm font-semibold hover:scale-105 transition-transform"
-              >
-                <Mail size={18} />
-                Subscribe to Newsletter
-              </a>
-            )}
           </motion.div>
 
           <div className="space-y-8">
@@ -68,7 +57,6 @@ const Newsletter = () => {
                     {post.summary}
                   </p>
 
-                  {/* Topic tags */}
                   {post.tags && post.tags.length > 0 && (
                     <div className="flex flex-wrap gap-2 mb-5">
                       {post.tags.map((tag) => (

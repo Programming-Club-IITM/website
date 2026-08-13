@@ -16,7 +16,7 @@ export const projects = [
     description: 'Contributing to the core visualization library in Python. Work involves optimizing rendering pipelines and adding new plot types.',
     tags: ['Python', 'C++', 'Data Visualization'],
     githubLink: null,
-    status: 'completed',
+    status: 'active',
     teamId: 1,
   },
   {
@@ -25,7 +25,7 @@ export const projects = [
     description: 'An open-source integration platform for modern engineering teams. Unified API for all your integrations.',
     tags: ['React', 'Node.js', 'PostgreSQL'],
     githubLink: null,
-    status: 'completed',
+    status: 'active',
     teamId: 2,
   },
   {
@@ -34,7 +34,7 @@ export const projects = [
     description: 'Graphics Processing on Neural Networks using CUDA. Exploring parallel processing capabilities for deep learning.',
     tags: ['CUDA', 'C++', 'Deep Learning'],
     githubLink: null,
-    status: 'completed',
+    status: 'active',
     teamId: 3,
   },
   {
