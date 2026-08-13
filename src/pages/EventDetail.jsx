@@ -31,17 +31,22 @@ const InfoRow = ({ icon: Icon, label, children }) => (
 );
 
 // ─── Action button ───────────────────────────────────────────────────
-const ActionButton = ({ href, icon: Icon, children, primary = false }) => {
+const ActionButton = ({ href, icon: Icon, children, variant = 'secondary' }) => {
   if (!href) return null;
+
+  const baseStyle = "inline-flex items-center justify-center gap-2 py-3 px-6 rounded-xl text-sm font-semibold transition-all w-full sm:w-auto";
+  const variants = {
+    primary: "bg-primary text-[#0d1312] hover:bg-highlight hover:scale-105 hover:shadow-[0_0_20px_rgba(47,189,165,0.4)]",
+    accent: "bg-accent text-[#0d1312] hover:bg-highlight hover:scale-105 hover:shadow-[0_0_20px_rgba(242,169,59,0.4)]", // Makes Problemset pop
+    secondary: "bg-white/5 text-white border border-white/10 hover:bg-white/10 hover:border-white/20"
+  };
+
   return (
     <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className={`inline-flex items-center justify-center gap-2 py-3 px-6 rounded-xl text-sm font-semibold transition-all w-full sm:w-auto ${primary
-          ? 'bg-primary text-[#0d1312] hover:bg-highlight hover:scale-105 hover:shadow-[0_0_20px_rgba(47,189,165,0.4)]'
-          : 'bg-white/5 text-white border border-white/10 hover:bg-white/10 hover:border-white/20'
-        }`}
+      className={`${baseStyle} ${variants[variant]}`}
     >
       <Icon size={18} />
       {children}
@@ -81,7 +86,7 @@ const EventDetail = () => {
   return (
     <SectionBackground variant="cyan" intensity={0.06}>
       <div className="py-24">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 
           {/* Back link */}
           <Link
@@ -92,12 +97,12 @@ const EventDetail = () => {
             Back to Events
           </Link>
 
-          {/* Header Section */}
+          {/* Header (Title & Tags only) */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="mb-12"
+            className="mb-8"
           >
             <div className="flex flex-wrap items-center gap-3 mb-6">
               {event.groupName && (
@@ -115,13 +120,9 @@ const EventDetail = () => {
               </span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-tight">
               {event.title}
             </h1>
-
-            <p className="text-xl text-textMuted leading-relaxed max-w-3xl">
-              {event.description}
-            </p>
           </motion.div>
 
           {/* Main Content */}
@@ -131,13 +132,33 @@ const EventDetail = () => {
             transition={{ duration: 0.6, delay: 0.15 }}
             className="space-y-12"
           >
+
+            {/* Split Layout: Poster (Left) & Description (Right) */}
+            <div className="flex flex-col md:flex-row gap-8 items-start">
+              {event.poster && (
+                <div className="w-full md:w-1/3 shrink-0 rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+                  <img
+                    src={assetPath(event.poster)}
+                    alt={`${event.title} poster`}
+                    className="w-full h-auto object-cover"
+                    loading="lazy"
+                  />
+                </div>
+              )}
+
+              <div className={`w-full ${event.poster ? 'md:w-2/3' : ''}`}>
+                <div className="prose prose-invert prose-lg max-w-none prose-p:leading-relaxed prose-a:text-primary hover:prose-a:text-highlight">
+                  <ReactMarkdown>{event.description}</ReactMarkdown>
+                </div>
+              </div>
+            </div>
+
             {/* Info Grid (Date, Time, Venue, Team) */}
             <div className="glass-panel p-6 sm:p-8 rounded-2xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 border-l-2 border-l-primary">
               <InfoRow icon={Calendar} label="Date">{formattedDate}</InfoRow>
               {event.time && <InfoRow icon={Clock} label="Time">{event.time}</InfoRow>}
               {event.venue && <InfoRow icon={MapPin} label="Venue">{event.venue}</InfoRow>}
 
-              {/* New: Team Conducted */}
               {event.teamConducted && event.teamConducted.length > 0 && (
                 <InfoRow icon={Users} label="Conducted By">
                   <div className="flex flex-col gap-1">
@@ -149,40 +170,28 @@ const EventDetail = () => {
               )}
             </div>
 
-            {/* Action Buttons (Links) */}
+            {/* Action Buttons */}
             {(event.registrationLink || event.contestLink || event.ranklistLink || event.problemsetLink) && (
               <div className="flex flex-wrap gap-4">
-                <ActionButton href={event.registrationLink} icon={ClipboardList} primary>
+                <ActionButton href={event.registrationLink} icon={ClipboardList} variant="primary">
                   Register Now
                 </ActionButton>
-                <ActionButton href={event.contestLink} icon={ExternalLink}>
-                  Contest Link
-                </ActionButton>
-                <ActionButton href={event.problemsetLink} icon={Code2}>
+                <ActionButton href={event.problemsetLink} icon={Code2} variant="accent">
                   Problemset
                 </ActionButton>
-                <ActionButton href={event.ranklistLink} icon={Trophy}>
+                <ActionButton href={event.contestLink} icon={ExternalLink} variant="secondary">
+                  Contest Link
+                </ActionButton>
+                <ActionButton href={event.ranklistLink} icon={Trophy} variant="secondary">
                   Ranklist
                 </ActionButton>
               </div>
             )}
 
-            {/* Markdown Details */}
+            {/* Extended Details */}
             {event.details && (
               <div className="prose prose-invert prose-lg max-w-none prose-headings:text-white prose-a:text-primary hover:prose-a:text-highlight">
                 <ReactMarkdown>{event.details}</ReactMarkdown>
-              </div>
-            )}
-
-            {/* Poster / Hero Image */}
-            {event.poster && (
-              <div className="w-full rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
-                <img
-                  src={assetPath(event.poster)}
-                  alt={`${event.title} poster`}
-                  className="w-full h-auto object-cover"
-                  loading="lazy"
-                />
               </div>
             )}
 

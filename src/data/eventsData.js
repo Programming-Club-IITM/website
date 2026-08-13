@@ -49,20 +49,22 @@ export const eventGroups = [
     events: [
       {
         slug: 'cps-2',
-        title: 'CPS – 2',
-        date: '2025-03-05',
-        category: 'past',
-        description: 'Focusing on essential algorithms: binary search applications, graph traversals (BFS/DFS), and time complexity analysis.',
+        title: 'CPS – 2: Advanced Graph Theory',
+        date: '2026-08-20',
+        category: 'upcoming',
+        // Description is now markdown and sits next to the poster
+        description: 'Join us for an **in-depth exploration** of Graph Theory! We will cover everything from basic graph traversals to complex shortest-path algorithms.\n\n*Perfect for intermediate competitive programmers looking to level up their rating.*',
         poster: 'events/cps-2/cps2.jpg',
         posters: ['events/cps-2/g1.jpg', 'events/cps-2/g2.jpg', 'events/cps-2/g3.jpg'],
-        venue: null,
-        time: null,
-        details: null,
-        registrationLink: null,
-        contestLink: null,
-        ranklistLink: null,
-        problemsetLink: 'https://codeforces.com/group/example', // New field
-        teamConducted: ['Kushal Vurukonda', 'Some Other Guy'], // New field (Array of strings)
+        venue: 'CS36, CS Block',
+        time: '6:00 PM – 8:30 PM',
+        // Details is markdown and sits below the action buttons
+        details: '### What to expect\nThis session will be highly interactive. We will start with a 45-minute theoretical breakdown, followed by a 1.5-hour live coding arena.\n\n### Prerequisites\n* Basic knowledge of C++ STL (Vectors, Queues, Sets).\n* Understanding of Big-O time complexity.\n* A laptop with a working IDE.\n\n### Syllabus\n1. **Traversals:** BFS and DFS from scratch.\n2. **Shortest Paths:** Dijkstra\'s and Bellman-Ford.\n3. **Trees:** Minimum Spanning Trees using Kruskal\'s.',
+        registrationLink: 'https://forms.google.com/example',
+        contestLink: 'https://codeforces.com/contest/example',
+        ranklistLink: 'https://codeforces.com/contest/example/standings',
+        problemsetLink: 'https://codeforces.com/group/example',
+        teamConducted: ['Kushal Vurukonda', 'Aditi Sharma', 'Rahul Kumar'],
         slidesPdf: 'events/cps-2/cps2.pdf',
       },
       {
