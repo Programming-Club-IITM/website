@@ -7,6 +7,7 @@ import Events from './pages/Events';
 import EventDetail from './pages/EventDetail';
 import Newsletter from './pages/Newsletter';
 import Team from './pages/Team';
+import NewsletterDetail from './pages/NewsletterDetail';
 
 // ─── Scroll To Top Component ─────────────────────────────────────────
 const ScrollToTop = () => {
@@ -34,6 +35,7 @@ function App() {
           <Route path="events" element={<Events />} />
           <Route path="events/:slug" element={<EventDetail />} />
           <Route path="newsletter" element={<Newsletter />} />
+          <Route path="newsletter/:slug" element={<NewsletterDetail />} />
           <Route path="team" element={<Team />} />
         </Route>
       </Routes>
