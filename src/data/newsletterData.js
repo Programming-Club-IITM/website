@@ -8,7 +8,7 @@ export const newsletter = [
     slug: 'rvo-cpp',
     title: 'Return Value Optimization (RVO)',
     date: '2026-08-13',
-    author: 'Programming Club',
+    author: 'tushar3q34',
     summary: 'A deep dive into C++ Return Value Optimization, analyzing assembly output across C++11 and C++17.',
     tags: ['C++', 'Compilers', 'Assembly'],
     content: rvoContent, // 2. Assign the imported markdown here

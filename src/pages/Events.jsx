@@ -144,9 +144,10 @@ const Events = () => {
               {years.map((year) => (
                 <div key={year} className="relative">
                   {/* Year Divider */}
-                  <div className="flex items-center gap-4 mb-8">
-                    <h3 className="text-2xl font-bold text-accent font-mono">{year}</h3>
-                    <div className="flex-1 h-px bg-white/10" />
+                  <div className="mb-8 pl-2">
+                    <h3 className="text-4xl font-extrabold text-white/30 tracking-tight font-sans">
+                      {year}
+                    </h3>
                   </div>
 
                   {/* Grid of Events for this year */}

@@ -3,8 +3,30 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ChevronDown, ArrowRight } from 'lucide-react';
 import HeroBackground from '../components/HeroBackground';
-
+import React, { useState, useEffect } from 'react';
+const quotes = [
+  { text: "Talk is cheap. Show me the code.", author: "Linus Torvalds" },
+  { text: "The question of whether computers can think is like the question whether submarines can swim.", author: "Edsger Dijkstra" },
+  {
+    text: "What one programmer can do in one month, two programmers can do in two months.", author: "Fred Brooks" },
+  { text: "To iterate is human, to recurse divine.", author: "L. Peter Deutsch" },
+  { text: "There are 10 types of people in this world. Those who understand binary and those who don't.", author: "Random user" }
+];
 const Home = () => {
+  const [quoteIndex, setQuoteIndex] = useState(0);
+
+  useEffect(() => {
+    // Calculate index based on the current epoch time divided by 30 minutes (1,800,000 ms)
+    // This ensures everyone sees the same quote at the same time, and it changes globally!
+    const updateQuote = () => {
+      const index = Math.floor(Date.now() / (30 * 60 * 1000)) % quotes.length;
+      setQuoteIndex(index);
+    };
+
+    updateQuote(); // Set initially
+    const interval = setInterval(updateQuote, 60000); // Check every minute to see if 30 mins have passed
+    return () => clearInterval(interval);
+  }, []);
   return (
     <div className="flex flex-col w-full">
       {/* ─── Hero Section ──────────────────────────────────────────────────────── */}
@@ -45,9 +67,9 @@ const Home = () => {
                 <span className="text-gray-300">Centre </span>
                 <span className="text-red-500 font-semibold">for Innovation</span>
               </div>
-              <div className="text-sm sm:text-base md:text-lg text-gray-400/80 uppercase tracking-widest font-mono">
+              <span className="font-sans font-medium tracking-wide text-accent text-sm uppercase">
                 Indian Institute of Technology Madras
-              </div>
+              </span>
             </motion.div>
 
             {/* CTA Buttons */}
@@ -67,7 +89,20 @@ const Home = () => {
             </motion.div>
           </motion.div>
         </div>
-
+        {/* Dynamic Quote Section */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.8 }}
+          className="mt-16 max-w-2xl mx-auto flex flex-col items-center justify-center space-y-2"
+        >
+          <p className="text-textMuted/80 text-sm md:text-base italic font-medium text-center">
+            "{quotes[quoteIndex].text}"
+          </p>
+          <p className="text-primary/60 text-xs font-semibold tracking-widest uppercase">
+            — {quotes[quoteIndex].author}
+          </p>
+        </motion.div>
         {/* Scroll Indicator */}
         <motion.div
           initial={{ opacity: 0 }}
