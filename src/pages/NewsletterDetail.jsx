@@ -16,7 +16,7 @@ const NewsletterDetail = () => {
                 <div className="max-w-xl mx-auto px-4">
                     <h1 className="text-4xl font-bold text-white mb-4">Article Not Found</h1>
                     <p className="text-textMuted mb-8">This newsletter issue doesn't exist.</p>
-                    <Link className="btn-primary" to="/newsletter">← Back to Newsletter</Link>
+                    <Link to="/newsletter" className="btn-primary">← Back to Newsletter</Link>
                 </div>
             </div>
         );
@@ -29,12 +29,12 @@ const NewsletterDetail = () => {
     });
 
     return (
-        <SectionBackground intensity="{0.05}" variant="cyan">
+        <SectionBackground intensity={0.05} variant="cyan">
             <div className="py-24">
                 <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
 
-                    <Link className="inline-flex items-center gap-2 text-sm text-textMuted hover:text-accent transition-colors mb-10" to="/newsletter">
-                        <ArrowLeft size="{16}" />
+                    <Link to="/newsletter" className="inline-flex items-center gap-2 text-sm text-textMuted hover:text-accent transition-colors mb-10">
+                        <ArrowLeft size={16} />
                         Back to Articles
                     </Link>
 
@@ -60,11 +60,11 @@ const NewsletterDetail = () => {
 
                         <div className="flex flex-wrap items-center gap-6 text-textMuted text-sm font-mono">
                             <div className="flex items-center gap-2">
-                                <User className="text-primary" size="{16}" />
+                                <User size={16} className="text-primary" />
                                 {post.author}
                             </div>
                             <div className="flex items-center gap-2">
-                                <Calendar className="text-primary" size="{16}" />
+                                <Calendar size={16} className="text-primary" />
                                 {formattedDate}
                             </div>
                         </div>

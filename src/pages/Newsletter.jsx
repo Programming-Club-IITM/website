@@ -1,8 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, BookOpen, Mail } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { newsletter, NEWSLETTER_SUBSCRIBE_LINK } from '../data/newsletterData';
-import { Link} from 'react-router-dom';
 import SectionBackground from '../components/SectionBackground';
 
 const Newsletter = () => {
@@ -11,94 +11,82 @@ const Newsletter = () => {
       <div className="py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
-            key={post.slug}
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.5 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            className="text-center mb-16"
           >
-            <Link className="block glass-card p-8 group hover:border-accent/40 transition-colors" to="{`/newsletter/${post.slug}`}">
-              <div className="flex items-center gap-4 text-sm font-mono text-textMuted mb-4">
-                <span>{new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
-                <span className="w-1 h-1 rounded-full bg-gray-500"></span>
-                <span className="text-primary">{post.author}</span>
-              </div>
-
-              <h2 className="text-2xl font-bold text-white mb-3 group-hover:text-accent transition-colors">
-                {post.title}
-              </h2>
-
-              <p className="text-gray-400 mb-5 leading-relaxed">
-                {post.summary}
-              </p>
-
-              {/* Topic tags */}
-              {post.tags && post.tags.length > 0 && (
-                <div className="flex flex-wrap gap-2 mb-5">
-                  {post.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-3 py-1 rounded-full bg-accent/10 text-xs font-mono text-accent/80 border border-accent/15"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              )}
-
-              <div className="flex items-center text-accent font-medium group-hover:gap-2 transition-all">
-                Read Full Article <ArrowRight className="ml-1" size="{18}" />
-              </div>
-            </Link>
+            <div className="inline-flex justify-center items-center w-16 h-16 rounded-full bg-accent/20 text-accent mb-6">
+              <BookOpen size={32} />
+            </div>
+            <h1 className="text-5xl md:text-6xl font-bold mb-6">
+              Technical Blog &{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent via-primary to-highlight">
+                Newsletter
+              </span>
+            </h1>
+            <p className="text-xl text-textMuted max-w-2xl mx-auto mb-8">
+              Deep dives, tutorials, and write-ups from our community members.
+            </p>
+            {NEWSLETTER_SUBSCRIBE_LINK && (
+              <a
+                href={NEWSLETTER_SUBSCRIBE_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 btn-primary py-3 px-6 rounded-lg text-sm font-semibold hover:scale-105 transition-transform"
+              >
+                <Mail size={18} />
+                Subscribe to Newsletter
+              </a>
+            )}
           </motion.div>
 
           <div className="space-y-8">
             {newsletter.map((post) => (
-              <motion.article
-                key={post.id}
+              <motion.div
+                key={post.slug}
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: '-40px' }}
                 transition={{ duration: 0.5 }}
-                className="glass-card p-8 group cursor-pointer hover:border-accent/40 transition-colors"
-                onClick={() => {
-                  if (post.link) {
-                    window.open(post.link, '_blank', 'noopener,noreferrer');
-                  }
-                }}
               >
-                <div className="flex items-center gap-4 text-sm font-mono text-textMuted mb-4">
-                  <span>{new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
-                  <span className="w-1 h-1 rounded-full bg-gray-500"></span>
-                  <span className="text-primary">{post.author}</span>
-                </div>
-
-                <h2 className="text-2xl font-bold text-white mb-3 group-hover:text-accent transition-colors">
-                  {post.title}
-                </h2>
-
-                <p className="text-gray-400 mb-5 leading-relaxed">
-                  {post.summary}
-                </p>
-
-                {/* Topic tags */}
-                {post.tags && post.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mb-5">
-                    {post.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-3 py-1 rounded-full bg-accent/10 text-xs font-mono text-accent/80 border border-accent/15"
-                      >
-                        {tag}
-                      </span>
-                    ))}
+                <Link
+                  to={`/newsletter/${post.slug}`}
+                  className="block glass-card p-8 group hover:border-accent/40 transition-colors"
+                >
+                  <div className="flex items-center gap-4 text-sm font-mono text-textMuted mb-4">
+                    <span>{new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                    <span className="w-1 h-1 rounded-full bg-gray-500"></span>
+                    <span className="text-primary">{post.author}</span>
                   </div>
-                )}
 
-                <div className="flex items-center text-accent font-medium group-hover:gap-2 transition-all">
-                  Read Full Article <ArrowRight size={18} className="ml-1" />
-                </div>
-              </motion.article>
+                  <h2 className="text-2xl font-bold text-white mb-3 group-hover:text-accent transition-colors">
+                    {post.title}
+                  </h2>
+
+                  <p className="text-gray-400 mb-5 leading-relaxed">
+                    {post.summary}
+                  </p>
+
+                  {/* Topic tags */}
+                  {post.tags && post.tags.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mb-5">
+                      {post.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="px-3 py-1 rounded-full bg-accent/10 text-xs font-mono text-accent/80 border border-accent/15"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+
+                  <div className="flex items-center text-accent font-medium group-hover:gap-2 transition-all">
+                    Read Full Article <ArrowRight size={18} className="ml-1" />
+                  </div>
+                </Link>
+              </motion.div>
             ))}
           </div>
         </div>
