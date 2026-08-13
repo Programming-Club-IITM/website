@@ -2,7 +2,6 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
-import { useState } from 'react';
 
 import {
   ArrowLeft,
@@ -10,22 +9,23 @@ import {
   Clock,
   MapPin,
   ExternalLink,
-  Presentation,
+  Users,
+  Code2,
   Trophy,
-  ClipboardList,
+  ClipboardList
 } from 'lucide-react';
-import { assetPath,getEventBySlug } from '../data/eventsData';
+import { assetPath, getEventBySlug } from '../data/eventsData';
 import SectionBackground from '../components/SectionBackground';
 
 // ─── Detail row helper ───────────────────────────────────────────────
 const InfoRow = ({ icon: Icon, label, children }) => (
-  <div className="flex items-start gap-3 text-textMuted">
-    <Icon size={18} className="text-primary mt-0.5 shrink-0" />
+  <div className="flex items-start gap-3">
+    <Icon size={20} className="text-primary mt-0.5 shrink-0" />
     <div>
-      <span className="text-xs font-mono uppercase tracking-widest text-textMuted/60 block mb-0.5">
+      <span className="text-xs font-mono uppercase tracking-widest text-textMuted/60 block mb-1">
         {label}
       </span>
-      <span className="text-white text-sm">{children}</span>
+      <span className="text-white text-base font-medium">{children}</span>
     </div>
   </div>
 );
@@ -38,13 +38,12 @@ const ActionButton = ({ href, icon: Icon, children, primary = false }) => {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className={`inline-flex items-center justify-center gap-2 py-2.5 px-5 rounded-lg text-sm font-medium transition-all ${
-        primary
-          ? 'btn-primary'
-          : 'btn-outline'
-      }`}
+      className={`inline-flex items-center justify-center gap-2 py-3 px-6 rounded-xl text-sm font-semibold transition-all w-full sm:w-auto ${primary
+          ? 'bg-primary text-[#0d1312] hover:bg-highlight hover:scale-105 hover:shadow-[0_0_20px_rgba(47,189,165,0.4)]'
+          : 'bg-white/5 text-white border border-white/10 hover:bg-white/10 hover:border-white/20'
+        }`}
     >
-      <Icon size={16} />
+      <Icon size={18} />
       {children}
     </a>
   );
@@ -55,16 +54,12 @@ const EventDetail = () => {
   const { slug } = useParams();
   const event = getEventBySlug(slug);
 
-
-
   // 404 fallback
   if (!event) {
     return (
       <div className="py-20 text-center">
         <div className="max-w-xl mx-auto px-4">
-          <h1 className="text-4xl font-bold text-white mb-4">
-            Event Not Found
-          </h1>
+          <h1 className="text-4xl font-bold text-white mb-4">Event Not Found</h1>
           <p className="text-textMuted mb-8">
             The event you're looking for doesn't exist or may have been removed.
           </p>
@@ -83,129 +78,162 @@ const EventDetail = () => {
     year: 'numeric',
   });
 
-  const hasDetails = event.details || event.venue || event.time;
-  const hasActions =
-    event.registrationLink ||
-    event.contestLink ||
-    event.ranklistLink ||
-    event.slidesLink;
-
   return (
     <SectionBackground variant="cyan" intensity={0.06}>
-      <div className="py-20">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="py-24">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+
           {/* Back link */}
           <Link
             to="/events"
-            className="inline-flex items-center gap-2 text-sm text-textMuted hover:text-primary transition-colors mb-8"
+            className="inline-flex items-center gap-2 text-sm text-textMuted hover:text-primary transition-colors mb-10"
           >
             <ArrowLeft size={16} />
             Back to Events
           </Link>
 
-          {/* Header */}
+          {/* Header Section */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="mb-10"
+            className="mb-12"
           >
-            <div className="flex items-center gap-3 mb-4">
+            <div className="flex flex-wrap items-center gap-3 mb-6">
               {event.groupName && (
-                <span className="text-xs font-mono uppercase tracking-widest text-accent">
+                <span className="text-xs font-mono uppercase tracking-[0.2em] text-accent px-3 py-1.5 rounded-full bg-accent/10 border border-accent/20">
                   {event.groupName}
                 </span>
               )}
               <span
-                className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                  event.category === 'upcoming'
+                className={`px-3 py-1.5 rounded-full text-xs font-mono uppercase tracking-widest ${event.category === 'upcoming'
                     ? 'bg-primary/20 text-primary border border-primary/30'
                     : 'bg-surface text-textMuted border border-white/10'
-                }`}
+                  }`}
               >
                 {event.category === 'upcoming' ? 'Upcoming' : 'Past'}
               </span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-white">
+
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
               {event.title}
             </h1>
+
+            <p className="text-xl text-textMuted leading-relaxed max-w-3xl">
+              {event.description}
+            </p>
           </motion.div>
 
-          {/* Content */}
+          {/* Main Content */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.15 }}
-            className="max-w-3xl mx-auto space-y-10"
+            className="space-y-12"
           >
-            {/* Poster - full width hero */}
-            {event.poster && (
-              <img
-                src={assetPath(event.poster)}
-                alt={`${event.title} poster`}
-                className="w-full h-auto rounded-2xl"
-                loading="lazy"
-              />
-            )}
-
-            {/* Gallery collage */}
-            {event.posters?.length > 0 && (
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 auto-rows-[140px]">
-                {event.posters.map((src, i) => (
-                  <img
-                    key={i}
-                    src={assetPath(src)}
-                    alt={`${event.title} photo ${i + 1}`}
-                    className={`w-full h-full object-cover rounded-xl ${i === 0 ? 'col-span-2 row-span-2' : ''
-                      }`}
-                  />
-                ))}
-              </div>
-            )}
-
-            {/* Description */}
-            <p className="text-textMuted leading-relaxed text-lg">
-              {event.description}
-            </p>
-
-            {/* Info rows */}
-            <div className="flex flex-wrap gap-x-10 gap-y-4 border-t border-white/[0.07] pt-6">
+            {/* Info Grid (Date, Time, Venue, Team) */}
+            <div className="glass-panel p-6 sm:p-8 rounded-2xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 border-l-2 border-l-primary">
               <InfoRow icon={Calendar} label="Date">{formattedDate}</InfoRow>
               {event.time && <InfoRow icon={Clock} label="Time">{event.time}</InfoRow>}
               {event.venue && <InfoRow icon={MapPin} label="Venue">{event.venue}</InfoRow>}
+
+              {/* New: Team Conducted */}
+              {event.teamConducted && event.teamConducted.length > 0 && (
+                <InfoRow icon={Users} label="Conducted By">
+                  <div className="flex flex-col gap-1">
+                    {event.teamConducted.map((person, idx) => (
+                      <span key={idx} className="truncate">{person}</span>
+                    ))}
+                  </div>
+                </InfoRow>
+              )}
             </div>
 
-            {/* Extended details */}
-            {event.details && (
-              <div className="border-t border-white/[0.07] pt-6">
-                <h3 className="text-sm font-mono uppercase tracking-widest text-textMuted/60 mb-3">
-                  Details
-                </h3>
-                <div className="prose prose-invert max-w-none">
-                  <ReactMarkdown>{event.details}</ReactMarkdown>
-                </div>
+            {/* Action Buttons (Links) */}
+            {(event.registrationLink || event.contestLink || event.ranklistLink || event.problemsetLink) && (
+              <div className="flex flex-wrap gap-4">
+                <ActionButton href={event.registrationLink} icon={ClipboardList} primary>
+                  Register Now
+                </ActionButton>
+                <ActionButton href={event.contestLink} icon={ExternalLink}>
+                  Contest Link
+                </ActionButton>
+                <ActionButton href={event.problemsetLink} icon={Code2}>
+                  Problemset
+                </ActionButton>
+                <ActionButton href={event.ranklistLink} icon={Trophy}>
+                  Ranklist
+                </ActionButton>
               </div>
             )}
 
-            {/* Slides */}
-            {event.slidesPdf && (
-              <div className="border-t border-white/[0.07] pt-6">
-                <div className="flex justify-between items-center mb-3">
-                  <h3 className="text-sm font-mono uppercase tracking-widest text-textMuted/60">
-                    Slides
-                  </h3>
-                  <a href={assetPath(event.slidesPdf)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-primary text-sm hover:underline">
-                    <ExternalLink size={14} /> Open PDF
-                  </a>
-                </div>
-                <iframe
-                  src={assetPath(event.slidesPdf)}
-                  loading ="lazy"
-                  title={`${event.title} slides`}
-                  className="w-full h-[80vh] rounded-xl border border-white/10"
+            {/* Markdown Details */}
+            {event.details && (
+              <div className="prose prose-invert prose-lg max-w-none prose-headings:text-white prose-a:text-primary hover:prose-a:text-highlight">
+                <ReactMarkdown>{event.details}</ReactMarkdown>
+              </div>
+            )}
+
+            {/* Poster / Hero Image */}
+            {event.poster && (
+              <div className="w-full rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+                <img
+                  src={assetPath(event.poster)}
+                  alt={`${event.title} poster`}
+                  className="w-full h-auto object-cover"
+                  loading="lazy"
                 />
               </div>
             )}
+
+            {/* PDF Viewer */}
+            {event.slidesPdf && (
+              <div className="space-y-4">
+                <div className="flex justify-between items-center px-2">
+                  <h3 className="text-xl font-bold text-white">Presentation Slides</h3>
+                  <a
+                    href={assetPath(event.slidesPdf)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-primary hover:text-highlight transition-colors text-sm font-medium"
+                  >
+                    Open Fullscreen <ExternalLink size={16} />
+                  </a>
+                </div>
+                <div className="rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-surface/50">
+                  <iframe
+                    src={assetPath(event.slidesPdf)}
+                    loading="lazy"
+                    title={`${event.title} slides`}
+                    className="w-full h-[60vh] sm:h-[80vh]"
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Photo Gallery Collage */}
+            {event.posters?.length > 0 && (
+              <div className="space-y-6 pt-8 border-t border-white/[0.06]">
+                <h3 className="text-xl font-bold text-white px-2">Event Gallery</h3>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 auto-rows-[160px] sm:auto-rows-[200px]">
+                  {event.posters.map((src, i) => (
+                    <div
+                      key={i}
+                      className={`rounded-2xl overflow-hidden border border-white/10 group ${i === 0 ? 'col-span-2 row-span-2' : ''
+                        }`}
+                    >
+                      <img
+                        src={assetPath(src)}
+                        alt={`${event.title} gallery photo ${i + 1}`}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        loading="lazy"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
           </motion.div>
         </div>
       </div>

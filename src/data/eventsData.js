@@ -54,13 +54,15 @@ export const eventGroups = [
         category: 'past',
         description: 'Focusing on essential algorithms: binary search applications, graph traversals (BFS/DFS), and time complexity analysis.',
         poster: 'events/cps-2/cps2.jpg',
-        posters: ['events/cps-2/g1.jpg', 'events/cps-2/g2.jpg','events/cps-2/g3.jpg'],
+        posters: ['events/cps-2/g1.jpg', 'events/cps-2/g2.jpg', 'events/cps-2/g3.jpg'],
         venue: null,
         time: null,
         details: null,
         registrationLink: null,
         contestLink: null,
         ranklistLink: null,
+        problemsetLink: 'https://codeforces.com/group/example', // New field
+        teamConducted: ['Kushal Vurukonda', 'Some Other Guy'], // New field (Array of strings)
         slidesPdf: 'events/cps-2/cps2.pdf',
       },
       {
