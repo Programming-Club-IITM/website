@@ -40,4 +40,3 @@ You can check [this](https://adventofcode.com/2025/about) out for more informati
 
 See you at the leaderboard :​)
 
-*Author – ScepticallySam*

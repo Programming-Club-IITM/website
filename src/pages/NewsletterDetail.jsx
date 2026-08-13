@@ -23,11 +23,13 @@ const NewsletterDetail = () => {
         );
     }
 
-    const formattedDate = new Date(post.date).toLocaleDateString('en-US', {
-        month: 'long',
-        day: 'numeric',
-        year: 'numeric',
-    });
+    const formattedDate = post.date
+        ? new Date(post.date).toLocaleDateString('en-US', {
+            month: 'long',
+            day: 'numeric',
+            year: 'numeric',
+        })
+        : null;
 
     return (
         <SectionBackground intensity={0.05} variant="cyan">
@@ -64,10 +66,12 @@ const NewsletterDetail = () => {
                                 <User size={16} className="text-primary" />
                                 {post.author}
                             </div>
-                            <div className="flex items-center gap-2">
-                                <Calendar size={16} className="text-primary" />
-                                {formattedDate}
-                            </div>
+                            {post.date && (
+                                <div className="flex items-center gap-2">
+                                    <Calendar size={16} className="text-primary" />
+                                    {formattedDate}
+                                </div>
+                            )}
                         </div>
                     </motion.div>
 
