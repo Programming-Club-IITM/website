@@ -4,27 +4,22 @@ import { motion } from 'framer-motion';
 import { ChevronDown, ArrowRight } from 'lucide-react';
 import HeroBackground from '../components/HeroBackground';
 import React, { useState, useEffect } from 'react';
+
 const quotes = [
   { text: "Talk is cheap. Show me the code.", author: "Linus Torvalds" },
   { text: "The question of whether computers can think is like the question whether submarines can swim.", author: "Edsger Dijkstra" },
-  {
-    text: "What one programmer can do in one month, two programmers can do in two months.", author: "Fred Brooks" },
+  {text: "What one programmer can do in one month, two programmers can do in two months.", author: "Fred Brooks" },
   { text: "To iterate is human, to recurse divine.", author: "L. Peter Deutsch" },
   { text: "There are 10 types of people in this world. Those who understand binary and those who don't.", author: "Random user" }
 ];
 const Home = () => {
-  const [quoteIndex, setQuoteIndex] = useState(0);
+
+  const [quoteIndex, setQuoteIndex] = useState(() => Math.floor(Date.now() / (30 * 60 * 1000)) % quotes.length);
 
   useEffect(() => {
-    // Calculate index based on the current epoch time divided by 30 minutes (1,800,000 ms)
-    // This ensures everyone sees the same quote at the same time, and it changes globally!
-    const updateQuote = () => {
-      const index = Math.floor(Date.now() / (30 * 60 * 1000)) % quotes.length;
-      setQuoteIndex(index);
-    };
-
-    updateQuote(); // Set initially
-    const interval = setInterval(updateQuote, 60000); // Check every minute to see if 30 mins have passed
+    const interval = setInterval(() => {
+      setQuoteIndex(Math.floor(Date.now() / (30 * 60 * 1000)) % quotes.length);
+    }, 60000);
     return () => clearInterval(interval);
   }, []);
   return (
@@ -79,7 +74,7 @@ const Home = () => {
               transition={{ delay: 0.8, duration: 0.8 }}
               className="flex flex-wrap justify-center gap-4 sm:gap-6 mt-4"
             >
-              <a href="mailto:programmingclubiitm@gmail.com" className="btn-primary py-3 px-8 text-base shadow-[0_0_20px_rgba(47,189,165,0.3)] hover:shadow-[0_0_30px_rgba(47,189,165,0.5)]">
+              <a href="https://chat.whatsapp.com/ILpSOtzG6sA122vlalbeNn" className="btn-primary py-3 px-8 text-base shadow-[0_0_20px_rgba(47,189,165,0.3)] hover:shadow-[0_0_30px_rgba(47,189,165,0.5)]">
                 Join the Community
               </a>
               <Link to="/projects" className="btn-outline py-3 px-8 text-base bg-white/[0.03] backdrop-blur-sm group">
@@ -94,13 +89,13 @@ const Home = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.8 }}
-          className="mt-16 max-w-2xl mx-auto flex flex-col items-center justify-center space-y-2"
+          className="mt-16 max-w-2xl mx-auto flex flex-col items-center justify-center space-y-2 z-10 relative"
         >
           <p className="text-textMuted/80 text-sm md:text-base italic font-medium text-center">
-            "{quotes[quoteIndex].text}"
+            "{quotes[quoteIndex]?.text}"
           </p>
           <p className="text-primary/60 text-xs font-semibold tracking-widest uppercase">
-            — {quotes[quoteIndex].author}
+            — {quotes[quoteIndex]?.author}
           </p>
         </motion.div>
         {/* Scroll Indicator */}
