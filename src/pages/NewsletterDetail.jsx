@@ -32,7 +32,7 @@ const NewsletterDetail = () => {
     return (
         <SectionBackground intensity={0.05} variant="cyan">
             <div className="py-24">
-                <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 
                     <Link to="/newsletter" className="inline-flex items-center gap-2 text-sm text-textMuted hover:text-accent transition-colors mb-10">
                         <ArrowLeft size={16} />
@@ -75,7 +75,7 @@ const NewsletterDetail = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.15 }}
-                        className="prose prose-invert prose-lg max-w-none prose-headings:text-white prose-a:text-accent hover:prose-a:text-highlight prose-pre:bg-[#0d1312] prose-pre:border prose-pre:border-white/10 prose-pre:whitespace-pre-wrap prose-pre:break-words prose-code:break-words"
+                        className="prose prose-invert prose-lg max-w-none prose-headings:text-white prose-a:text-accent hover:prose-a:text-highlight prose-pre:bg-[#0d1312] prose-pre:border prose-pre:border-white/10"
                     >
                         {/* Custom components map to intercept images and wrap them in assetPath */}
                         <ReactMarkdown
