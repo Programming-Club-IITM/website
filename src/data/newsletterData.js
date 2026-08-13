@@ -25,16 +25,7 @@ export const newsletter = [
       }
     ]
   },
-  {
-    slug: 'building-cli-rust',
-    title: 'Building a CLI tool in Rust',
-    date: '2025-11-20',
-    author: 'Bob Williams',
-    summary: 'Why we chose Rust for our internal tooling and how you can get started building blazingly fast CLIs.',
-    tags: ['Rust', 'Systems Programming', 'CLI'],
-    content: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem.',
-    furtherReading: [] // Leave empty if none
-  }
+  
 ];
 
 export const getNewsletterBySlug = (slug) => newsletter.find(n => n.slug === slug);
