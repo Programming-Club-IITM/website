@@ -4,6 +4,7 @@
 import rvoContent from './newsletters/RVO.md?raw';
 import AoCContent from './newsletters/AoC.md?raw';
 import Cpp23Content from './newsletters/c++23.md?raw';
+import satContent from './newsletters/sat.md?raw';
 
 export const newsletter = [
   {
@@ -45,6 +46,38 @@ export const newsletter = [
         title: 'error handling',
         url: 'https://www.youtube.com/watch?v=Vz40rDiWnN8',
         type: 'video' // 'read' or 'video'
+      },
+    ]
+
+  },
+  {
+    slug: '2-sat',
+    title: '2-SAT problem and its polynomial time algorithm',
+    date: null,
+    author: 'Suraj Kagalkar',
+    summary: "Explains 2-SAT — a Boolean satisfiability problem with two-literal clauses — solved in polynomial time by building an implication graph and checking Strongly Connected Components (via Kosaraju's algorithm) for contradictions. Includes a working C++ implementation.",
+    tags: ['2-SAT', 'GraphTheory', 'KosarajuAlgorithm',],
+    content: satContent, // 2. Assign the imported markdown here
+    furtherReading: [
+      {
+        title: 'A clear, high-level overview of 2-SAT: definitions, implication graphs, algorithms and applications.',
+        url: 'https://en.wikipedia.org/wiki/2-satisfiability',
+        type: 'read' // 'read' or 'video'
+      },
+      {
+        title: 'A compact, implementation-focused guide (implication graph + SCCs) with code and complexity notes',
+        url: 'https://cp-algorithms.com/graph/2SAT.html',
+        type: 'read' // 'read' or 'video'
+      },
+      {
+        title: '“How to solve the 2-SAT problem in POLYNOMIAL TIME?”: A concise video walkthrough showing the implication-graph + SCC method step-by-step.',
+        url: 'https://www.youtube.com/watch?v=Ku-jJ0G4tIc',
+        type: 'video' // 'read' or 'video'
+      },
+      {
+        title: 'Algorithm for 2-satisfiability problem: Community Q&A with practical algorithmic tips, pitfalls, and implementation pointers from experienced coders.',
+        url: 'https://stackoverflow.com/questions/1663104/algorithm-for-2-satisfiability-problem',
+        type: 'read' // 'read' or 'video'
       },
     ]
 

@@ -1,4 +1,3 @@
-# Advent of Code 2025
 
 Hello everyone, hope you are having a splendid vacation.
 

@@ -44,8 +44,13 @@ const Newsletter = () => {
                   className="block glass-card p-8 group hover:border-accent/40 transition-colors"
                 >
                   <div className="flex items-center gap-4 text-sm font-mono text-textMuted mb-4">
-                    <span>{new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
-                    <span className="w-1 h-1 rounded-full bg-gray-500"></span>
+                    {/* Conditionally render the date and separator dot */}
+                    {post.date && (
+                      <>
+                        <span>{new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                        <span className="w-1 h-1 rounded-full bg-gray-500"></span>
+                      </>
+                    )}
                     <span className="text-primary">{post.author}</span>
                   </div>
 
