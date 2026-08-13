@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
-import { Calendar, MapPin, Clock, Users, ArrowLeft, ExternalLink } from 'lucide-react';
+
 
 import {
   ArrowLeft,
@@ -230,7 +230,7 @@ const EventDetail = () => {
                             Slide Deck {index + 1}
                           </h3>
                         ) : (
-                          <div /> 
+                          <div />
                         )}
 
                         <a
