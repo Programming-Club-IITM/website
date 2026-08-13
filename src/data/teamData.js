@@ -64,35 +64,42 @@ const person = (id, name, linkedin = null, photo=null) => ({
 
 export const team = {
   heads: [
-    person(1, 'Head 1', 'progclubiitm.com', 'team/t1.jpeg'),
-    person(2, 'Head 2'),
+    person(1, 'Madhav AK', 'https://www.linkedin.com/in/madhav-arun-krishna-868a762b2', 'team/t1.jpeg'),
+    person(2, 'Anvesh', 'https://in.linkedin.com/in/anvesh-subham-pradhan-333367313','team/t2.jpeg'  ),
   ],
 
   devStrats: [
-    person(3, 'Dev Strat 1'),
-    person(4, 'Dev Strat 2'),
-    person(5, 'Dev Strat 3'),
+    person(3, 'Veer Mani Tripathi', 'https://www.linkedin.com/in/veer-mani-tripathi-246a52335?utm_source=share_via&utm_content=profile&utm_medium=member_android', 'team/t3.jpeg'),
+    person(4, 'Samarth Shah', 'https://www.linkedin.com/in/samarth-shah-b9136439b?utm_source=share_via&utm_content=profile&utm_medium=member_android', 'team/t4.jpeg'),
+    person(5, 'V Sathvik Reddy', 'https://www.linkedin.com/in/vangapelli-sathvik-reddy-9513b1321/', 'team/t5.jpeg'),
   ],
 
   cpStrats: [
-    person(6, 'CP Strat 1'),
-    person(7, 'CP Strat 2'),
-    person(8, 'CP Strat 3'),
+    person(6, 'Harshvardhan Jaju', 'https://www.linkedin.com/in/harshvardhan-jaju-692825376/', 'team/t6.jpeg'),
+    person(7, 'Parasa V Prajwal', 'https://www.linkedin.com/in/parasaprajwal/', 'team/t7.jpeg'),
+    person(8, 'Pranavanand Saji', 'https://www.linkedin.com/in/pranavanand-saji-830256315?utm_source=share_via&utm_content=profile&utm_medium=member_ios', 'team/t8.jpeg'),
+    person(9, 'Arnav Thorat', 'http://linkedin.com/in/arnav-thorat/', 'team/t9.jpeg')
   ],
 
   coordinators: [
-    person(9, 'Coordinator 1'),
-    person(10, 'Coordinator 2'),
-    person(11, 'Coordinator 3'),
-    person(12, 'Coordinator 4'),
-    person(13, 'Coordinator 5'),
-    person(14, 'Coordinator 6'),
-    person(35, 'Coordinator 6'),
-    person(36, 'Coordinator 6'),
-    person(37, 'Coordinator 6'),
-    person(38, 'Coordinator 6'),
-    person(39, 'Coordinator 6'),
-    person(40, 'Coordinator 6'),
+    person(10, 'Rishhilingam C N', 'https://www.linkedin.com/in/rishhilingam-c-n-185412384?utm_source=share_via&utm_content=profile&utm_medium=member_android', 'team/t10.jpeg'),
+    person(11, 'Bhupathi Nithin Agnihotri', 'https://www.linkedin.com/in/nithin-agnihotri-bhupathi-06446a372?utm_source=share_via&utm_content=profile&utm_medium=member_android', 'team/t11.jpeg'),
+    person(12, 'Aayush Ranjan', 'https://www.linkedin.com/in/aayush-ranjan-3693981b1?utm_source=share_via&utm_content=profile&utm_medium=member_ios', 'team/t12.jpeg'),
+    person(13, 'Mukunthan K U', 'https://www.linkedin.com/in/mukunthan-k-u-b078b9308/', 'team/t13.jpeg'),
+    person(14, 'Siddharth R', 'https://www.linkedin.com/in/siddharth-r-089b54376?utm_source=share_via&utm_content=profile&utm_medium=member_android', 'team/t14.jpeg'),
+    person(15, 'Kushal', 'https://www.linkedin.com/in/kushal-vurukonda/', 'team/t15.jpeg'),
+    person(16, 'Kanishka Chakraborty', 'https://www.linkedin.com/in/kanishka-chakraborty-8a1b28374/', 'team/t16.jpeg'),
+    person(17, 'Sasanka Mouli G', 'https://www.linkedin.com/in/gsm070', 'team/t17.jpeg'),
+    person(18, 'Chaithanya Parama Shivam', 'http://www.linkedin.com/in/chaithanya-parama-shivam-4a0421397', 'team/t18.jpeg'),
+    person(19, 'Atharva Mhatre', 'http://linkedin.com/in/atharva-mhatre-0ba40b365/', 'team/t19.jpeg'),
+    person(20, 'Aarit', 'https://www.linkedin.com/in/aarit-panda-32274339b/', 'team/t20.jpeg'),
+    person(21, 'Anish sarkar', 'https://www.linkedin.com/in/anish-sarkar-5b964a19a/?isSelfProfile=true', 'team/t21.jpeg'),
+    person(22, 'Nithil', 'https://www.linkedin.com/in/nithil-adav-a-0aba9a374?utm_source=share_via&utm_content=profile&utm_medium=member_android', 'team/t22.jpeg'),
+    person(23, 'Dev Kaurav', 'https://www.linkedin.com/in/devkaurav2025', 'team/t23.jpeg'),
+    person(24, 'Yash Tulshyan', 'https://www.linkedin.com/in/yasht67', 'team/t24.jpeg'),
+    person(25, 'Saatvik Rai', 'https://www.linkedin.com/in/saatvik-rai', 'team/t25.jpeg'),
+    person(26, 'Siddharth Maira', 'https://www.linkedin.com/in/siddharth-maira/', 'team/t26.jpeg'),
+    person(27, 'SJayashivan Hosamani', 'https://www.linkedin.com/in/jayashivan-hosamani-6b9b7039b', 'team/t27.jpeg'),
   ],
 
   // Keep these names in sync with src/data/projectsData.js
@@ -101,8 +108,8 @@ export const team = {
       id: 1,
       name: 'Matplotlib',
       leads: [
-        person(15, 'Project Lead 1'),
-        person(16, 'Project Lead 2'),
+        person(3, 'Project Lead 1'),
+        person(4, 'Project Lead 2'),
       ],
       members: [
         person(17, 'Project Member 1'),
@@ -114,8 +121,8 @@ export const team = {
       id: 2,
       name: 'Poozle',
       leads: [
-        person(20, 'Project Lead 1'),
-        person(21, 'Project Lead 2'),
+        person(5, 'Project Lead 1'),
+        person(6, 'Project Lead 2'),
       ],
       members: [
         person(22, 'Project Member 1'),
@@ -127,26 +134,26 @@ export const team = {
       id: 3,
       name: 'GUNN',
       leads: [
-        person(25, 'Project Lead 1'),
-        person(26, 'Project Lead 2'),
+        person(7, 'Project Lead 1'),
+        person(8, 'Project Lead 2'),
       ],
       members: [
         person(27, 'Project Member 1'),
-        person(28, 'Project Member 2'),
-        person(29, 'Project Member 3'),
+        person(10, 'Project Member 2'),
+        person(11, 'Project Member 3'),
       ],
     },
     {
       id: 4,
       name: 'CodeGrader',
       leads: [
-        person(30, 'Project Lead 1'),
-        person(31, 'Project Lead 2'),
+        person(9, 'Project Lead 1'),
+        person(1, 'Project Lead 2'),
       ],
       members: [
-        person(32, 'Project Member 1'),
-        person(33, 'Project Member 2'),
-        person(34, 'Project Member 3'),
+        person(12, 'Project Member 1'),
+        person(13, 'Project Member 2'),
+        person(14, 'Project Member 3'),
       ],
     },
   ],
