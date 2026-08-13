@@ -76,14 +76,16 @@ const Home = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5, duration: 1 }}
-          className="absolute bottom-10 z-20 flex flex-col items-center text-textMuted"
+          className="absolute bottom-20 z-30 flex flex-col items-center text-textMuted"
         >
-          <span className="text-xs font-mono uppercase tracking-widest mb-2 opacity-50">Discover</span>
+          <span className="text-[10px] sm:text-xs font-mono uppercase tracking-widest mb-3 text-textMuted/70">
+            Discover
+          </span>
           <motion.div
-            animate={{ y: [0, 8, 0] }}
+            animate={{ y: [0, 10, 0] }}
             transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
           >
-            <ChevronDown size={20} className="text-primary/70" />
+            <ChevronDown size={24} className="text-primary" />
           </motion.div>
         </motion.div>
       </section>
