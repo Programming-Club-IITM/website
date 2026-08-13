@@ -28,7 +28,7 @@ const Home = () => {
           >
             {/* Title */}
             <h1
-              className="font-extrabold tracking-tight mb-2 leading-none"
+              className="font-extrabold tracking-tight mb-2 leading-none select-none pointer-events-none"
               style={{ fontSize: 'clamp(2.75rem, 15vw, 9rem)' }}
             >
               <span className="text-white block mb-2">Programming</span>
