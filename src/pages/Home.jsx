@@ -5,27 +5,13 @@ import { ChevronDown, ArrowRight } from 'lucide-react';
 import HeroBackground from '../components/HeroBackground';
 import React, { useState, useEffect } from 'react';
 
-const quotes = [
-  { text: "Talk is cheap. Show me the code.", author: "Linus Torvalds" },
-  { text: "The question of whether computers can think is like the question whether submarines can swim.", author: "Edsger Dijkstra" },
-  {text: "What one programmer can do in one month, two programmers can do in two months.", author: "Fred Brooks" },
-  { text: "To iterate is human, to recurse divine.", author: "L. Peter Deutsch" },
-  { text: "There are 10 types of people in this world. Those who understand binary and those who don't.", author: "Random user" }
-];
+
+
 const Home = () => {
-
-  const [quoteIndex, setQuoteIndex] = useState(() => Math.floor(Date.now() / (30 * 60 * 1000)) % quotes.length);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setQuoteIndex(Math.floor(Date.now() / (30 * 60 * 1000)) % quotes.length);
-    }, 60000);
-    return () => clearInterval(interval);
-  }, []);
   return (
     <div className="flex flex-col w-full">
       {/* ─── Hero Section ──────────────────────────────────────────────────────── */}
-      <section className="relative min-h-[100svh] flex flex-col items-center justify-between overflow-hidden py-10 pb-20">
+      <section className="relative min-h-[100svh] flex flex-col items-center justify-center overflow-hidden">
         {/* Background Network */}
         <div className="absolute inset-0 z-0 bg-[#0B0F15]">
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-bgDark/50 to-bgDark z-10"></div>
@@ -84,20 +70,7 @@ const Home = () => {
             </motion.div>
           </motion.div>
         </div>
-        {/* Dynamic Quote Section */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.8 }}
-          className="mt-8 mb-16 max-w-2xl mx-auto flex flex-col items-center justify-center space-y-2 z-10 relative"
-        >
-          <p className="text-textMuted/80 text-sm md:text-base italic font-medium text-center">
-            "{quotes[quoteIndex]?.text}"
-          </p>
-          <p className="text-primary/60 text-xs font-semibold tracking-widest uppercase">
-            — {quotes[quoteIndex]?.author}
-          </p>
-        </motion.div>
+
         {/* Scroll Indicator */}
         <motion.div
           initial={{ opacity: 0 }}
