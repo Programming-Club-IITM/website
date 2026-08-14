@@ -23,6 +23,24 @@ const PUSH = 0.9;        // impulse strength at the cursor's centre
 const DAMPING = 0.94;    // how fast a nudged node eases back to its own drift
 const MAX_SPEED = 3.2;   // px/frame ceiling, keeps the field from flying apart
 
+// ── Click-to-spawn tuning ────────────────────────────────────────────
+const SPAWN_PER_CLICK = 6;  // dots added per click
+const SPAWN_SPREAD = 26;    // px scatter around the click point
+const SPAWN_BURST = 1.6;    // outward kick so new dots visibly scatter
+// Hard ceiling on the field. Link-finding is O(n²), so this is what stops a
+// long clicking session from turning the hero into a slideshow. The baseline
+// population is 30–80, so this leaves a lot of room to play.
+const MAX_NODES = 400;
+
+// Link alpha is quantised into buckets so a dense field costs a handful of
+// stroke calls instead of one per link. 16 steps across a 0–0.35 alpha range
+// is a 0.02 difference per step — invisible on 1px lines over near-black.
+const ALPHA_STEPS = 16;
+const LINK_STYLES = Array.from({ length: ALPHA_STEPS }, (_, i) =>
+  // Use the primary teal color for all lines to keep it clean
+  `rgba(48, 189, 165, ${(((i + 0.5) / ALPHA_STEPS) * 0.35).toFixed(3)})`
+);
+
 const HeroBackground = () => {
   const canvasRef = useRef(null);
   const mouseRef = useRef({ x: 0, y: 0, active: false });
@@ -33,10 +51,30 @@ const HeroBackground = () => {
     const ctx = canvas.getContext('2d');
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    let width, height, dpr;
+    let width = 0, height = 0, dpr;
     let nodes = [];
     let animationId;
     let bounds = canvas.getBoundingClientRect();
+
+    // One factory for every dot, so clicked-in ones are built exactly like the
+    // initial population — same colour weighting, same radius range, same drift.
+    const createNode = (x, y, burst = 0) => {
+      // bvx/bvy is the node's own ambient drift; vx/vy is what actually moves
+      // it, so a cursor nudge decays back to the drift instead of persisting.
+      const bvx = (Math.random() - 0.5) * 0.25; // slightly faster
+      const bvy = (Math.random() - 0.5) * 0.25;
+      const angle = Math.random() * Math.PI * 2;
+      return {
+        x,
+        y,
+        vx: bvx + Math.cos(angle) * burst,
+        vy: bvy + Math.sin(angle) * burst,
+        bvx,
+        bvy,
+        r: Math.random() * 1.8 + 1.2,
+        color: pickColor(),
+      };
+    };
 
     const setup = () => {
       const rect = canvas.parentElement.getBoundingClientRect();
@@ -50,27 +88,42 @@ const HeroBackground = () => {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       bounds = canvas.getBoundingClientRect();
 
-      // Increase node density for a better network effect
-      const nodeCount = Math.max(30, Math.min(80, Math.floor((width * height) / 16000)));
-      nodes = Array.from({ length: nodeCount }, () => {
-        // bvx/bvy is the node's own ambient drift; vx/vy is what actually moves
-        // it, so a cursor nudge decays back to the drift instead of persisting.
-        const bvx = (Math.random() - 0.5) * 0.25; // slightly faster
-        const bvy = (Math.random() - 0.5) * 0.25;
-        return {
-          x: Math.random() * width,
-          y: Math.random() * height,
-          vx: bvx,
-          vy: bvy,
-          bvx,
-          bvy,
-          r: Math.random() * 1.8 + 1.2,
-          color: pickColor(),
-        };
-      });
+      if (nodes.length === 0) {
+        // Increase node density for a better network effect
+        const nodeCount = Math.max(30, Math.min(80, Math.floor((width * height) / 16000)));
+        nodes = Array.from({ length: nodeCount }, () =>
+          createNode(Math.random() * width, Math.random() * height)
+        );
+      } else {
+        // Keep the existing field (including anything clicked in) and just pull
+        // strays back into frame. Mobile browsers fire resize whenever the
+        // address bar hides, so rebuilding here would wipe the dots constantly.
+        nodes.forEach((n) => {
+          n.x = Math.min(Math.max(n.x, 0), width);
+          n.y = Math.min(Math.max(n.y, 0), height);
+        });
+      }
+    };
+
+    const spawnAt = (clientX, clientY) => {
+      if (prefersReducedMotion) return;
+      const x = clientX - bounds.left;
+      const y = clientY - bounds.top;
+      if (x < 0 || x > bounds.width || y < 0 || y > bounds.height) return;
+
+      const count = Math.min(SPAWN_PER_CLICK, MAX_NODES - nodes.length);
+      for (let i = 0; i < count; i++) {
+        nodes.push(createNode(
+          x + (Math.random() - 0.5) * SPAWN_SPREAD,
+          y + (Math.random() - 0.5) * SPAWN_SPREAD,
+          SPAWN_BURST
+        ));
+      }
     };
 
     const linkDist = 180; // Connect nodes from further away
+    const linkDistSq = linkDist * linkDist;
+    const buckets = new Array(ALPHA_STEPS).fill(null);
 
     const render = () => {
       ctx.clearRect(0, 0, width, height);
@@ -118,24 +171,36 @@ const HeroBackground = () => {
         ctx.fill();
       });
 
-      // connecting lines
+      // connecting lines — collected into one path per alpha bucket, then
+      // stroked in a single pass each, so link count barely costs anything
+      buckets.fill(null);
+
       for (let i = 0; i < nodes.length; i++) {
+        const a = nodes[i];
         for (let j = i + 1; j < nodes.length; j++) {
-          const dx = nodes[i].x - nodes[j].x;
-          const dy = nodes[i].y - nodes[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < linkDist) {
+          const b = nodes[j];
+          const dx = a.x - b.x;
+          const dy = a.y - b.y;
+          const distSq = dx * dx + dy * dy;
+          // Compare squared first, so sqrt only runs for links we actually draw
+          if (distSq < linkDistSq) {
+            const dist = Math.sqrt(distSq);
             // Stronger alpha for more visible lines
-            const alpha = (1 - dist / linkDist) * 0.35;
-            ctx.beginPath();
-            ctx.moveTo(nodes[i].x, nodes[i].y);
-            ctx.lineTo(nodes[j].x, nodes[j].y);
-            // Use the primary teal color for all lines to keep it clean
-            ctx.strokeStyle = `rgba(48, 189, 165, ${alpha})`;
-            ctx.lineWidth = 1;
-            ctx.stroke();
+            const t = 1 - dist / linkDist;
+            const step = Math.min(ALPHA_STEPS - 1, (t * ALPHA_STEPS) | 0);
+            let path = buckets[step];
+            if (!path) path = buckets[step] = new Path2D();
+            path.moveTo(a.x, a.y);
+            path.lineTo(b.x, b.y);
           }
         }
+      }
+
+      ctx.lineWidth = 1;
+      for (let s = 0; s < ALPHA_STEPS; s++) {
+        if (!buckets[s]) continue;
+        ctx.strokeStyle = LINK_STYLES[s];
+        ctx.stroke(buckets[s]);
       }
 
       animationId = requestAnimationFrame(render);
@@ -153,6 +218,14 @@ const HeroBackground = () => {
     };
     const clearPointer = () => { mouseRef.current.active = false; };
 
+    const handlePointerDown = (e) => {
+      trackPointer(e);
+      // Never hijack a real click — the hero's buttons and links win. The title
+      // and subtitle are pointer-events-none, so clicks there fall through here.
+      if (e.target?.closest?.('a, button, input, textarea, select, label, [role="button"]')) return;
+      spawnAt(e.clientX, e.clientY);
+    };
+
     // bounds is viewport-relative, so it moves as the hero scrolls
     const refreshBounds = () => { bounds = canvas.getBoundingClientRect(); };
 
@@ -162,7 +235,7 @@ const HeroBackground = () => {
     window.addEventListener('resize', setup);
     window.addEventListener('scroll', refreshBounds, { passive: true });
     window.addEventListener('pointermove', trackPointer, { passive: true });
-    window.addEventListener('pointerdown', trackPointer, { passive: true });
+    window.addEventListener('pointerdown', handlePointerDown, { passive: true });
     // pointerleave doesn't bubble, so it has to sit on the root element to catch
     // the cursor leaving the window entirely (no further moves would arrive).
     document.documentElement.addEventListener('pointerleave', clearPointer);
@@ -174,7 +247,7 @@ const HeroBackground = () => {
       window.removeEventListener('resize', setup);
       window.removeEventListener('scroll', refreshBounds);
       window.removeEventListener('pointermove', trackPointer);
-      window.removeEventListener('pointerdown', trackPointer);
+      window.removeEventListener('pointerdown', handlePointerDown);
       document.documentElement.removeEventListener('pointerleave', clearPointer);
       window.removeEventListener('pointercancel', clearPointer);
       window.removeEventListener('blur', clearPointer);
