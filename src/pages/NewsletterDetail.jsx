@@ -47,16 +47,6 @@ const NewsletterDetail = () => {
                         transition={{ duration: 0.6 }}
                         className="mb-12 border-b border-white/10 pb-10"
                     >
-                        {post.tags && post.tags.length > 0 && (
-                            <div className="flex flex-wrap gap-2 mb-6">
-                                {post.tags.map((tag) => (
-                                    <span key={tag} className="px-3 py-1 rounded-full bg-accent/10 text-xs font-mono text-accent/80 border border-accent/15">
-                                        {tag}
-                                    </span>
-                                ))}
-                            </div>
-                        )}
-
                         <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6 leading-tight">
                             {post.title}
                         </h1>

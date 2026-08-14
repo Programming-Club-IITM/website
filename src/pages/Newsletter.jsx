@@ -62,19 +62,6 @@ const Newsletter = () => {
                     {post.summary}
                   </p>
 
-                  {post.tags && post.tags.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mb-5">
-                      {post.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-3 py-1 rounded-full bg-accent/10 text-xs font-mono text-accent/80 border border-accent/15"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-
                   <div className="flex items-center text-accent font-medium group-hover:gap-2 transition-all">
                     Read Full Article <ArrowRight size={18} className="ml-1" />
                   </div>

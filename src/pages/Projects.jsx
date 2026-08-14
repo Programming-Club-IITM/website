@@ -74,14 +74,6 @@ const Projects = () => {
                   {project.description}
                 </p>
 
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {project.tags.map((tag) => (
-                    <span key={tag} className="px-3 py-1 rounded-full bg-surface text-xs font-mono text-gray-300 border border-white/5">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
                 {/* Link to team section */}
                 <Link
                   to="/team"

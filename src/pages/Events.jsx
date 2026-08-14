@@ -17,24 +17,9 @@ const EventCard = ({ event }) => (
       to={`/events/${event.slug}`}
       className="glass-card p-6 flex flex-col h-full group block border-l-2 hover:border-l-primary transition-colors border-l-transparent"
     >
-      <div className="flex justify-between items-start mb-3">
-        <div>
-          {event.groupName && (
-            <span className="text-[10px] font-mono uppercase tracking-widest text-textMuted/60 block mb-1">
-              {event.groupName}
-            </span>
-          )}
-          <h3 className="text-lg font-bold text-white group-hover:text-primary transition-colors">
-            {event.title}
-          </h3>
-        </div>
-
-        {event.category === 'upcoming' && (
-          <span className="px-3 py-1 rounded-full text-[10px] uppercase tracking-wider font-bold shrink-0 ml-3 bg-primary/20 text-primary border border-primary/30">
-            Upcoming
-          </span>
-        )}
-      </div>
+      <h3 className="text-lg font-bold text-white group-hover:text-primary transition-colors mb-3">
+        {event.title}
+      </h3>
 
       <div className="flex items-center gap-2 text-textMuted text-sm mb-3">
         <Calendar size={14} className="text-primary/70" />

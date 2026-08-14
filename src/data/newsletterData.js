@@ -13,7 +13,6 @@ export const newsletter = [
     date: null,
     author: 'ScepticallySam',
     summary: "An introduction to the 12-day Advent of Code 2025 programming challenge, detailing puzzle mechanics and how to join the Programming Club's private leaderboard.",
-    tags: ['advent-of-code', 'competitive-programming', 'puzzles'],
     content: AoCContent, // 2. Assign the imported markdown here
     furtherReading: [ ]
 
@@ -24,7 +23,6 @@ export const newsletter = [
     date: null,
     author: 'tushar3q34',
     summary: 'A deep dive into C++ Return Value Optimization, analyzing assembly output across C++11 and C++17.',
-    tags: ['C++', 'Compilers', 'Assembly'],
     content: rvoContent, // 2. Assign the imported markdown here
     furtherReading: []
   },
@@ -34,7 +32,6 @@ export const newsletter = [
     date: null,
     author: 'ScepticallySam',
     summary: "A brief introduction to the std::expected feature introduced in C++23, highlighting its benefits for explicit, type-safe, and composable error handling compared to traditional exceptions and std::optional.",
-    tags: ['c++23', 'std-expected',],
     content: Cpp23Content, // 2. Assign the imported markdown here
     furtherReading: [
       {
@@ -56,7 +53,6 @@ export const newsletter = [
     date: null,
     author: 'Suraj Kagalkar',
     summary: "Explains 2-SAT — a Boolean satisfiability problem with two-literal clauses — solved in polynomial time by building an implication graph and checking Strongly Connected Components (via Kosaraju's algorithm) for contradictions. Includes a working C++ implementation.",
-    tags: ['2-SAT', 'GraphTheory', 'KosarajuAlgorithm',],
     content: satContent, // 2. Assign the imported markdown here
     furtherReading: [
       {

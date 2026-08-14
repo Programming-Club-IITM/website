@@ -98,29 +98,13 @@ const EventDetail = () => {
             Back to Events
           </Link>
 
-          {/* Header (Title & Tags only) */}
+          {/* Header (Title only) */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="mb-8"
           >
-            <div className="flex flex-wrap items-center gap-3 mb-6">
-              {event.groupName && (
-                <span className="text-xs font-mono uppercase tracking-[0.2em] text-accent px-3 py-1.5 rounded-full bg-accent/10 border border-accent/20">
-                  {event.groupName}
-                </span>
-              )}
-              <span
-                className={`px-3 py-1.5 rounded-full text-xs font-mono uppercase tracking-widest ${event.category === 'upcoming'
-                    ? 'bg-primary/20 text-primary border border-primary/30'
-                    : 'bg-surface text-textMuted border border-white/10'
-                  }`}
-              >
-                {event.category === 'upcoming' ? 'Upcoming' : 'Past'}
-              </span>
-            </div>
-
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-tight">
               {event.title}
             </h1>
