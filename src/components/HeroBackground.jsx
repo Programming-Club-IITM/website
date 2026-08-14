@@ -17,6 +17,12 @@ const pickColor = () => {
   return NODE_COLORS[0].color;
 };
 
+// ── Cursor interaction tuning ────────────────────────────────────────
+const INFLUENCE = 170;   // px radius around the cursor that nudges nodes
+const PUSH = 0.9;        // impulse strength at the cursor's centre
+const DAMPING = 0.94;    // how fast a nudged node eases back to its own drift
+const MAX_SPEED = 3.2;   // px/frame ceiling, keeps the field from flying apart
+
 const HeroBackground = () => {
   const canvasRef = useRef(null);
   const mouseRef = useRef({ x: 0, y: 0, active: false });
@@ -30,6 +36,7 @@ const HeroBackground = () => {
     let width, height, dpr;
     let nodes = [];
     let animationId;
+    let bounds = canvas.getBoundingClientRect();
 
     const setup = () => {
       const rect = canvas.parentElement.getBoundingClientRect();
@@ -41,17 +48,26 @@ const HeroBackground = () => {
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      bounds = canvas.getBoundingClientRect();
 
       // Increase node density for a better network effect
       const nodeCount = Math.max(30, Math.min(80, Math.floor((width * height) / 16000)));
-      nodes = Array.from({ length: nodeCount }, () => ({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.25, // slightly faster
-        vy: (Math.random() - 0.5) * 0.25,
-        r: Math.random() * 1.8 + 1.2,
-        color: pickColor(),
-      }));
+      nodes = Array.from({ length: nodeCount }, () => {
+        // bvx/bvy is the node's own ambient drift; vx/vy is what actually moves
+        // it, so a cursor nudge decays back to the drift instead of persisting.
+        const bvx = (Math.random() - 0.5) * 0.25; // slightly faster
+        const bvy = (Math.random() - 0.5) * 0.25;
+        return {
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: bvx,
+          vy: bvy,
+          bvx,
+          bvy,
+          r: Math.random() * 1.8 + 1.2,
+          color: pickColor(),
+        };
+      });
     };
 
     const linkDist = 180; // Connect nodes from further away
@@ -62,21 +78,33 @@ const HeroBackground = () => {
       // update + draw nodes
       nodes.forEach((n) => {
         if (!prefersReducedMotion) {
-          n.x += n.vx;
-          n.y += n.vy;
-
-          // Mouse attraction physics
-          if (mouseRef.current.active) {
-            const dx = n.x - mouseRef.current.x;
-            const dy = n.y - mouseRef.current.y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < 200 && dist > 0.01) {
-              // Nodes accelerate towards the cursor
-              const force = (200 - dist) / 200 * 0.12;
-              n.x += (dx / dist) * force;
-              n.y += (dy / dist) * force;
+          // Cursor pushes nearby nodes outward — an impulse on velocity, so they
+          // carry momentum and coast instead of snapping.
+          const pointer = mouseRef.current;
+          if (pointer.active) {
+            const dx = n.x - pointer.x;
+            const dy = n.y - pointer.y;
+            const distSq = dx * dx + dy * dy;
+            if (distSq < INFLUENCE * INFLUENCE && distSq > 0.01) {
+              const dist = Math.sqrt(distSq);
+              const force = (1 - dist / INFLUENCE) * PUSH;
+              n.vx += (dx / dist) * force;
+              n.vy += (dy / dist) * force;
             }
           }
+
+          // Bleed the nudge off, easing each node back to its ambient drift
+          n.vx = n.bvx + (n.vx - n.bvx) * DAMPING;
+          n.vy = n.bvy + (n.vy - n.bvy) * DAMPING;
+
+          const speed = Math.hypot(n.vx, n.vy);
+          if (speed > MAX_SPEED) {
+            n.vx = (n.vx / speed) * MAX_SPEED;
+            n.vy = (n.vy / speed) * MAX_SPEED;
+          }
+
+          n.x += n.vx;
+          n.y += n.vy;
 
           if (n.x < 0) n.x = width;
           if (n.x > width) n.x = 0;
@@ -113,28 +141,53 @@ const HeroBackground = () => {
       animationId = requestAnimationFrame(render);
     };
 
-    const handleMouseMove = (e) => {
-      const rect = canvas.getBoundingClientRect();
-      mouseRef.current = { x: e.clientX - rect.left, y: e.clientY - rect.top, active: true };
+    // Tracked on window rather than on the canvas' parent: the hero copy and
+    // buttons sit in a sibling layer above the canvas, so a listener down here
+    // would never see the pointer over most of the hero. The canvas itself stays
+    // pointer-events-none, so this reads the cursor without ever capturing it.
+    const trackPointer = (e) => {
+      const x = e.clientX - bounds.left;
+      const y = e.clientY - bounds.top;
+      const inside = x >= 0 && x <= bounds.width && y >= 0 && y <= bounds.height;
+      mouseRef.current = { x, y, active: inside };
     };
-    const handleMouseLeave = () => { mouseRef.current.active = false; };
+    const clearPointer = () => { mouseRef.current.active = false; };
+
+    // bounds is viewport-relative, so it moves as the hero scrolls
+    const refreshBounds = () => { bounds = canvas.getBoundingClientRect(); };
 
     setup();
     animationId = requestAnimationFrame(render);
 
     window.addEventListener('resize', setup);
-    canvas.parentElement.addEventListener('mousemove', handleMouseMove);
-    canvas.parentElement.addEventListener('mouseleave', handleMouseLeave);
+    window.addEventListener('scroll', refreshBounds, { passive: true });
+    window.addEventListener('pointermove', trackPointer, { passive: true });
+    window.addEventListener('pointerdown', trackPointer, { passive: true });
+    // pointerleave doesn't bubble, so it has to sit on the root element to catch
+    // the cursor leaving the window entirely (no further moves would arrive).
+    document.documentElement.addEventListener('pointerleave', clearPointer);
+    window.addEventListener('pointercancel', clearPointer);
+    window.addEventListener('blur', clearPointer);
 
     return () => {
       cancelAnimationFrame(animationId);
       window.removeEventListener('resize', setup);
-      canvas.parentElement.removeEventListener('mousemove', handleMouseMove);
-      canvas.parentElement.removeEventListener('mouseleave', handleMouseLeave);
+      window.removeEventListener('scroll', refreshBounds);
+      window.removeEventListener('pointermove', trackPointer);
+      window.removeEventListener('pointerdown', trackPointer);
+      document.documentElement.removeEventListener('pointerleave', clearPointer);
+      window.removeEventListener('pointercancel', clearPointer);
+      window.removeEventListener('blur', clearPointer);
     };
   }, []);
 
-  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />;
+  return (
+    <canvas
+      ref={canvasRef}
+      aria-hidden="true"
+      className="absolute inset-0 w-full h-full pointer-events-none"
+    />
+  );
 };
 
 export default HeroBackground;

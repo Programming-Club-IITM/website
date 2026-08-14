@@ -113,12 +113,14 @@ const MemberGrid = ({ members }) => (
   </motion.div>
 );
 // ─── Section Header ──────────────────────────────────────────────────
-const SectionHeader = ({ title }) => (
+// `as` only changes the heading level for semantics — every instance renders
+// identically, so project sub-headings match "The Heads" / "Coordinators".
+const SectionHeader = ({ title, as: Tag = 'h2' }) => (
   <div className="flex items-center gap-4 mb-8 sm:mb-10">
     <div className="flex-1 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
-    <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white whitespace-nowrap">
+    <Tag className="text-xl sm:text-2xl md:text-3xl font-bold text-white whitespace-nowrap">
       {title}
-    </h2>
+    </Tag>
     <div className="flex-1 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
   </div>
 );
@@ -149,23 +151,19 @@ const ProjectTeam = ({ project }) => (
     className="glass-panel p-4 sm:p-8 md:p-10 border-l-2 border-l-accent"
     id={`project-${project.id}`}
   >
-    <h3 className="text-xl sm:text-2xl font-bold text-primary mb-8 sm:mb-10 text-center">
+    <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary mb-8 sm:mb-10 text-center">
       {project.name}
     </h3>
 
     {/* Leads */}
     <div className="mb-10">
-      <h4 className="text-xs font-mono uppercase tracking-[0.2em] text-textMuted mb-6 text-center">
-        Project Leads
-      </h4>
+      <SectionHeader as="h4" title="Project Leads" />
       <MemberGrid members={project.leads} />
     </div>
 
     {/* Members */}
     <div>
-      <h4 className="text-xs font-mono uppercase tracking-[0.2em] text-textMuted mb-6 text-center">
-        Project Members
-      </h4>
+      <SectionHeader as="h4" title="Project Members" />
       <MemberGrid members={project.members} />
     </div>
   </motion.div>
@@ -215,13 +213,13 @@ const Team = () => {
 
             <div className="section-divider" />
 
-            <TeamSection title="Dev Strats">
+            <TeamSection title="Dev Strategists">
               <MemberGrid members={team.devStrats} />
             </TeamSection>
 
             <div className="section-divider" />
 
-            <TeamSection title="CP Strats">
+            <TeamSection title="CP Strategists">
               <MemberGrid members={team.cpStrats} />
             </TeamSection>
 
