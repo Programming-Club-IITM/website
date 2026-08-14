@@ -34,7 +34,7 @@ const Projects = () => {
           >
             <h1 className="text-5xl md:text-6xl font-bold mb-6">
               Our{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-highlight via-primary to-accent">
+              <span className="text-gradient-brand">
                 Projects
               </span>
             </h1>

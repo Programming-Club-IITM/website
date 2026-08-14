@@ -37,13 +37,4 @@ export const projects = [
     status: 'completed',
     teamId: 3,
   },
-  {
-    id: 4,
-    title: 'CodeGrader',
-    description: 'An automated testing and grading system for competitive programming contests, with isolated execution environments.',
-    tags: ['Docker', 'Go', 'React'],
-    githubLink: null,
-    status: 'completed',
-    teamId: 4,
-  },
 ];

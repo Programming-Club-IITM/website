@@ -13,16 +13,16 @@ import React from 'react';
 
 const PALETTES = {
   teal: [
-    'rgba(47, 189, 165, VAR)',  // primary
-    'rgba(27, 143, 176, VAR)',  // accent
+    'rgba(48, 189, 165, VAR)',  // primary
+    'rgba(22, 132, 177, VAR)',  // accent
   ],
   cyan: [
-    'rgba(27, 143, 176, VAR)',
-    'rgba(47, 189, 165, VAR)',
+    'rgba(22, 132, 177, VAR)',
+    'rgba(48, 189, 165, VAR)',
   ],
   lime: [
     'rgba(134, 196, 64, VAR)',
-    'rgba(47, 189, 165, VAR)',
+    'rgba(48, 189, 165, VAR)',
   ],
 };
 

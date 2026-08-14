@@ -2,8 +2,8 @@ import React, { useEffect, useRef } from 'react';
 
 // Brand palette used for the node network
 const NODE_COLORS = [
-  { color: '47, 189, 165', weight: 5 },  // primary teal
-  { color: '27, 143, 176', weight: 4 },  // accent cyan
+  { color: '48, 189, 165', weight: 5 },  // primary teal
+  { color: '22, 132, 177', weight: 4 },  // accent cyan
   { color: '134, 196, 64', weight: 2 },  // highlight lime
 ];
 
@@ -103,7 +103,7 @@ const HeroBackground = () => {
             ctx.moveTo(nodes[i].x, nodes[i].y);
             ctx.lineTo(nodes[j].x, nodes[j].y);
             // Use the primary teal color for all lines to keep it clean
-            ctx.strokeStyle = `rgba(47, 189, 165, ${alpha})`;
+            ctx.strokeStyle = `rgba(48, 189, 165, ${alpha})`;
             ctx.lineWidth = 1;
             ctx.stroke();
           }

@@ -103,57 +103,48 @@ export const team = {
   ],
 
   // Keep these names in sync with src/data/projectsData.js
+  // Project ids 101+ so they never collide with the main roster above.
   projects: [
     {
       id: 1,
       name: 'Matplotlib',
       leads: [
-        person(3, 'Project Lead 1'),
-        person(4, 'Project Lead 2'),
+        person(101, 'Anton Beny M S', 'https://www.linkedin.com/in/anton-beny-m-s-727a71371/', 'team/t28.jpeg'),
+        person(102, 'Pranav Raghu', 'https://www.linkedin.com/in/pranav-raghu-56a699254/', 'team/t29.jpeg'),
       ],
       members: [
-        person(17, 'Project Member 1'),
-        person(18, 'Project Member 2'),
-        person(19, 'Project Member 3'),
+        person(103, 'Batchu Adwaith', 'http://linkedin.com/in/adwaithbatchu', 'team/t30.jpeg'),
+        person(104, 'Sujal Kumar', 'https://www.linkedin.com/in/sujal-kumar-0691b9318/', 'team/t31.jpeg'),
+        person(105, 'Sreekanth M', 'https://www.linkedin.com/in/sreekanth-m-b041ba370/', 'team/t32.jpeg'),
       ],
     },
     {
       id: 2,
       name: 'Poozle',
       leads: [
-        person(5, 'Project Lead 1'),
-        person(6, 'Project Lead 2'),
+        person(106, 'Tushar Jain', 'https://www.linkedin.com/in/tushar3q34/', 'team/t33.jpeg'),
+        person(107, 'Suraj Gurunath Kagalkar', 'https://www.linkedin.com/in/suraj-kagalkar-50871013a', 'team/t34.jpeg'),
       ],
       members: [
-        person(22, 'Project Member 1'),
-        person(23, 'Project Member 2'),
-        person(24, 'Project Member 3'),
+        person(108, 'Akshat Chaplot', 'https://www.linkedin.com/in/akshat-chaplot-497a43366/', 'team/t35.jpeg'),
+        person(109, 'Avi Shah', 'https://www.linkedin.com/in/avishah-plus', 'team/t36.jpeg'),
+        person(110, 'Archita Banka', 'https://www.linkedin.com/in/archita-banka-a9163131a/', 'team/t37.jpeg'),
+        person(111, 'Abhishek Rai', 'https://www.linkedin.com/in/abhishek-rai-a18b97311', 'team/t38.jpeg'),
+        person(112, 'Sanskar Gunde', 'https://www.linkedin.com/in/sanskar-gunde-7b9a0b33a', 'team/t39.jpeg'),
       ],
     },
     {
       id: 3,
       name: 'GUNN',
       leads: [
-        person(7, 'Project Lead 1'),
-        person(8, 'Project Lead 2'),
+        person(113, 'Yoogi Kovendhan', 'https://www.linkedin.com/in/yoogi-kovendhan-0083772a3', 'team/t40.jpeg'),
+        person(114, 'Krutarth Patel', 'https://www.linkedin.com/in/krutarth-patel-3b9a961b4/', 'team/t41.jpeg'),
       ],
       members: [
-        person(27, 'Project Member 1'),
-        person(10, 'Project Member 2'),
-        person(11, 'Project Member 3'),
-      ],
-    },
-    {
-      id: 4,
-      name: 'CodeGrader',
-      leads: [
-        person(9, 'Project Lead 1'),
-        person(1, 'Project Lead 2'),
-      ],
-      members: [
-        person(12, 'Project Member 1'),
-        person(13, 'Project Member 2'),
-        person(14, 'Project Member 3'),
+        person(115, 'Harsha Karthikeya Vutukuri', 'https://www.linkedin.com/in/harsha-karthikeya-vutukuri-0a7939365/', 'team/t42.jpeg'),
+        person(116, 'Josyula Surya Srimukhi', 'https://www.linkedin.com/in/surya-srimukhi-josyula-8bb24935b', 'team/t43.jpeg'),
+        person(117, 'Priyal Patel', 'https://www.linkedin.com/in/priyal-patel-3671a2366', 'team/t44.jpeg'),
+        person(118, 'Sanika Nair', 'https://www.linkedin.com/in/sanika-nair-b5000b321/', 'team/t45.jpeg'),
       ],
     },
   ],

@@ -21,7 +21,7 @@ const Newsletter = () => {
             </div>
             <h1 className="text-5xl md:text-6xl font-bold mb-6">
               Technical Blog &{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent via-primary to-highlight">
+              <span className="text-gradient-brand">
                 Newsletter
               </span>
             </h1>

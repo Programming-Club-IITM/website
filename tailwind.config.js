@@ -8,18 +8,21 @@ export default {
     extend: {
       colors: {
         background: '#0a0a0a',
+        bgDark: '#0a0a0a',    // Alias of background, used by section/hero fades
         surface: '#121a19',
-        primary: '#2FBDA5',   // Teal — sampled from the logo ribbon
-        accent: '#1B8FB0',    // Deep cyan-blue — sampled from the logo ribbon's shadow tone
-        highlight: '#86C440', // Lime green — sampled from the logo's "PC" lettering
+        primary: '#30bda5',   // Medium Aquamarine — design doc
+        accent: '#1684b1',    // Liberty Blue — design doc
+        highlight: '#86c440', // Lime green — the logo's "PC" lettering
         spark: '#F2A93B',     // Warm amber — sparing contrast accent, not from logo
         textMain: '#f3f4f6',
         textMuted: '#94a3a1',
       },
       fontFamily: {
-        sans: ['"DM Sans"', 'sans-serif'],
-        mono: ['Fira Code', 'monospace'],
-        sora: ['Sora', 'sans-serif'],
+        // Design doc: Sora display · DM Sans body · IBM Plex Mono labels · Fira Code code
+        sans: ['"DM Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        mono: ['"IBM Plex Mono"', 'ui-monospace', 'monospace'],
+        code: ['"Fira Code"', '"IBM Plex Mono"', 'ui-monospace', 'monospace'],
+        sora: ['Sora', '"DM Sans"', 'ui-sans-serif', 'sans-serif'],
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-out',
