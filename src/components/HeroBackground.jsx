@@ -111,13 +111,16 @@ const HeroBackground = () => {
       const y = clientY - bounds.top;
       if (x < 0 || x > bounds.width || y < 0 || y > bounds.height) return;
 
-      const count = Math.min(SPAWN_PER_CLICK, MAX_NODES - nodes.length);
-      for (let i = 0; i < count; i++) {
+      // const count = Math.min(SPAWN_PER_CLICK, MAX_NODES - nodes.length);
+      for (let i = 0; i < SPAWN_PER_CLICK; i++) {
         nodes.push(createNode(
           x + (Math.random() - 0.5) * SPAWN_SPREAD,
           y + (Math.random() - 0.5) * SPAWN_SPREAD,
           SPAWN_BURST
         ));
+      }
+      if (nodes.length > MAX_NODES) {
+        nodes.splice(0, nodes.length - MAX_NODES);
       }
     };
 
