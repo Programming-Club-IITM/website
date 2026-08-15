@@ -119,7 +119,7 @@ const HeroBackground = () => {
           SPAWN_BURST
         ));
       }
-      while (nodes.length > MAX_NODES) {
+      for (let i = 0; i < SPAWN_PER_CLICK && nodes.length > MAX_NODES; i++) {
         const idx = Math.floor(Math.random() * nodes.length);
         nodes.splice(idx, 1);
       }
