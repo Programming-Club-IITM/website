@@ -30,7 +30,7 @@ const SPAWN_BURST = 1.6;    // outward kick so new dots visibly scatter
 // Hard ceiling on the field. Link-finding is O(n²), so this is what stops a
 // long clicking session from turning the hero into a slideshow. The baseline
 // population is 30–80, so this leaves a lot of room to play.
-const MAX_NODES = 400;
+const MAX_NODES = 100;
 
 // Link alpha is quantised into buckets so a dense field costs a handful of
 // stroke calls instead of one per link. 16 steps across a 0–0.35 alpha range
