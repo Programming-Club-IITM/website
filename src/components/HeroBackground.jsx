@@ -119,8 +119,9 @@ const HeroBackground = () => {
           SPAWN_BURST
         ));
       }
-      if (nodes.length > MAX_NODES) {
-        nodes.splice(0, nodes.length - MAX_NODES);
+      while (nodes.length > MAX_NODES) {
+        const idx = Math.floor(Math.random() * nodes.length);
+        nodes.splice(idx, 1);
       }
     };
 
