@@ -3,7 +3,6 @@ import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
 
-
 import {
   ArrowLeft,
   Calendar,
@@ -12,8 +11,9 @@ import {
   ExternalLink,
   Users,
   Code2,
-  Trophy,
-  ClipboardList
+  ClipboardList,
+  FileCode2,
+  Lightbulb
 } from 'lucide-react';
 import { assetPath, getEventBySlug } from '../data/eventsData';
 import SectionBackground from '../components/SectionBackground';
@@ -38,7 +38,7 @@ const ActionButton = ({ href, icon: Icon, children, variant = 'secondary' }) => 
   const baseStyle = "inline-flex items-center justify-center gap-2 py-3 px-6 rounded-xl text-sm font-semibold transition-all w-full sm:w-auto";
   const variants = {
     primary: "bg-primary text-[#0d1312] hover:bg-highlight hover:scale-105 hover:shadow-[0_0_20px_rgba(47,189,165,0.4)]",
-    accent: "bg-accent text-[#0d1312] hover:bg-highlight hover:scale-105 hover:shadow-[0_0_20px_rgba(242,169,59,0.4)]", // Makes Problemset pop
+    accent: "bg-accent text-[#0d1312] hover:bg-highlight hover:scale-105 hover:shadow-[0_0_20px_rgba(242,169,59,0.4)]",
     secondary: "bg-white/5 text-white border border-white/10 hover:bg-white/10 hover:border-white/20"
   };
 
@@ -52,6 +52,62 @@ const ActionButton = ({ href, icon: Icon, children, variant = 'secondary' }) => 
       <Icon size={18} />
       {children}
     </a>
+  );
+};
+
+// ─── Reusable PDF Viewer Section ─────────────────────────────────────
+const PdfViewerSection = ({ title, emoji, pdfData, itemLabel, children }) => {
+  if (!pdfData) return null;
+
+  const pdfs = Array.isArray(pdfData) ? pdfData : [pdfData];
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay:0.3 }}
+      className="mb-16"
+    >
+      <h2 className="text-3xl font-bold mb-6 text-white">
+        {title}
+      </h2>
+
+      {/* This renders anything we pass inside the component tags! */}
+      {children && <div className="mb-8">{children}</div>}
+
+      <div className="space-y-12">
+        {pdfs.map((pdf, index, arr) => (
+          <div key={index} className="flex flex-col">
+            <div className="flex items-center justify-between mb-4 px-2">
+              {arr.length > 1 ? (
+                <h3 className="text-xl font-bold text-accent">
+                  {itemLabel} {index + 1}
+                </h3>
+              ) : (
+                <div />
+              )}
+
+              <a
+                href={assetPath(pdf)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-primary hover:text-highlight text-sm font-semibold transition-colors bg-primary/10 hover:bg-primary/20 px-4 py-2 rounded-lg"
+              >
+                Open PDF <ExternalLink size={16} />
+              </a>
+            </div>
+
+            <div className="w-full h-[500px] md:h-[700px] rounded-xl overflow-hidden border border-white/10 shadow-2xl glass-card">
+              <iframe
+                src={assetPath(pdf)}
+                className="w-full h-full"
+                title={`${title} ${index + 1}`}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    </motion.div>
   );
 };
 
@@ -156,19 +212,16 @@ const EventDetail = () => {
             </div>
 
             {/* Action Buttons */}
-            {(event.registrationLink || event.contestLink || event.ranklistLink || event.problemsetLink) && (
+            {(event.registrationLink || event.contestLink || event.problemsetLink) && (
               <div className="flex flex-wrap gap-4">
                 <ActionButton href={event.registrationLink} icon={ClipboardList} variant="primary">
                   Register Now
                 </ActionButton>
                 <ActionButton href={event.problemsetLink} icon={Code2} variant="accent">
-                  Problemset
+                  Problemset Link
                 </ActionButton>
                 <ActionButton href={event.contestLink} icon={ExternalLink} variant="secondary">
                   Contest Link
-                </ActionButton>
-                <ActionButton href={event.ranklistLink} icon={Trophy} variant="secondary">
-                  Ranklist
                 </ActionButton>
               </div>
             )}
@@ -179,8 +232,9 @@ const EventDetail = () => {
                 <ReactMarkdown>{event.details}</ReactMarkdown>
               </div>
             )}
+
             {/* Upcoming Event Placeholder Banner */}
-            {event.category === 'upcoming' && !event.slidesPdf && !event.problemsetLink && (!event.posters || event.posters.length === 0) && (
+            {event.category === 'upcoming' && !event.slidesPdf && !event.problemsetPdf && !event.solutionsPdf && (!event.posters || event.posters.length === 0) && (
               <div className="bg-surface border border-primary/20 rounded-xl p-6 text-center shadow-[0_0_15px_rgba(47,189,165,0.1)]">
                 <p className="text-primary font-medium">
                   ✨ Slides, problemsets, and gallery will be uploaded here after the event concludes.
@@ -188,58 +242,42 @@ const EventDetail = () => {
               </div>
             )}
 
-            {/* PDF Viewer(s) */}
-            {event.slidesPdf && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                className="mb-16"
+            {/* Dynamic PDF Viewers */}
+            <div className="space-y-4">
+              <PdfViewerSection
+                title="Presentation Slides"
+                pdfData={event.slidesPdf}
+                itemLabel="Slide Deck"
+              />
+
+              <PdfViewerSection
+                title="Problem Set"
+                pdfData={event.problemsetPdf}
+                itemLabel="Problem Set"
               >
-                <h2 className="text-3xl font-bold mb-8 text-white flex items-center gap-3">
-                  <span className="w-8 h-8 rounded-full bg-surface flex items-center justify-center text-textMuted text-sm border border-white/10">
-                    📄
-                  </span>
-                  Presentation Slides
-                </h2>
-
-                <div className="space-y-12">
-                  {(Array.isArray(event.slidesPdf) ? event.slidesPdf : [event.slidesPdf]).map((pdf, index, arr) => (
-                    <div key={index} className="flex flex-col">
-
-                      {/* Header for each PDF (Title + External Link) */}
-                      <div className="flex items-center justify-between mb-4 px-2">
-                        {arr.length > 1 ? (
-                          <h3 className="text-xl font-bold text-accent">
-                            Slide Deck {index + 1}
-                          </h3>
-                        ) : (
-                          <div />
-                        )}
-
-                        <a
-                          href={assetPath(pdf)}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 text-primary hover:text-highlight text-sm font-semibold transition-colors bg-primary/10 hover:bg-primary/20 px-4 py-2 rounded-lg"
-                        >
-                          Open PDF <ExternalLink size={16} />
-                        </a>
-                      </div>
-
-                      {/* PDF Window (Restored tall height) */}
-                      <div className="w-full h-[500px] md:h-[700px] rounded-xl overflow-hidden border border-white/10 shadow-2xl glass-card">
-                        <iframe
-                          src={assetPath(pdf)}
-                          className="w-full h-full"
-                          title={`${event.title} Slides ${index + 1}`}
-                        />
-                      </div>
+                {event.problemSetters && event.problemSetters.length > 0 && (
+                  <div className="flex flex-wrap items-center gap-3 bg-white/5 p-4 rounded-xl border border-white/10 w-fit">
+                    <span className="text-textMuted text-sm font-medium flex items-center gap-2">
+                      <Users size={16} className="text-primary" />
+                      Problem Setters:
+                    </span>
+                    <div className="flex flex-wrap gap-2">
+                      {event.problemSetters.map((setter, idx) => (
+                        <span key={idx} className="bg-primary/10 text-primary border border-primary/20 px-3 py-1 rounded-md text-sm font-semibold">
+                          {setter}
+                        </span>
+                      ))}
                     </div>
-                  ))}
-                </div>
-              </motion.div>
-            )}
+                  </div>
+                )}
+              </PdfViewerSection>
+
+              <PdfViewerSection
+                title="Editorial / Solutions"
+                pdfData={event.solutionsPdf}
+                itemLabel="Solution"
+              />
+            </div>
 
             {/* Photo Gallery Collage */}
             {event.posters?.length > 0 && (

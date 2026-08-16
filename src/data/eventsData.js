@@ -12,8 +12,13 @@
  *   details        – long description / markdown text for the detail page
  *   registrationLink – external registration URL
  *   contestLink    – external contest/codeforces URL
- *   ranklistLink   – ranklist URL
- *   slidesLink     – slides/presentation URL
+ *   problemsetLink – external link to a problemset platform (e.g. HackerRank)
+ *   problemSetters - list of strings of names
+ *   teamconducted - list of strings of names
+ *   slidesPdf      – path(s) to slides PDF(s) inside public folder
+ *   problemsetPdf  – path(s) to problemset PDF(s) inside public folder
+ *   solutionsPdf   – path(s) to solutions PDF(s) inside public folder
+ *    category- past or upcoming
  *
  * TO ADD A NEW EVENT:
  *   1. Find the right group (or create a new one)
@@ -24,6 +29,32 @@ const base = import.meta.env.BASE_URL;
 export const assetPath = (path) => `${base}${path}`;
 
 export const eventGroups = [
+  {
+    name: "Freshie Roadmaps",
+    events:[
+      {
+        slug: "MCPC-2026",
+        title: "The Art of Doing Less",
+        date:" 2026-08-15",
+        category: "past",
+        description: " Join us for **Freshie Roadmaps**! The Programming Club presents **\"The Art of Doing Less\"**—an absolute beginner's intro to Dynamic Programming. Learn to break down complex problems and optimize your code efficiently.",
+        poster: 'events/mcpc-2026/mcpc26.jpeg',
+        posters: ["events/mcpc-2026/g1.jpg", "events/mcpc-2026/g2.jpg", "events/mcpc-2026/g3.jpg", "events/mcpc-2026/g4.jpg", "events/mcpc-2026/g5.jpg", "events/mcpc-2026/g6.jpg"],
+        venue: "SSB 134",
+        time: "4:30 PM",
+        details: "### What to expect\nThis session will bridge the gap between basic problem-solving and algorithmic optimization. We will begin with a simple puzzle about climbing stairs to understand event branching, and discover how it links to the Fibonacci sequence. You'll learn why calculating recursively from the top fails for large numbers and how to optimize your code so the same values aren't calculated again and again.\n\n### Prerequisites\n* No prior experience in dynamic programming required, just a willingness to learn!\n* Basic logical and problem-solving skills.\n* Familiarity with basic mathematical concepts like exponents, binary expansions, and matrices.\n\n### Syllabus\n1. **The Recursion Trap:** Breaking down problems using the stair-climbing puzzle and understanding the pitfalls of naive recursive functions.\n2. **Linear Iteration:** Learning to calculate from the bottom up to drastically reduce computations (e.g., dropping from 177 nodes to just 11).\n3. **Binary Matrix Exponentiation:** An introduction to using the Fibonacci matrix and the \"exponent trick\" to achieve logarithmic time complexity.",
+        registrationLink: null,
+        contestLink: null,
+        problemsetLink: null,
+        teamConducted: ["Siddharth R","Siddharth Maira"],
+        slidesPdf: "events/mcpc-2026/mcpc26slides.pdf",
+        problemSetters: ["Rishhilingam C N", "Atharva Mhatre", "Saatvik Rai", "Mukunthan K U"],
+        problemsetPdf: 'events/mcpc-2026/mcpc26problems.pdf',
+        solutionsPdf: 'events/mcpc-2026/mcpc26sol.pdf',
+
+      }
+    ]
+  },
   {
     name: "Intro to Programming",
     events: [
@@ -49,12 +80,15 @@ export const eventGroups = [
           "### What to expect\nThis two-part event will bridge the gap between basic programming and competitive problem-solving. We will begin with the fundamentals of C++ and the Codeforces platform, before diving deep into object-oriented programming and memory management in C++.\n\n### Prerequisites\n* No prior experience in C++ required, just a willingness to learn!\n* Basic logical and problem-solving skills.\n* A laptop with a working C++ compiler and IDE.\n\n### Syllabus\n1. **C++ & CP Basics:** Introduction to C++ syntax, basic competitive programming paradigms, and getting started on Codeforces.\n2. **Advanced C++ Development:** Deep dive into Object-Oriented Programming (Classes) and memory management (Pointers).",
         registrationLink: null,
         contestLink: null,
-        ranklistLink: null,
+        problemsetLink: null,
         teamConducted: null,
         slidesPdf: [
           "events/pc-1010-1020/PC-1010.pdf",
           "events/pc-1010-1020/PC-1020.pdf",
         ],
+        problemSetters: null,
+        problemsetPdf:null,
+        solutionsPdf:null,
       },
     ],
   },
@@ -82,10 +116,11 @@ export const eventGroups = [
           "### What to expect\nThis session focuses on essential techniques to optimize your code and solve problems more efficiently. We will introduce you to powerful built-in tools and fundamental algorithms that are crucial for any competitive programmer.\n\n### Prerequisites\n* Basic knowledge of C++ syntax and general programming concepts.\n* A laptop with a working IDE.\n\n### Syllabus\n1. **Standard Template Library (STL):** Utilizing built-in data structures and functions.\n2. **Prefix Sum:** Optimizing range queries for faster execution.\n3. **Binary Search:** Efficiently finding elements and solving monotonic functions.",
         registrationLink: null,
         contestLink: null,
-        ranklistLink: null,
         problemsetLink: null,
         teamConducted: null,
         slidesPdf: "events/cps-2/cps2.pdf",
+        problemsetPdf: null,
+        solutionsPdf: null
       },
       {
         slug: "cps-3",
@@ -102,10 +137,11 @@ export const eventGroups = [
           "### What to expect\nThis session will unpack the building blocks of Graph Theory. We will explore how to represent complex networks and navigate them efficiently using foundational algorithms.\n\n### Prerequisites\n* Basic understanding of C++ and data structures (like arrays and vectors).\n* A laptop with a working IDE.\n\n### Syllabus\n1. **Fundamentals:** Nodes, edges, and graph representations.\n2. **Traversals:** Master BFS and DFS from scratch.\n3. **Shortest Path Algorithms:** Introduction to finding the most efficient routes.",
         registrationLink: null,
         contestLink: null,
-        ranklistLink: null,
         problemsetLink: null,
         teamConducted: null,
         slidesPdf: null,
+        problemsetPdf: null,
+        solutionsPdf: null
       },
     ],
   },
@@ -131,10 +167,11 @@ export const eventGroups = [
           "### What to expect\nThis session will introduce you to the fundamentals of version control. You will learn how to track changes securely, manage your codebase, and collaborate seamlessly on team projects using Git and GitHub.\n\n### Prerequisites\n* Absolutely none! This is designed for beginners.\n* A laptop to practice the commands and set up your account.\n\n### Syllabus\n1. **Version Control Basics:** Understanding why we track code changes and how it saves time.\n2. **Git Commands:** Essential local commands to stage, commit, and manage your repository.\n3. **GitHub:** Hosting your code, collaborating, and working efficiently in teams.",
         registrationLink: null,
         contestLink: null,
-        ranklistLink: null,
         problemsetLink: null,
         teamConducted: null,
         slidesPdf: "events/sds-2/sds-2.pdf",
+        problemsetPdf: null,
+        solutionsPdf: null
       },
     ],
   },
@@ -161,10 +198,11 @@ export const eventGroups = [
           "### What to expect\nThis session will guide you through the open-source landscape. You will gain valuable insights from past GSoC contributors, learn how to make your first contributions, and get ready to showcase your skills during Hacktoberfest.\n\n### Prerequisites\n* No prior open-source experience needed!\n* A laptop, a GitHub account (recommended), and an eagerness to collaborate.\n\n### Syllabus\n1. **Introduction to Open Source:** How to start contributing and effectively build your profile.\n2. **Hacktoberfest Prep:** Everything you need to know to participate and showcase your skills (Join the IITM Discord: https://discord.gg/vJMSmwh4).\n3. **GSoC Mentorship:** Insights from past GSoC contributors and details on joining our mentorship program (Application: https://forms.gle/AEHAWAyYL22edZdW8).",
         registrationLink: null,
         contestLink: null,
-        ranklistLink: null,
         problemsetLink: null,
         teamConducted: null,
         slidesPdf: "events/oss-1/oss-1.pdf",
+        problemsetPdf: null,
+        solutionsPdf: null
       },
     ],
   },
@@ -193,10 +231,11 @@ export const eventGroups = [
           "### The Challenge\nPrepare for an intense, fast-paced algorithmic coding competition. You will face a curated set of problems designed to push your optimization skills and logical thinking to the limit.\n\n### Divisions\nTo keep the competition fair and fierce, the arena is split into two battlegrounds:\n* **Div 1:** Open to Sophos and above. Expect advanced problems and intense rivalry.\n* **Div 2:** Exclusively for Freshies! A leveled playing field to showcase your raw potential.\n\n### The Loot & Perks\n* **Massive Prize Pool:** ₹16,000 up for grabs across both divisions.\n* **Swag & Snacks:** Exclusive IMC goodies and free refreshments for all participants.\n* **CP Guild Draft:** Stand out from the crowd! This contest doubles as an official recruitment round for the CP Guild.",
         registrationLink: null,
         contestLink: null,
-        ranklistLink: null,
         problemsetLink: null,
         teamConducted: null,
         slidesPdf: null,
+        problemsetPdf: null,
+        solutionsPdf: null
       },
     ],
   },
@@ -219,10 +258,11 @@ export const eventGroups = [
         registrationLink:
           "https://unstop.com/p/bitshift-2026-iit-madras-1619526",
         contestLink: "https://codeforces.com/blog/entry/150003",
-        ranklistLink: null,
         problemsetLink: null,
         teamConducted: null,
         slidesPdf: null,
+        problemsetPdf: null,
+        solutionsPdf: null
       },
     ],
   },
@@ -250,10 +290,11 @@ export const eventGroups = [
           "### The Challenge\nMove beyond standard competitive programming! Your solutions will be evaluated on real-world performance parameters, testing how efficiently you write code and manage system overheads. Get ready to put your software development skills to the ultimate test.\n\n### Format & Eligibility\n* **Who can participate:** Open exclusively to 1st and 2nd-year UG students.\n* **Team Dynamics:** Solo battle! This is an individual participation contest.\n\n### The Loot\n* **Massive Prize Pool:** ₹50,000 total up for grabs, generously sponsored by IMC Trading.\n* **Category Breakdown:** ₹30,000 dedicated for 2nd-year students and ₹20,000 for 1st-year students.",
         registrationLink: null,
         contestLink: null,
-        ranklistLink: null,
         problemsetLink: null,
         teamConducted: null,
         slidesPdf: null,
+        problemsetPdf: null,
+        solutionsPdf: null
       },
     ],
   },
