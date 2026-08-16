@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Calendar, ArrowRight } from 'lucide-react';
 import { getAllEvents } from '../data/eventsData';
 import SectionBackground from '../components/SectionBackground';
+import ReactMarkdown from 'react-markdown';
 
 // ─── Small Event Card (links to detail page) ────────────────────────
 const EventCard = ({ event }) => (
@@ -32,9 +33,9 @@ const EventCard = ({ event }) => (
         </span>
       </div>
 
-      <p className="text-textMuted text-sm mb-4 flex-grow line-clamp-3">
-        {event.description}
-      </p>
+      <div className="text-textMuted text-sm mb-4 flex-grow line-clamp-3 prose prose-invert prose-sm max-w-none prose-p:m-0">
+        <ReactMarkdown>{event.description}</ReactMarkdown>
+      </div>
 
       <div className="flex items-center text-primary text-sm font-medium group-hover:gap-1.5 transition-all mt-auto pt-4 border-t border-white/[0.05]">
         View Details <ArrowRight size={14} className="ml-1" />
