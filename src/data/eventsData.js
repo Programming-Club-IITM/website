@@ -34,7 +34,7 @@ export const eventGroups = [
     events:[
       {
         slug: "MCPC-2026",
-        title: "The Art of Doing Less",
+        title: "Freshie Roadmaps",
         date:" 2026-08-15",
         category: "past",
         description: " Join us for **Freshie Roadmaps**! The Programming Club presents **\"The Art of Doing Less\"**—an absolute beginner's intro to Dynamic Programming. Learn to break down complex problems and optimize your code efficiently.",
