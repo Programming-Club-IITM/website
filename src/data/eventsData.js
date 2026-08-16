@@ -46,7 +46,7 @@ export const eventGroups = [
         registrationLink: null,
         contestLink: null,
         problemsetLink: null,
-        teamConducted: ["Siddharth R","Siddharth Maira"],
+        teamConducted: ["V Sathvik Reddy","Siddharth R","Siddharth Maira"],
         slidesPdf: "events/mcpc-2026/mcpc26slides.pdf",
         problemSetters: ["Rishhilingam C N", "Atharva Mhatre", "Saatvik Rai", "Mukunthan K U"],
         problemsetPdf: 'events/mcpc-2026/mcpc26problems.pdf',
