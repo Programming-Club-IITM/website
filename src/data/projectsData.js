@@ -2,36 +2,28 @@
  * PROJECTS DATA
  *
  * status: 'active' | 'completed'
- *   – All current entries are past/completed projects.
- *   – Set status to 'active' when adding new ongoing projects.
+ *   – Mark a project 'completed' once it wraps up; ongoing ones stay 'active'.
  *
  * teamId: matches the project id in teamData.js so we can link
  *   the project card to the corresponding team section.
  */
 
 export const projects = [
-  {
-    id: 1,
-    title: 'Matplotlib',
-    description: 'Contributing to the core visualization library in Python. Work involves optimizing rendering pipelines and adding new plot types.',
-    githubLink: null,
-    status: 'completed',
-    teamId: 1,
-  },
-  {
-    id: 2,
-    title: 'Poozle',
-    description: 'An open-source integration platform for modern engineering teams. Unified API for all your integrations.',
-    githubLink: null,
-    status: 'completed',
-    teamId: 2,
-  },
-  {
-    id: 3,
-    title: 'GUNN',
-    description: 'Graphics Processing on Neural Networks using CUDA. Exploring parallel processing capabilities for deep learning.',
-    githubLink: null,
-    status: 'completed',
-    teamId: 3,
-  },
+    {
+        id: 1,
+        title: 'NanoCompile',
+        description:
+            'Project NanoCompile aims to build a lightweight compiler for ONNX models that turns a model’s computation graph into optimized, model-specific C++ inference code. It shifts operations from runtime to compile time, including shape inference, operator fusion, constant folding, and AOT memory reuse, with the goal of making inference faster and more memory-efficient.',
+        githubLink: null,
+        status: 'active',
+        teamId: 1,
+    },
+    {
+        id: 2,
+        title: 'Poozle',
+        description: 'Project Poozle is a parallelized string-searching library in C++ delivering exact, regex, and fuzzy pattern matching with native multithreading and fine-grained performance control. It uses a custom FM-Index (Burrows-Wheeler Transform + suffix arrays) for compressed, ultra-fast exact search, a Thompson\'s NFA-based regex engine for linear-time matching without catastrophic backtracking, and edit-distance (Levenshtein) based fuzzy search for robust approximate matching on noisy or imperfect text. Users can choose their search algorithm and tune parameters to maximize speed for their specific use case.',
+        githubLink: null,
+        status: 'active',
+        teamId: 2,
+    },
 ];

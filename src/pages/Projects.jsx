@@ -51,7 +51,7 @@ const Projects = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true, margin: '-40px' }}
                 transition={{ duration: 0.5 }}
-                className="glass-card p-8 group relative overflow-hidden flex flex-col"
+                className="glass-card p-8 group relative overflow-hidden flex flex-col min-h-[22rem] h-full"
               >
                 <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-bl-[100px] -z-10 transition-transform group-hover:scale-110"></div>
 
@@ -70,7 +70,7 @@ const Projects = () => {
                   </div>
                 </div>
 
-                <p className="text-textMuted mb-6 line-clamp-3 flex-grow">
+                <p className="text-textMuted mb-6 flex-grow leading-relaxed">
                   {project.description}
                 </p>
 
