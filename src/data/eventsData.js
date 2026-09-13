@@ -250,11 +250,11 @@ export const eventGroups = [
     events: [
       {
         slug: "codearena-2026",
-        title: "Code Arena",
+        title: "Code Arena 2.0",
         date: "2026-09-19",
         category: "upcoming",
         description:
-          "The Programming Club presents **CODE ARENA 2.0** (proudly sponsored by IMC!)\nGet ready for an epic battle of logic, speed, and problem-solving with a massive **₹50K prize pool** up for grabs!\nPerfect for competitive programmers looking to test their skills, win cash prizes, claim exclusive IMC merch, and earn a direct spot in the CP Guild.",
+          "The Programming Club presents **CODE ARENA 2.0** (proudly sponsored by IMC!)\n\nGet ready for an epic battle of logic, speed, and problem-solving with a massive **₹50K prize pool** up for grabs!\n\nPerfect for competitive programmers looking to test their skills, win cash prizes, claim exclusive IMC merch, and earn a direct spot in the CP Guild.",
         poster: "events/codearena-2026/codearena2026.jpeg",
         posters: null,
         venue: "TBD",
