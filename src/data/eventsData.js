@@ -120,7 +120,6 @@ export const eventGroups = [
         title: "CPS - 2",
         date: "2025-09-14",
         category: "completed",
-        // Description is now markdown and sits next to the poster
         description:
           "The Programming Club is back to dive into the real weapons of Competitive Programming! It’s time to skip the long ways and make your code much faster – like a pro.\n\n*Perfect for anyone looking to boost their problem-solving, add speed to their code, explore new concepts, or just have some fun!*",
         poster: "events/cps-2/cps2.jpg",
@@ -131,7 +130,6 @@ export const eventGroups = [
         ],
         venue: "CS36, CS Block",
         time: "6:00 PM – 8:30 PM",
-        // Details is markdown and sits below the action buttons
         details:
           "### What to expect\nThis session focuses on essential techniques to optimize your code and solve problems more efficiently. We will introduce you to powerful built-in tools and fundamental algorithms that are crucial for any competitive programmer.\n\n### Prerequisites\n* Basic knowledge of C++ syntax and general programming concepts.\n* A laptop with a working IDE.\n\n### Syllabus\n1. **Standard Template Library (STL):** Utilizing built-in data structures and functions.\n2. **Prefix Sum:** Optimizing range queries for faster execution.\n3. **Binary Search:** Efficiently finding elements and solving monotonic functions.",
         registrationLink: null,
@@ -168,6 +166,27 @@ export const eventGroups = [
   {
     name: "SDS",
     events: [
+      {
+        slug: "sds-1",
+        title: "SDS - 1",
+        date: "2026-09-05",
+        category: "completed",
+        description:
+          "# The Programming Club is Back with SDS-1!\n\nLearn how to leverage **C++'s true power** to build scalable and understandable code—right from the basics!",
+        poster: "events/sds-1/sds-1.jpeg",
+        posters: ["events/sds-1/g1.jpeg", "events/sds-1/g2.jpeg", "events/sds-1/g3.jpeg", "events/sds-1/g4.jpeg", "events/sds-1/g5.jpeg", "events/sds-1/g6.jpeg"],
+        venue: "SSB 134",
+        time: "4:30 PM – 7:30 PM",
+        details:
+          "### What to Expect/nThis session introduces core C++ programming concepts essential for software development. Through practical, real-world examples—such as designing a Spotify playlist—you will learn how to structure data, organize code into reusable components, and optimize memory management./n/n### Prerequisites/n* A fully charged laptop/n* Enthu!/n/n### Syllabus/n1. **Containers & Sequences:** Fixed-size Arrays, dynamic `std::vector`, and `std::string` manipulation./n2. **Modular Code & Reusability:** Designing functions, parameters, and return types./n3. **Data Modeling & OOP:** Grouping data with `struct` and encapsulating logic using `class`, access specifiers (`public`, `private`), constructors, and getters/setters./n4. **Memory Management & Arguments:** Understanding pointers vs. references, dereferencing, and Pass-by-Value vs. Pass-by-Reference.",
+        registrationLink: null,
+        contestLink: 'https://www.hackerrank.com/sds-1-contest',
+        problemsetLink: 'https://colab.research.google.com/drive/1gYKWhJZtZmCXBWdSKha0QUh5iFoHrN0-?usp=sharing',
+        teamConducted: ['Veer Mani Tripathi', 'Mukunthan K U','Sasanka Mouli G'],
+        slidesPdf: "events/sds-1/sds-1.pdf",
+        problemsetPdf: null,
+        solutionsPdf: null
+      },
       {
         slug: "sds-2",
         title: "SDS – 2",
@@ -229,6 +248,27 @@ export const eventGroups = [
   {
     name: "Code Arena",
     events: [
+      {
+        slug: "codearena-2026",
+        title: "Code Arena",
+        date: "2026-09-19",
+        category: "upcoming",
+        description:
+          "The Programming Club presents **CODE ARENA 2.0** (proudly sponsored by IMC!) Get ready for an epic battle of logic, speed, and problem-solving with a massive ₹50K prize pool up for grabs!/nPerfect for competitive programmers looking to test their skills, win cash prizes, claim exclusive IMC merch, and earn a direct spot in the CP Guild.",
+        poster: "events/codearena-2026/codearena2026.jpeg",
+        posters: null,
+        venue: "TBD",
+        time: "1:30 PM – 4:30 PM",
+        details:
+          "# The Challenge/nGear up for an intense, fast-paced algorithmic coding battle designed to push your problem-solving, logic, and speed to the absolute limit./n/n# Divisions/nTo keep the competition fair and fierce, the arena is divided into two separate battlegrounds:/n* **Div 1 (Sophos & above):** High-stakes competition with advanced challenges./n* **Div 2 (Freshies only):** A dedicated playing field tailored for first-years to prove their raw coding mettle./n/n# The Loot & Perks/n* **₹50K Total Prize Pool:** Cash rewards across both divisions, plus winner T-shirts for top rankers./n* **Div 1 Cash:** 🥇 ₹10K | 🥈 ₹8K | 🥉 ₹6K | 4th: ₹4K | 5th: ₹2K/n* **Div 2 Cash:** 🥇 ₹6K | 🥈 ₹5K | 🥉 ₹4K | 4th: ₹3K | 5th: ₹2K/n* **Guaranteed Swag:** Exclusive IMC merch for every single participant!/n* **CP Guild Recruitment:** Standout performances will be directly considered for CP Guild membership./n/nJoin the [WhatsApp group](https://chat.whatsapp.com/CvTR9UYOo8zF3N8rh5kcSO?s=cl&p=i&mlu=4&ilr=4) for updates!",
+        registrationLink: 'https://forms.gle/smpiCngLaeXthJoc9',
+        contestLink: null,
+        problemsetLink: null,
+        teamConducted: [],
+        slidesPdf: null,
+        problemsetPdf: null,
+        solutionsPdf: null
+      },
       {
         slug: "codearena",
         title: "Code Arena",
