@@ -7,21 +7,20 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: '#0a0a0a',
-        bgDark: '#0a0a0a',    // Alias of background, used by section/hero fades
-        surface: '#121a19',
-        primary: '#30bda5',   // Medium Aquamarine — design doc
-        accent: '#1684b1',    // Liberty Blue — design doc
-        highlight: '#86c440', // Lime green — the logo's "PC" lettering
-        spark: '#F2A93B',     // Warm amber — sparing contrast accent, not from logo
-        textMain: '#f3f4f6',
-        textMuted: '#94a3a1',
+        background: '#090D0F', // Ultra-deep teal/slate (replaces #0a0a0a)
+        bgDark: '#090D0F',
+        surface: '#11161A',    // Solid elevated panel (no opacity/blur)
+        borderLine: '#1E252B', // Crisp 1px hairline border
+        primary: '#10B981',    // Emerald green (Compiler Success / Verified)
+        accent: '#0EA5E9',     // Clean cerulean blue (Focus / Active)
+        spark: '#F59E0B',      // Warning Amber (Hints / Errors)
+        textMain: '#EDEDEC',   // Off-white text
+        textMuted: '#8A8B91',  // Legible gray
       },
       fontFamily: {
-        // Design doc: Sora display · DM Sans body · IBM Plex Mono labels · Fira Code code
-        sans: ['"DM Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        mono: ['"IBM Plex Mono"', 'ui-monospace', 'monospace'],
-        code: ['"Fira Code"', '"IBM Plex Mono"', 'ui-monospace', 'monospace'],
+        sans: ['"DM Sans"', 'system-ui', 'sans-serif'],
+        mono: ['"JetBrains Mono"','"IBM Plex Mono"', 'ui-monospace', 'monospace'],
+        code: ['"JetBrains Mono"', '"Fira Code"', 'ui-monospace', 'monospace'],
         sora: ['Sora', '"DM Sans"', 'ui-sans-serif', 'sans-serif'],
       },
       animation: {
