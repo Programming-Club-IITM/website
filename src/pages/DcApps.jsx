@@ -36,7 +36,7 @@ export default function DcApps() {
   }
 
   useEffect(() => {
-    document.title = `\${cur?.title || 'DC Application'} | Programming Club IITM`;
+    document.title = `${cur?.title || 'DC Application'} | Programming Club IITM`;
   }, [cur]);
 
   useEffect(() => {
