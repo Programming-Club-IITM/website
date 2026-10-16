@@ -1,3 +1,4 @@
+import DcApps from './pages/DcApps';
 import React, { useEffect } from 'react';
 import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Layout from './components/Layout';
@@ -37,6 +38,9 @@ function App() {
           <Route path="newsletter" element={<Newsletter />} />
           <Route path="newsletter/:slug" element={<NewsletterDetail />} />
           <Route path="team" element={<Team />} />
+          <Route path="dc-apps" element={<DcApps />} />
+          <Route path="dc-apps/:part" element={<DcApps />} />
+          <Route path="dc-apps/:part/:sub" element={<DcApps />} />
         </Route>
       </Routes>
     </HashRouter>

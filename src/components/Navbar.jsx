@@ -210,6 +210,7 @@ const Navbar = () => {
     // Events handled by dropdown
     { name: 'Newsletter', path: '/newsletter' },
     { name: 'Team', path: '/team' },
+    { name: 'DC App', path: '/dc-apps' },
   ];
 
   return (
