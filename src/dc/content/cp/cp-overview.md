@@ -20,13 +20,6 @@ All CP questions will be hosted in a **Codeforces contest**, which will remain o
 - The **bonus section is optional**, and is meant for those who want to push a little further.
 - Don't worry if you can't finish everything. Your approach and attempts matter.
 
-## Codeforces Contests
-
-We'll also consider your performance in the **next 3 Codeforces contests**.
-
-Only your **best contest** will be considered, so one or two bad rounds won't hurt you.
-
-Try to participate in at least one of them **live and rated**, rather than virtually.
 
 ### A few things to keep in mind
 
