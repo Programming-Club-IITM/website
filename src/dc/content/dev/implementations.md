@@ -179,9 +179,9 @@ Complete the required functions inside the `LinkedList` class. Follow the proble
 | `SORT_COUNT` | Count inversions and sort the list |
 
 ### Test Case Distribution:
-- 00–02: INSERT, DISPLAY
+- 00–02: INSERT, DISPLAY, COUNT
 - 03–06: insertion, deletion, DISPLAY
-- 07–08: FIND, DISPLAY, COUNT
+- 07–08: FIND, DISPLAY
 - 09–14: SORT, DISPLAY
 - 15–22: SORT_COUNT, DISPLAY
 - 23–39: mixed operations
