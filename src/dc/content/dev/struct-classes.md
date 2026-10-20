@@ -434,7 +434,7 @@ cout << gas.ReturnMass();
 
 ---
 id: dev-struct-classes-r8
-type: long-text
+type: reading
 ---
 
 ### **Templates**
