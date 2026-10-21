@@ -178,7 +178,7 @@ Now that you understand how to create and use classes,
 id: dev-struct-classes-q2
 type: long-text
 ---
-**Task 2:** In the above `GasContainer` Class, make all your member variables private. This essentially makes those member variables inaccessible from main by default. Create two helper functions `GetData` and `SetData` which get and set (P,V,M,T) respectively, for example `void GetData(double& P, double& V, double& M, double& T) const` and `void SetData(double P, double V, double M, double T)`. Note that `gas1.Pressure` in the previous example will no longer compile once the members are private.
+**Task 2:** In the above `GasContainer` Class, make all your member variables private. This essentially makes those member variables inaccessible from main by default. Create two helper functions `GetData` and `SetData` which get and set (P,V,M,T) respectively, for example `<datatype> Get<VariableName>(): return <Membervariable>` and `void SetData(double P, double V, double M, double T)`. Note that `gas1.Pressure` in the previous example will no longer compile once the members are private.
 
 Such functions are called as getters and setters and their role is to make private variables accessible from external functions.
 
