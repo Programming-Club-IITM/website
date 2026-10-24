@@ -160,7 +160,7 @@ Once you verify your email:
 3. You can **edit and resubmit as many times as you want** before the deadline.
 4. Only your final submission will be considered.
 
-**Deadline: Saturday, October 23, 11:59 PM**
+**Deadline: Sunday, October 25, 11:59 PM**
 
 ---
 
