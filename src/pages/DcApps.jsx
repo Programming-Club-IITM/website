@@ -154,7 +154,7 @@ export default function DcApps() {
         <div className="max-w-7xl 2xl:max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <header className="space-y-2">
             <h1 className="text-4xl sm:text-5xl font-bold text-white">DC Application {CONFIG.YEAR}</h1>
-            <p className="text-textMuted">Programming Club IITM. Closes {new Date(CONFIG.DEADLINE).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}.</p>
+            <p className="text-textMuted">Programming Club IITM. Closes {new Date(CONFIG.DISPLAY_DEADLINE).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}.</p>
           </header>
 
           <div className="grid lg:grid-cols-[280px_1fr] gap-8 items-start">
